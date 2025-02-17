@@ -1,7 +1,8 @@
 {
-    "name": "FixedMathSharp_Editor",
+    "name": "FixedMathSharp.Editor",
+    "rootNamespace": "",
     "references": [
-        "FixedMathSharp_Core"
+        "FixedMathSharp.Runtime"
     ],
     "includePlatforms": [
         "Editor"
