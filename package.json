@@ -1,0 +1,12 @@
+{
+  "name": "com.mrdav30.fixedmathsharp",
+  "version": "1.0.4",
+  "displayName": "FixedMathSharp",
+  "description": "A deterministic fixed-point math library for Unity and .NET.",
+  "unity": "2022.3",
+  "author": {
+    "name": "David Oravsky",
+    "email": "david.oravsky@gmail.com",
+    "url": "https://github.com/mrdav30"
+  }
+}
