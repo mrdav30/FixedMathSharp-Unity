@@ -5,6 +5,8 @@ FixedMathSharp-Unity
 
 A **deterministic fixed-point math** library for **Unity** and **.NET**, designed for **lockstep simulation**, **multiplayer determinism**, and **floating-point-free precision**.
 
+This package is a Unity-specific implementation of the [FixedMathSharp](https://github.com/mrdav30/FixedMathSharp) library
+
 ---
 
 ## 🛠️ Key Features
