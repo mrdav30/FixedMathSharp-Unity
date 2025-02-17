@@ -859,6 +859,11 @@
             Returns 1 if the value is positive, 0 if is 0, and -1 if it is negative.
             </summary>
         </member>
+        <member name="M:FixedMathSharp.Fixed64.IsInteger(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns true if the number has no decimal part (i.e., if the number is equivalent to an integer) and False otherwise. 
+            </summary>
+        </member>
         <member name="M:FixedMathSharp.Fixed64.op_Addition(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Adds two Fixed64 numbers, with saturating behavior in case of overflow.
@@ -866,7 +871,12 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Addition(FixedMathSharp.Fixed64,System.Int32)">
             <summary>
-            Adds an int to a 
+            Adds an int to x 
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.op_Addition(System.Int32,FixedMathSharp.Fixed64)">
+            <summary>
+            Adds an int to y 
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
@@ -876,7 +886,12 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,System.Int32)">
             <summary>
-            Subtracts an int from a 
+            Subtracts an int from x 
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.op_Subtraction(System.Int32,FixedMathSharp.Fixed64)">
+            <summary>
+            Subtracts an int from y 
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Multiply(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
@@ -1038,6 +1053,9 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64Extensions.Sign(FixedMathSharp.Fixed64)">
             <inheritdoc cref="M:FixedMathSharp.Fixed64.Sign(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.IsInteger(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed64.IsInteger(FixedMathSharp.Fixed64)" />
         </member>
         <member name="M:FixedMathSharp.Fixed64Extensions.Squared(FixedMathSharp.Fixed64)">
             <inheritdoc cref="M:FixedMathSharp.FixedMath.Squared(FixedMathSharp.Fixed64)" />
@@ -1808,6 +1826,16 @@
             - Useful for fixed-point math scenarios where floating-point precision is insufficient or not desired.
             </remarks>
         </member>
+        <member name="F:FixedMathSharp.Vector2d.x">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Vector2d.y">
+            <summary>
+            The Y component of the vector.
+            </summary>
+        </member>
         <member name="F:FixedMathSharp.Vector2d.DefaultRotation">
             <summary>
             (1, 0)
@@ -1868,6 +1896,14 @@
             Gets the left-hand (clockwise) normal vector.
             </summary>
         </member>
+        <member name="P:FixedMathSharp.Vector2d.Normal">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.GetNormalized(FixedMathSharp.Vector2d)"/>
+        </member>
+        <member name="P:FixedMathSharp.Vector2d.Magnitude">
+            <summary>
+            Returns the actual length of this vector (RO).
+            </summary>
+        </member>
         <member name="P:FixedMathSharp.Vector2d.SqrMagnitude">
             <summary>
             Returns the square magnitude of the vector (avoids calculating the square root).
@@ -1903,6 +1939,9 @@
             </summary>
             <param name="xAmount">The amount to add to the x component.</param>
             <param name="yAmount">The amount to add to the y component.</param>
+        </member>
+        <member name="M:FixedMathSharp.Vector2d.AddInPlace(FixedMathSharp.Vector2d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.AddInPlace(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)"/>
         </member>
         <member name="M:FixedMathSharp.Vector2d.SubtractInPlace(FixedMathSharp.Fixed64)">
             <summary>
@@ -2047,6 +2086,17 @@
             Returns the dot product of this vector with another vector.
             </summary>
         </member>
+        <member name="M:FixedMathSharp.Vector2d.CrossProduct(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Computes the cross product magnitude of this vector with another vector.
+            </summary>
+            <param name="otherX">The X component of the other vector.</param>
+            <param name="otherY">The Y component of the other vector.</param>
+            <returns>The cross product magnitude.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector2d.CrossProduct(FixedMathSharp.Vector2d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.CrossProduct(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)"/>
+        </member>
         <member name="M:FixedMathSharp.Vector2d.Distance(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Returns the distance between this vector and another vector specified by its components.
@@ -2083,6 +2133,20 @@
             <param name="vector">The vector to compute the magnitude of.</param>
             <returns>The magnitude (length) of the vector.</returns>
         </member>
+        <member name="M:FixedMathSharp.Vector2d.Abs(FixedMathSharp.Vector2d)">
+            <summary>
+            Returns a new <see cref="T:FixedMathSharp.Vector2d"/> where each component is the absolute value of the corresponding input component.
+            </summary>
+            <param name="value">The input vector.</param>
+            <returns>A vector with absolute values for each component.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector2d.Sign(FixedMathSharp.Vector2d)">
+            <summary>
+            Returns a new <see cref="T:FixedMathSharp.Vector2d"/> where each component is the sign of the corresponding input component.
+            </summary>
+            <param name="value">The input vector.</param>
+            <returns>A vector where each component is -1, 0, or 1 based on the sign of the input.</returns>
+        </member>
         <member name="M:FixedMathSharp.Vector2d.CreateRotation(FixedMathSharp.Fixed64)">
             <summary>
             Creates a vector from a given angle in radians.
@@ -2095,6 +2159,12 @@
             <param name="start">The starting vector.</param>
             <param name="end">The ending vector.</param>
             <returns>The Euclidean distance between the two vectors.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector2d.SqrDistance(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Calculates the squared distance between two vectors, avoiding the need for a square root operation.
+            </summary>
+            <returns>The squared distance between the two vectors.</returns>
         </member>
         <member name="M:FixedMathSharp.Vector2d.ForwardDirection(FixedMathSharp.Fixed64)">
             <summary>
@@ -2134,6 +2204,17 @@
             <param name="vec">The vector to rotate.</param>
             <param name="angleInRadians">The angle in radians.</param>
             <returns>The rotated vector.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector2d.ToVector3d(FixedMathSharp.Fixed64)">
+            <summary>
+            Converts this <see cref="T:FixedMathSharp.Vector2d"/> to a <see cref="T:FixedMathSharp.Vector3d"/>, 
+            mapping the Y component of this vector to the Z axis in the resulting vector.
+            </summary>
+            <param name="z">The value to assign to the Y axis of the resulting <see cref="T:FixedMathSharp.Vector3d"/>.</param>
+            <returns>
+            A new <see cref="T:FixedMathSharp.Vector3d"/> where (X, Y) from this <see cref="T:FixedMathSharp.Vector2d"/> 
+            become (X, Z) in the resulting vector, with the provided Z parameter assigned to Y.
+            </returns>
         </member>
         <member name="M:FixedMathSharp.Vector2d.ToDegrees(FixedMathSharp.Vector2d)">
             <summary>
@@ -2177,6 +2258,9 @@
         <member name="M:FixedMathSharp.Vector2dExtensions.Abs(FixedMathSharp.Vector2d)">
             <inheritdoc cref="M:FixedMathSharp.Vector2d.Abs(FixedMathSharp.Vector2d)" />
         </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.Sign(FixedMathSharp.Vector2d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.Sign(FixedMathSharp.Vector2d)" />
+        </member>
         <member name="M:FixedMathSharp.Vector2dExtensions.ToDegrees(FixedMathSharp.Vector2d)">
             <inheritdoc cref="M:FixedMathSharp.Vector2d.ToDegrees(FixedMathSharp.Vector2d)" />
         </member>
@@ -2216,6 +2300,21 @@
             - Calculating distances, angles, projections, and interpolation between vectors.
             - Essential for fixed-point math scenarios where floating-point precision isn't suitable.
             </remarks>
+        </member>
+        <member name="F:FixedMathSharp.Vector3d.x">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Vector3d.y">
+            <summary>
+            The Y component of the vector.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Vector3d.z">
+            <summary>
+            The Z component of the vector.
+            </summary>
         </member>
         <member name="F:FixedMathSharp.Vector3d.Up">
             <summary>
@@ -2277,6 +2376,9 @@
             Provides a rotated version of the current vector, where rotation is a 90 degrees rotation around the Y axis in the clockwise direction.
             </summary>
         </member>
+        <member name="P:FixedMathSharp.Vector3d.Normal">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.GetNormalized(FixedMathSharp.Vector3d)"/>
+        </member>
         <member name="P:FixedMathSharp.Vector3d.Magnitude">
             <summary>
             Returns the actual length of this vector (RO).
@@ -2304,6 +2406,16 @@
             If you need to know the actual distance, use MyMagnitude
             </summary>
             <returns>The magnitude.</returns>
+        </member>
+        <member name="P:FixedMathSharp.Vector3d.LongStateHash">
+            <summary>
+            Returns a long hash of the vector based on its x, y, and z values.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Vector3d.StateHash">
+            <summary>
+            Returns a hash of the vector based on its state.
+            </summary>
         </member>
         <member name="M:FixedMathSharp.Vector3d.Set(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
@@ -2412,6 +2524,15 @@
             <param name="otherZ">The z component of the other vector.</param>
             <returns>The dot product of the two vectors.</returns>
         </member>
+        <member name="M:FixedMathSharp.Vector3d.CrossProduct(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Computes the cross product magnitude of this vector with another vector.
+            </summary>
+            <param name="otherX">The X component of the other vector.</param>
+            <param name="otherY">The Y component of the other vector.</param>
+            <param name="otherZ">The Z component of the other vector.</param>
+            <returns>The cross product magnitude.</returns>
+        </member>
         <member name="M:FixedMathSharp.Vector3d.Cross(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Returns the cross vector of this vector with another vector.
@@ -2477,6 +2598,54 @@
             <param name="vector">The vector whose magnitude is being calculated.</param>
             <returns>The magnitude of the vector.</returns>
         </member>
+        <member name="M:FixedMathSharp.Vector3d.Abs(FixedMathSharp.Vector3d)">
+            <summary>
+            Returns a new <see cref="T:FixedMathSharp.Vector3d"/> where each component is the absolute value of the corresponding input component.
+            </summary>
+            <param name="value">The input vector.</param>
+            <returns>A vector with absolute values for each component.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.Sign(FixedMathSharp.Vector3d)">
+            <summary>
+            Returns a new <see cref="T:FixedMathSharp.Vector3d"/> where each component is the sign of the corresponding input component.
+            </summary>
+            <param name="value">The input vector.</param>
+            <returns>A vector where each component is -1, 0, or 1 based on the sign of the input.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.Clamp(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Clamps each component of the given <see cref="T:FixedMathSharp.Vector3d"/> within the specified min and max bounds.
+            </summary>
+            <param name="value">The vector to clamp.</param>
+            <param name="min">The minimum bounds.</param>
+            <param name="max">The maximum bounds.</param>
+            <returns>A vector with each component clamped between min and max.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.AreParallel(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Determines if two vectors are exactly parallel by checking if their cross product is zero.
+            </summary>
+            <param name="v1">The first vector.</param>
+            <param name="v2">The second vector.</param>
+            <returns>True if the vectors are exactly parallel, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.AreAlmostParallel(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
+            <summary>
+            Determines if two vectors are approximately parallel based on a cosine similarity threshold.
+            </summary>
+            <param name="v1">The first normalized vector.</param>
+            <param name="v2">The second normalized vector.</param>
+            <param name="cosThreshold">The cosine similarity threshold for near-parallel vectors.</param>
+            <returns>True if the vectors are nearly parallel, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.Midpoint(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Computes the midpoint between two vectors.
+            </summary>
+            <param name="v1">The first vector.</param>
+            <param name="v2">The second vector.</param>
+            <returns>The midpoint vector.</returns>
+        </member>
         <member name="M:FixedMathSharp.Vector3d.Distance(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <inheritdoc cref="M:FixedMathSharp.Vector3d.Distance(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
         </member>
@@ -2498,6 +2667,15 @@
             <remarks>
             This method considers the line segments, not the infinite lines they represent, ensuring that the returned points always lie within the provided segments.
             </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.ClosestPointOnLineSegment(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Finds the closest point on a line segment between points A and B to a given point P.
+            </summary>
+            <param name="a">The start of the line segment.</param>
+            <param name="b">The end of the line segment.</param>
+            <param name="p">The point to project onto the segment.</param>
+            <returns>The closest point on the line segment to P.</returns>
         </member>
         <member name="M:FixedMathSharp.Vector3d.Dot(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <summary>
@@ -2522,6 +2700,9 @@
             <param name="lhs"></param>
             <param name="rhs"></param>
             <returns></returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.CrossProduct(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.CrossProduct(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)"/>
         </member>
         <member name="M:FixedMathSharp.Vector3d.Project(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <summary>
@@ -2585,6 +2766,16 @@
             <param name="rotation">The quaternion representing the inverse rotation.</param>
             <returns>The rotated vector.</returns>
         </member>
+        <member name="M:FixedMathSharp.Vector3d.ToVector2d">
+            <summary>
+            Converts this <see cref="T:FixedMathSharp.Vector3d"/> to a <see cref="T:FixedMathSharp.Vector2d"/>, 
+            dropping the Y component (height) of this vector in the resulting vector.
+            </summary>
+            <returns>
+            A new <see cref="T:FixedMathSharp.Vector2d"/> where (X, Z) from this <see cref="T:FixedMathSharp.Vector3d"/> 
+            become (X, Y) in the resulting vector.
+            </returns>
+        </member>
         <member name="M:FixedMathSharp.Vector3d.ToDegrees(FixedMathSharp.Vector3d)">
             <summary>
             Converts each component of the vector from radians to degrees.
@@ -2629,6 +2820,9 @@
         </member>
         <member name="M:FixedMathSharp.Vector3dExtensions.Abs(FixedMathSharp.Vector3d)">
             <inheritdoc cref="M:FixedMathSharp.Vector3d.Abs(FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.Sign(FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.Sign(FixedMathSharp.Vector3d)" />
         </member>
         <member name="M:FixedMathSharp.Vector3dExtensions.FuzzyEqualAbsolute(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
             <summary>
