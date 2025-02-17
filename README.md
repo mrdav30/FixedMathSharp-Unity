@@ -1,65 +1,36 @@
-FixedMathSharp
+FixedMathSharp-Unity
 ==============
 
 ![FixedMathSharp Icon](https://raw.githubusercontent.com/mrdav30/fixedmathsharp/main/icon.png)
 
-**A high-precision, deterministic fixed-point math library for .NET.**  
-Ideal for simulations, games, and physics engines requiring reliable arithmetic without floating-point inaccuracies.
+A **deterministic fixed-point math** library for **Unity** and **.NET**, designed for **lockstep simulation**, **multiplayer determinism**, and **floating-point-free precision**.
 
 ---
 
 ## 🛠️ Key Features
 
-- **Deterministic Calculations:** Perfect for simulations, multiplayer games, and physics engines.
-- **High Precision Arithmetic:** Uses fixed-point math to eliminate floating-point inaccuracies.
-- **Comprehensive Vector Support:** Includes 2D and 3D vector operations (`Vector2d`, `Vector3d`).
-- **Quaternion Rotations:** Leverage `FixedQuaternion` for smooth rotations without gimbal lock.
-- **Matrix Operations:** Supports transformations with `Fixed4x4` and `Fixed3x3` matrices.
-- **Bounding Shapes:** Includes `IBound` structs `BoundingBox`, `BoundingSphere`, and `BoundingArea` for lightweight spatial calculations.
-- **Advanced Math Functions:** Includes trigonometry and common math utilities.
-- **Unity Integration:** Seamless interoperability with Unity using `FixedMathSharp.Editor`.
-
+- **Fully Deterministic** – Eliminates floating-point errors for lockstep simulations.
+- **Fixed-Point Arithmetic** – Implements `Fixed64` with high precision.
+- **Math & Trigonometry** – Optimized `FixedMath` and `FixedTrigonometry` utilities.
+- **Vector & Matrix Support** – Includes `Vector2d`, `Vector3d`, `FixedQuaternion`, and `Fixed4x4`.
+- **Bounding Volume Utilities** – Use `BoundingBox`, `BoundingSphere`, and `BoundingArea` for collision checks.
+- **Unity Integration** – Compatible with **Unity’s Job System** & **Burst Compiler**.
 
 ---
 
 ## 🚀 Installation
 
+### **Via Unity Package Manager (UPM)**
+1. Open **Unity Package Manager** (`Window > Package Manager`).
+2. Click **Add package from git URL...**.
+3. Enter:
 
-Clone the repository and add it to your project:
+https://github.com/mrdav30/FixedMathSharp-Unity.git
 
-### Non-Unity Projects
-
-1. **Install via NuGet**:
-   - Add FixedMathSharp to your project using the following command:
-   
-     ```bash
-     dotnet add package FixedMathSharp
-     ```
-
-2. **Or Download/Clone**:
-   - Clone the repository or download the source code.
-   
-     ```bash
-     git clone https://github.com/mrdav30/FixedMathSharp.git
-     ```
-
-3. **Add to Project**:
-
-   - Include the FixedMathSharp project or its DLLs in your build process.
-
-### Unity
-
-To integrate **FixedMathSharp** into your Unity project:
-
-1. **Download the Package**:
-   - Obtain the latest `FixedMathSharp{{VERSION}}.unitypackage` from the [Releases](https://github.com/mrdav30/FixedMathSharp/releases) section of the repository.
-
-2. **Import into Unity**:
-   - In Unity, navigate to **Assets > Import Package > Custom Package...**.
-   - Select the downloaded `FixedMathSharp{{VERSION}}.unitypackage` file.
-
-3. **Verify the Integration**:
-   - After importing, confirm that the `FixedMathSharp` namespace is accessible in your scripts.
+### **Manual Import**
+1. Download the latest `FixedMathSharp.unitypackage` from the [Releases](https://github.com/mrdav30/FixedMathSharp-Unity/releases).
+2. In Unity, go to **Assets > Import Package > Custom Package...**.
+3. Select and import `FixedMathSharp.unitypackage`.
 
 ---
 
@@ -114,54 +85,11 @@ Console.WriteLine(sinValue); // Output: ~0.707
 
 ---
 
-## 📦 Library Structure
-
-- **`Fixed64` Struct:** Represents fixed-point numbers for precise arithmetic.
-- **`Vector2d` and `Vector3d` Structs:** Handle 2D and 3D vector operations.
-- **`FixedQuaternion` Struct:** Provides rotation handling without gimbal lock, enabling smooth rotations and quaternion-based transformations.
-- **`IBound` Interface:** Standard interface for bounding shapes `BoundingBox`, `BoundingArea`, and `BoundingSphere`, each offering intersection, containment, and projection logic.
-- **`FixedMath` Static Class:** Provides common math functions.
-- **`FixedTrigonometry` Class:** Offers trigonometric functions using fixed-point math.
-- **`Fixed4x4` and `Fixed3x3`:** Support matrix operations for transformations.
-- **`FixedMathSharp.Editor`:** Extensions for seamless integration with Unity, including property drawers and type conversions.
-
-### Fixed64 Struct
-
-**Fixed64** is the core data type representing fixed-point numbers. It 
-provides various mathematical operations, including addition,
-subtraction, multiplication, division, and more. The struct guarantees
-deterministic behavior by using integer-based arithmetic with a
-configurable `SHIFT_AMOUNT`.
-
----
-
-## ⚡ Performance Considerations
-
-This library leverages **inline methods** and **fixed-point arithmetic** 
-to ensure high precision without the pitfalls of floating-point numbers. 
-It is optimized for **deterministic behavior**, making it ideal for physics 
-engines, multiplayer simulations, and other time-sensitive applications.
-
----
-
-## 🧪 Testing and Validation
-
-Unit tests are used extensively to validate the correctness of mathematical 
-operations. Special **fuzzy comparisons** are employed where small precision 
-discrepancies might occur, mimicking floating-point behavior.
-
-To run the tests:
-```bash
-dotnet test --configuration Release
-```
-
----
-
 ## 🛠️ Compatibility
 
-- **.NET Framework:** 4.7.1+
-- **Unity3D:** Fully compatible with Unity using the `FixedMathSharp.Editor` extension.
-- **Platforms:** Windows, Linux, macOS
+- **.NET Framework:** 4.7.2+
+- **Unity3D Version:** 2022.3+
+- **Platforms:** Windows, Linux, macOS, WebGL, Mobile
 
 ---
 
