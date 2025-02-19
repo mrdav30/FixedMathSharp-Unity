@@ -1029,6 +1029,20 @@
             <param name="f1"></param>
             <returns></returns>
         </member>
+        <member name="M:FixedMathSharp.Fixed64.ToFloat(System.Int64)">
+            <summary>
+            Converts a Fixed64s RawValue (Int64) into a float
+            </summary>
+            <param name="f1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.ToDecimal(System.Int64)">
+            <summary>
+            Converts a Fixed64s RawValue (Int64) into a decimal
+            </summary>
+            <param name="f1"></param>
+            <returns></returns>
+        </member>
         <member name="M:FixedMathSharp.Fixed64.Equals(System.Object)">
             <summary>
             Determines whether this instance equals another object.
