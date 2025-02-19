@@ -67,6 +67,11 @@ namespace FixedMathSharp.Editor
 
         #region EditorGUILayout
 
+        public static void FixedNumberField(string Label, ref Fixed64 fixedNumber)
+        {
+            fixedNumber = (Fixed64)EditorGUILayout.DoubleField(Label, (double)fixedNumber);
+        }
+
         public static void FixedNumberField(string label, ref SerializedProperty property)
         {
             SerializedProperty rawValue = property.FindPropertyRelative("m_rawValue");
