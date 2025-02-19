@@ -8,7 +8,6 @@ namespace FixedMathSharp.Editor
     /// A custom property drawer for Fixed64 structures.
     /// </summary>
     /// <see cref="PropertyDrawer" />
-    [CustomPropertyDrawer(typeof(FixedNumberAttribute))]
     [CustomPropertyDrawer(typeof(Fixed64))]
     public class Fixed64Drawer : PropertyDrawer
     {
@@ -16,21 +15,22 @@ namespace FixedMathSharp.Editor
         {
             Rect contentPosition = EditorGUI.PrefixLabel(position, label);
 
-            if (!property.NextVisible(true))
+            SerializedProperty rawValue = property.FindPropertyRelative("m_rawValue");
+            if (rawValue == null)
                 return;
 
             EditorGUI.BeginProperty(contentPosition, label, property);
             {
                 EditorGUI.BeginChangeCheck();
 
-                Fixed64 newVal = FixedMathEditorUtility.FixedNumberField(
+                Fixed64 newVal = FMSEditorUtility.FixedNumberField(
                                     contentPosition,
                                     GUIContent.none,
-                                    property.longValue);
+                                    rawValue.longValue);
 
                 if (EditorGUI.EndChangeCheck())
                 {
-                    property.longValue = newVal.m_rawValue;
+                    rawValue.longValue = newVal.m_rawValue;
                     property.serializedObject.ApplyModifiedProperties();
                 }
             }
