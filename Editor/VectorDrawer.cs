@@ -57,7 +57,7 @@ namespace FixedMathSharp.Editor
                         if (!property.NextVisible(true))
                             break;
 
-                        Fixed64 newVal = FixedMathEditorUtility.FixedNumberField(
+                        Fixed64 newVal = FMSEditorUtility.FixedNumberField(
                                         contentPosition,
                                         hideLabels ? GUIContent.none : new GUIContent(displayName),
                                         property.longValue);

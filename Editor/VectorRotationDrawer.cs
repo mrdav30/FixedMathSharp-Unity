@@ -35,7 +35,7 @@ namespace FixedMathSharp.Editor
                 position.height = height;
 
                 // Draw the angle in degrees in the inspector
-                FixedMathEditorUtility.DoubleField(position, "Angle", ref angleInDegrees, at.Timescale);
+                FMSEditorUtility.DoubleField(position, "Angle", ref angleInDegrees, at.Timescale);
 
                 // Convert the new angle back to radians
                 Fixed64 newAngleInRadians = FixedMath.DegToRad(angleInDegrees);

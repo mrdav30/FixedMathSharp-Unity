@@ -22,7 +22,7 @@ namespace FixedMathSharp.Editor
 
                 using var indent = new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel);
                 // Display euler angles in the inspector and get the new values after editing
-                FixedMathEditorUtility.Vector3dField(contentPosition, GUIContent.none, ref eulerAngles);
+                FMSEditorUtility.Vector3dField(contentPosition, GUIContent.none, ref eulerAngles);
 
                 // Convert the edited euler angles back to a quaternion (in radians) and set the quaternion value
                 FixedQuaternion newQuaternion = FixedQuaternion.FromEulerAnglesInDegrees(eulerAngles.x, eulerAngles.y, eulerAngles.z);

@@ -15,7 +15,7 @@ namespace FixedMathSharp.Editor
 			// Calculate the angle, rounding to 2 decimal places
 			Fixed64 angle = FixedMath.RoundToPrecision(FixedMath.RadToDeg(FixedMath.Asin(value)), 2);
 
-			FixedMathEditorUtility.DoubleField(position, label, ref angle, angleAttribute.Timescale);
+			FMSEditorUtility.DoubleField(position, label, ref angle, angleAttribute.Timescale);
 
 			// Check if the max value is valid, and clamp the angle if necessary
 			Fixed64 max = new Fixed64(angleAttribute.Max);
