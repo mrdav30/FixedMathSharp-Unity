@@ -343,6 +343,595 @@
         <member name="M:FixedMathSharp.IBoundExtensions.ProjectPointWithinBounds(FixedMathSharp.IBound,FixedMathSharp.Vector3d)">
             <inheritdoc cref="M:FixedMathSharp.IBound.ProjectPoint(FixedMathSharp.Vector3d)" />
         </member>
+        <member name="T:FixedMathSharp.FixedMath">
+            <summary>
+            A static class that provides a variety of fixed-point math functions.
+            Fixed-point numbers are represented as <see cref="T:FixedMathSharp.Fixed64"/>.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedMath.PRECISION_L">
+            <summary>
+            Represents the smallest possible value that can be represented by the Fixed64 format.
+            </summary>
+            <remarks>
+            Precision of this type is 2^-SHIFT_AMOUNT, 
+            i.e. 1 / (2^SHIFT_AMOUNT) where SHIFT_AMOUNT defines the fractional bits.
+            </remarks>
+        </member>
+        <member name="F:FixedMathSharp.FixedMath.EPSILON_L">
+            <summary>
+             The smallest value that a Fixed64 can have different from zero.
+            </summary>
+            <remarks>
+            With the following rules:
+                 anyValue + Epsilon = anyValue
+                 anyValue - Epsilon = anyValue
+                 0 + Epsilon = Epsilon
+                 0 - Epsilon = -Epsilon
+             A value Between any number and Epsilon will result in an arbitrary number due to truncating errors.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.CopySign(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Produces a value with the magnitude of the first argument and the sign of the second argument.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Clamp01(FixedMathSharp.Fixed64)">
+            <summary>
+            Clamps value between 0 and 1 and returns value.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Clamp(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,System.Nullable{FixedMathSharp.Fixed64})">
+            <summary>
+            Clamps a fixed-point value between the given minimum and maximum values (defaults to Fixed64.Max).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.ClampOne(FixedMathSharp.Fixed64)">
+            <summary>
+            Clamps the value between -1 and 1 inclusive.
+            </summary>
+            <param name="f1">The Fixed64 value to clamp.</param>
+            <returns>Returns a value clamped between -1 and 1.</returns>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Abs(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the absolute value of a Fixed64 number.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Ceiling(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the smallest integral value that is greater than or equal to the specified number.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Floor(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the largest integer less than or equal to the specified number (floor function).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Max(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the larger of two fixed-point values.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Min(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the smaller of two fixed-point values.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Round(FixedMathSharp.Fixed64,System.MidpointRounding)">
+            <summary>
+            Rounds a fixed-point number to the nearest integral value, based on the specified rounding mode.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.RoundToPrecision(FixedMathSharp.Fixed64,System.Int32,System.MidpointRounding)">
+            <summary>
+            Rounds a fixed-point number to a specific number of decimal places.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Squared(FixedMathSharp.Fixed64)">
+            <summary>
+            Squares the Fixed64 value.
+            </summary>
+            <param name="value">The Fixed64 value to square.</param>
+            <returns>The squared value.</returns>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.FastAdd(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Adds two fixed-point numbers without performing overflow checking.
+            </summary>  
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.FastSub(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Subtracts two fixed-point numbers without performing overflow checking.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.FastMul(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Multiplies two fixed-point numbers without overflow checking for performance-critical scenarios.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.FastMod(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Fast modulus without the checks performed by the '%' operator.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.SmoothStep(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Performs a smooth step interpolation between two values.
+            </summary>
+            <remarks>
+            The interpolation follows a cubic Hermite curve where the function starts at `a`,
+            accelerates, and then decelerates towards `b`, ensuring smooth transitions.
+            </remarks>
+            <param name="a">The starting value.</param>
+            <param name="b">The ending value.</param>
+            <param name="t">A value between 0 and 1 that represents the interpolation factor.</param>
+            <returns>The interpolated value between `a` and `b`.</returns>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.CubicInterpolate(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Performs a cubic Hermite interpolation between two points, using specified tangents.
+            </summary>
+            <remarks>
+            This method interpolates smoothly between `p0` and `p1` while considering the tangents `m0` and `m1`.
+            It is useful for animation curves and smooth motion transitions.
+            </remarks>
+            <param name="p0">The first point.</param>
+            <param name="p1">The second point.</param>
+            <param name="m0">The tangent (slope) at `p0`.</param>
+            <param name="m1">The tangent (slope) at `p1`.</param>
+            <param name="t">A value between 0 and 1 that represents the interpolation factor.</param>
+            <returns>The interpolated value between `p0` and `p1`.</returns>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.LinearInterpolate(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Performs linear interpolation between two fixed-point values based on the interpolant t (0 greater or equal to `t` and less than or equal to 1).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.MoveTowards(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Moves a value from 'from' to 'to' by a maximum step of 'maxAmount'. 
+            Ensures the value does not exceed 'to'.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.AddOverflowHelper(System.Int64,System.Int64,System.Boolean@)">
+            <summary>
+            Adds two <see cref="T:System.Int64"/> values and checks for overflow.
+            If an overflow occurs during addition, the <paramref name="overflow"/> parameter is set to true.
+            </summary>
+            <param name="x">The first operand to add.</param>
+            <param name="y">The second operand to add.</param>
+            <param name="overflow">
+            A reference parameter that is set to true if an overflow is detected during the addition.
+            The existing value of <paramref name="overflow"/> is preserved if already true.
+            </param>
+            <returns>The sum of <paramref name="x"/> and <paramref name="y"/>.</returns>
+            <remarks>
+            Overflow is detected by checking for a change in the sign bit that indicates a wrap-around.
+            Additionally, a special check is performed for adding <see cref="F:FixedMathSharp.Fixed64.MIN_VALUE"/> and -1, 
+            as this is a known edge case for overflow.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Pow(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Raises the base number b to the power of exp.
+            Uses logarithms to compute power efficiently for fixed-point values.
+            </summary>
+            <exception cref="T:System.DivideByZeroException">
+            The base was Fixed64.Zero, with a negative expFixed64.Onent
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            The base was negative, with a non-Fixed64.Zero expFixed64.Onent
+            </exception>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Pow2(FixedMathSharp.Fixed64)">
+            <summary>
+            Raises 2 to the power of x.
+            Provides high accuracy for small values of x.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Log2(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the base-2 logarithm of a specified number.
+            Provides at least 9 decimals of accuracy.
+            </summary>
+            <remarks>
+            This implementation is based on Clay. S. Turner's fast binary logarithm algorithm 
+            (C. S. Turner,  "A Fast Binary Logarithm Algorithm", IEEE Signal Processing Mag., pp. 124,140, Sep. 2010.)
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Ln(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the natural logarithm of a specified fixed-point number.
+            Provides at least 7 decimals of accuracy.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Sqrt(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the square root of a specified fixed-point number.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.RadToDeg(FixedMathSharp.Fixed64)">
+            <summary>
+            Converts a value in radians to degrees.
+            </summary>
+            <remarks>
+            Uses double precision to avoid precision loss
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.DegToRad(FixedMathSharp.Fixed64)">
+            <summary>
+            Converts a value in degrees to radians.
+            </summary>
+            <remarks>
+            Uses double precision to avoid precision loss
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Sin(FixedMathSharp.Fixed64)">
+            <summary>
+            Computes the sine of a given angle in radians using an optimized 
+            minimax polynomial approximation.
+            </summary>
+            <param name="x">The angle in radians.</param>
+            <returns>The sine of the given angle, in fixed-point format.</returns>
+            <remarks>
+            - This function uses a Chebyshev-polynomial-based approximation to ensure high accuracy 
+              while maintaining performance in fixed-point arithmetic.
+            - The coefficients have been carefully tuned to minimize fixed-point truncation errors.
+            - The error is less than 1 ULP (unit in the last place) at key reference points, 
+              ensuring <c>Sin(π/4) = 0.707106781192124</c> exactly within Fixed64 precision.
+            - The function automatically normalizes input values to the range [-π, π] for stability.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Cos(FixedMathSharp.Fixed64)">
+            <summary>
+            Computes the cosine of a given angle in radians using a sine-based identity transformation.
+            </summary>
+            <param name="x">The angle in radians.</param>
+            <returns>The cosine of the given angle, in fixed-point format.</returns>
+            <remarks>
+            - Instead of directly approximating cosine, this function derives <c>cos(x)</c> using 
+              the identity <c>cos(x) = sin(x + π/2)</c>. This ensures maximum accuracy.
+            - The underlying sine function is computed using a highly optimized minimax polynomial approximation.
+            - By leveraging this transformation, cosine achieves the same precision guarantees 
+              as sine, including <c>Cos(π/4) = 0.707106781192124</c> exactly within Fixed64 precision.
+            - The function automatically normalizes input values to the range [-π, π] for stability.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Tan(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the tangent of x.
+            </summary>
+            <remarks>
+            This function is not well-tested. It may be wildly inaccurate.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Asin(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the arc-sine of a fixed-point number x, which is the angle in radians 
+            whose sine is x, using a combination of a Taylor series expansion and trigonometric identities.
+            
+            For values of x near ±1, the identity asin(x) = π/2 - acos(x) is used for stability.
+            For values of x near 0, a Taylor series expansion is used.
+            </summary>
+            <param name="x">The input value (sine) whose arcsine is to be computed. Should be in the range [-1, 1].</param>
+            <returns>The arc-sine of x in radians.</returns>
+            <exception cref="T:System.ArithmeticException">Thrown if x is outside the domain [-1, 1].</exception>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Acos(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the arccosine of the specified number x, calculated using a combination of the atan and sqrt functions.
+            </summary>
+            <param name="x">The input value whose arccosine is to be computed. Should be in the range [-1, 1].</param>
+            <returns>The arccosine of x in radians.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if x is outside the domain [-1, 1].</exception>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Atan(FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the arctangent of the specified number, using a more accurate approximation for larger values.
+            This function has at least 7 decimals of accuracy.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Atan2(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Computes the angle whose tangent is the quotient of two specified numbers.
+            </summary>
+            <remarks>
+            Uses a fixed-point arithmetic approximation for the arc tangent function, which is more efficient than using floating-point arithmetic, 
+            especially on systems where floating-point operations are expensive.
+            </remarks>
+            <param name="y">The y-coordinate of the point to which the angle is measured.</param>
+            <param name="x">The x-coordinate of the point to which the angle is measured.</param>
+            <returns>An angle, θ, measured in radians, such that -π ≤ θ ≤ π, and tan(θ) = y / x, 
+            taking into account the quadrants of the inputs to determine the sign of the result.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed3x3Extensions.ExtractScale(FixedMathSharp.Fixed3x3)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed3x3.ExtractScale(FixedMathSharp.Fixed3x3)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed3x3Extensions.SetScale(FixedMathSharp.Fixed3x3@,FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed3x3.SetScale(FixedMathSharp.Fixed3x3,FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed3x3Extensions.SetGlobalScale(FixedMathSharp.Fixed3x3@,FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed3x3.SetGlobalScale(FixedMathSharp.Fixed3x3,FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed3x3Extensions.FuzzyEqualAbsolute(FixedMathSharp.Fixed3x3,FixedMathSharp.Fixed3x3,FixedMathSharp.Fixed64)">
+            <summary>
+            Compares two Fixed3x3 for approximate equality, allowing a fixed absolute difference between components.
+            </summary>
+            <param name="f1">The current Fixed3x3.</param>
+            <param name="f2">The Fixed3x3 to compare against.</param>
+            <param name="allowedDifference">The allowed absolute difference between each component.</param>
+            <returns>True if the components are within the allowed difference, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed3x3Extensions.FuzzyEqual(FixedMathSharp.Fixed3x3,FixedMathSharp.Fixed3x3,System.Nullable{FixedMathSharp.Fixed64})">
+            <summary>
+            Compares two Fixed3x3 for approximate equality, allowing a fractional percentage (defaults to ~1%) difference between components.
+            </summary>
+            <param name="f1">The current Fixed3x3.</param>
+            <param name="f2">The Fixed3x3 to compare against.</param>
+            <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
+            <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4Extensions.ExtractLossyScale(FixedMathSharp.Fixed4x4)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ExtractLossyScale(FixedMathSharp.Fixed4x4)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4Extensions.SetGlobalScale(FixedMathSharp.Fixed4x4@,FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.SetGlobalScale(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4Extensions.SetTranslation(FixedMathSharp.Fixed4x4@,FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.SetTranslation(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4Extensions.SetRotation(FixedMathSharp.Fixed4x4@,FixedMathSharp.FixedQuaternion)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.SetRotation(FixedMathSharp.Fixed4x4,FixedMathSharp.FixedQuaternion)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4Extensions.TransformPoint(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.TransformPoint(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4Extensions.InverseTransformPoint(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.InverseTransformPoint(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.Sign(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed64.Sign(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.IsInteger(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed64.IsInteger(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.Squared(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.Squared(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.Round(FixedMathSharp.Fixed64,System.MidpointRounding)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.Round(FixedMathSharp.Fixed64,System.MidpointRounding)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.RoundToPrecision(FixedMathSharp.Fixed64,System.Int32,System.MidpointRounding)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.RoundToPrecision(FixedMathSharp.Fixed64,System.Int32,System.MidpointRounding)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.ClampOne(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.ClampOne(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.Clamp01(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.Clamp01(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.Abs(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.Abs(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.AbsLessThan(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Checks if the absolute value of x is less than y.
+            </summary>
+            <param name="x">The value to compare.</param>
+            <param name="y">The comparison threshold.</param>
+            <returns>True if |x| &lt; y; otherwise false.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.FastAdd(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.FastAdd(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.FastSub(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.FastSub(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.FastMul(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.FastMul(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.FastMod(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.FastMod(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.Floor(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.Floor(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.Ceiling(FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedMath.Ceiling(FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.RoundToInt(FixedMathSharp.Fixed64)">
+            <summary>
+            Rounds the Fixed64 value to the nearest integer.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.CeilToInt(FixedMathSharp.Fixed64)">
+            <summary>
+            Rounds up the Fixed64 value to the nearest integer.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.FloorToInt(FixedMathSharp.Fixed64)">
+            <summary>
+            Rounds down the Fixed64 value to the nearest integer.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.ToFormattedString(FixedMathSharp.Fixed64)">
+            <summary>
+            Converts the Fixed64 value to a string formatted to 2 decimal places.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.ToFormattedDouble(FixedMathSharp.Fixed64,System.Int32)">
+            <summary>
+            Converts the Fixed64 value to a double with specified decimal precision.
+            </summary>
+            <param name="f1">The Fixed64 value to convert.</param>
+            <param name="precision">The number of decimal places to round to.</param>
+            <returns>The formatted double value.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.ToFormattedFloat(FixedMathSharp.Fixed64)">
+            <summary>
+            Converts the Fixed64 value to a float with 2 decimal points of precision.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.ToPreciseFloat(FixedMathSharp.Fixed64)">
+            <summary>
+            Converts the Fixed64 value to a precise float representation (without rounding).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.ToRadians(FixedMathSharp.Fixed64)">
+            <summary>
+            Converts the angle in degrees to radians.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.ToDegree(FixedMathSharp.Fixed64)">
+            <summary>
+            Converts the angle in radians to degree.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.MoreThanEpsilon(FixedMathSharp.Fixed64)">
+            <summary>
+            Checks if the value is greater than epsilon (positive or negative).
+            Useful for determining if a value is effectively non-zero with a given precision.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.LessThanEpsilon(FixedMathSharp.Fixed64)">
+            <summary>
+            Checks if the value is less than epsilon (i.e., effectively zero).
+            Useful for determining if a value is close enough to zero with a given precision.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64Extensions.FuzzyComponentEqual(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Helper method to compare individual vector components for approximate equality, allowing a fractional difference.
+            Handles zero components by only using the allowed percentage difference.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedQuaternionExtensions.ToAngularVelocity(FixedMathSharp.FixedQuaternion,FixedMathSharp.FixedQuaternion,FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.FixedQuaternion.ToAngularVelocity(FixedMathSharp.FixedQuaternion,FixedMathSharp.FixedQuaternion,FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.FixedQuaternionExtensions.FuzzyEqualAbsolute(FixedMathSharp.FixedQuaternion,FixedMathSharp.FixedQuaternion,FixedMathSharp.Fixed64)">
+            <summary>
+            Compares two quaternions for approximate equality, allowing a fixed absolute difference between components.
+            </summary>
+            <param name="q1">The current quaternion.</param>
+            <param name="q2">The quaternion to compare against.</param>
+            <param name="allowedDifference">The allowed absolute difference between each component.</param>
+            <returns>True if the components are within the allowed difference, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.FixedQuaternionExtensions.FuzzyEqual(FixedMathSharp.FixedQuaternion,FixedMathSharp.FixedQuaternion,System.Nullable{FixedMathSharp.Fixed64})">
+            <summary>
+            Compares two quaternions for approximate equality, allowing a fractional percentage (defaults to ~1%) difference between components.
+            </summary>
+            <param name="q1">The current quaternion.</param>
+            <param name="q2">The quaternion to compare against.</param>
+            <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
+            <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.ClampOneInPlace(FixedMathSharp.Vector2d)">
+            <summary>
+            Clamps each component of the vector to the range [-1, 1] in place and returns the modified vector.
+            </summary>
+            <param name="v">The vector to clamp.</param>
+            <returns>The clamped vector with each component between -1 and 1.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.CheckDistance(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
+            <summary>
+            Checks if the distance between two vectors is less than or equal to a specified factor.
+            </summary>
+            <param name="me">The current vector.</param>
+            <param name="other">The vector to compare distance to.</param>
+            <param name="factor">The maximum allowable distance.</param>
+            <returns>True if the distance between the vectors is less than or equal to the factor, false otherwise.</returns>  
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.Rotate(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.Rotate(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.Abs(FixedMathSharp.Vector2d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.Abs(FixedMathSharp.Vector2d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.Sign(FixedMathSharp.Vector2d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.Sign(FixedMathSharp.Vector2d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.ToDegrees(FixedMathSharp.Vector2d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.ToDegrees(FixedMathSharp.Vector2d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.ToRadians(FixedMathSharp.Vector2d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector2d.ToRadians(FixedMathSharp.Vector2d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.FuzzyEqualAbsolute(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
+            <summary>
+            Compares two vectors for approximate equality, allowing a fixed absolute difference.
+            </summary>
+            <param name="me">The current vector.</param>
+            <param name="other">The vector to compare against.</param>
+            <param name="allowedDifference">The allowed absolute difference between each component.</param>
+            <returns>True if the components are within the allowed difference, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector2dExtensions.FuzzyEqual(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,System.Nullable{FixedMathSharp.Fixed64})">
+            <summary>
+            Compares two vectors for approximate equality, allowing a fractional difference (percentage).
+            Handles zero components by only using the allowed percentage difference.
+            </summary>
+            <param name="me">The current vector.</param>
+            <param name="other">The vector to compare against.</param>
+            <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
+            <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.ClampOneInPlace(FixedMathSharp.Vector3d)">
+            <summary>
+            Clamps each component of the vector to the range [-1, 1] in place and returns the modified vector.
+            </summary>
+            <param name="v">The vector to clamp.</param>
+            <returns>The clamped vector with each component between -1 and 1.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.CheckDistance(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
+            <summary>
+            Checks if the distance between two vectors is less than or equal to a specified factor.
+            </summary>
+            <param name="me">The current vector.</param>
+            <param name="other">The vector to compare distance to.</param>
+            <param name="factor">The maximum allowable distance.</param>
+            <returns>True if the distance between the vectors is less than or equal to the factor, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.Rotate(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.Rotate(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.InverseRotate(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.InverseRotate(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.ToDegrees(FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.ToDegrees(FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.ToRadians(FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.ToRadians(FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.Abs(FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.Abs(FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.Sign(FixedMathSharp.Vector3d)">
+            <inheritdoc cref="M:FixedMathSharp.Vector3d.Sign(FixedMathSharp.Vector3d)" />
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.FuzzyEqualAbsolute(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
+            <summary>
+            Compares two vectors for approximate equality, allowing a fixed absolute difference.
+            </summary>
+            <param name="me">The current vector.</param>
+            <param name="other">The vector to compare against.</param>
+            <param name="allowedDifference">The allowed absolute difference between each component.</param>
+            <returns>True if the components are within the allowed difference, false otherwise.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector3dExtensions.FuzzyEqual(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,System.Nullable{FixedMathSharp.Fixed64})">
+            <summary>
+            Compares two vectors for approximate equality, allowing a fractional difference (percentage).
+            Handles zero components by only using the allowed percentage difference.
+            </summary>
+            <param name="me">The current vector.</param>
+            <param name="other">The vector to compare against.</param>
+            <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
+            <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
+        </member>
         <member name="T:FixedMathSharp.Fixed3x3">
             <summary>
             Represents a 3x3 matrix used for linear transformations in 2D and 3D space, such as rotation, scaling, and shearing.
@@ -434,6 +1023,20 @@
             <param name="shZ">Shear factor along the Z-axis.</param>
             <returns>A 3x3 shear matrix.</returns>
         </member>
+        <member name="M:FixedMathSharp.Fixed3x3.CreateScale(FixedMathSharp.Vector3d)">
+            <summary>
+            Creates a scaling matrix that applies a uniform or non-uniform scale transformation.
+            </summary>
+            <param name="scale">The scale factors along the X, Y, and Z axes.</param>
+            <returns>A 3x3 scaling matrix.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed3x3.CreateScale(FixedMathSharp.Fixed64)">
+            <summary>
+            Creates a uniform scaling matrix with the same scale factor on all axes.
+            </summary>
+            <param name="scaleFactor">The uniform scale factor.</param>
+            <returns>A 3x3 scaling matrix with uniform scaling.</returns>
+        </member>
         <member name="M:FixedMathSharp.Fixed3x3.Normalize(FixedMathSharp.Fixed3x3)">
             <summary>
             Normalizes the basis vectors of a 3x3 matrix to ensure they are orthogonal and unit length.
@@ -508,37 +1111,28 @@
             Attempts to invert the matrix. If the determinant is zero, returns false and sets result to null.
             </summary>
         </member>
+        <member name="M:FixedMathSharp.Fixed3x3.TransformDirection(FixedMathSharp.Fixed3x3,FixedMathSharp.Vector3d)">
+            <summary>
+            Transforms a direction vector from local space to world space using this transformation matrix.
+            Ignores translation.
+            </summary>
+            <param name="matrix">The transformation matrix.</param>
+            <param name="direction">The local-space direction vector.</param>
+            <returns>The transformed direction in world space.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed3x3.InverseTransformDirection(FixedMathSharp.Fixed3x3,FixedMathSharp.Vector3d)">
+            <summary>
+            Transforms a direction from world space into the local space of the matrix.
+            Ignores translation.
+            </summary>
+            <param name="matrix">The transformation matrix.</param>
+            <param name="direction">The world-space direction.</param>
+            <returns>The transformed local-space direction.</returns>
+        </member>
         <member name="M:FixedMathSharp.Fixed3x3.op_UnaryNegation(FixedMathSharp.Fixed3x3)">
             <summary>
             Negates all elements of the matrix.
             </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed3x3Extensions.ExtractScale(FixedMathSharp.Fixed3x3)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed3x3.ExtractScale(FixedMathSharp.Fixed3x3)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed3x3Extensions.SetScale(FixedMathSharp.Fixed3x3@,FixedMathSharp.Vector3d)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed3x3.SetScale(FixedMathSharp.Fixed3x3,FixedMathSharp.Vector3d)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed3x3Extensions.SetGlobalScale(FixedMathSharp.Fixed3x3@,FixedMathSharp.Vector3d)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed3x3.SetGlobalScale(FixedMathSharp.Fixed3x3,FixedMathSharp.Vector3d)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed3x3Extensions.FuzzyEqualAbsolute(FixedMathSharp.Fixed3x3,FixedMathSharp.Fixed3x3,FixedMathSharp.Fixed64)">
-            <summary>
-            Compares two Fixed3x3 for approximate equality, allowing a fixed absolute difference between components.
-            </summary>
-            <param name="f1">The current Fixed3x3.</param>
-            <param name="f2">The Fixed3x3 to compare against.</param>
-            <param name="allowedDifference">The allowed absolute difference between each component.</param>
-            <returns>True if the components are within the allowed difference, false otherwise.</returns>
-        </member>
-        <member name="M:FixedMathSharp.Fixed3x3Extensions.FuzzyEqual(FixedMathSharp.Fixed3x3,FixedMathSharp.Fixed3x3,System.Nullable{FixedMathSharp.Fixed64})">
-            <summary>
-            Compares two Fixed3x3 for approximate equality, allowing a fractional percentage (defaults to ~1%) difference between components.
-            </summary>
-            <param name="f1">The current Fixed3x3.</param>
-            <param name="f2">The Fixed3x3 to compare against.</param>
-            <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
-            <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
         </member>
         <member name="T:FixedMathSharp.Fixed4x4">
             <summary>
@@ -561,18 +1155,24 @@
             Returns the identity matrix (diagonal elements set to 1).
             </summary>
         </member>
+        <member name="F:FixedMathSharp.Fixed4x4.Zero">
+            <summary>
+            Returns a matrix with all elements set to zero.
+            </summary>
+        </member>
         <member name="M:FixedMathSharp.Fixed4x4.#ctor(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Initializes a new FixedMatrix4x4 with individual elements.
             </summary>
         </member>
         <member name="P:FixedMathSharp.Fixed4x4.Translation">
-            <summary>
-            Gets or sets the translation component of this matrix.
-            </summary>
-            <returns>
-            The translation component of the current instance.
-            </returns>
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ExtractTranslation(FixedMathSharp.Fixed4x4)" />
+        </member>
+        <member name="P:FixedMathSharp.Fixed4x4.Scale">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ExtractScale(FixedMathSharp.Fixed4x4)" />
+        </member>
+        <member name="P:FixedMathSharp.Fixed4x4.Rotation">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ExtractRotation(FixedMathSharp.Fixed4x4)" />
         </member>
         <member name="M:FixedMathSharp.Fixed4x4.GetDeterminant">
             <summary>
@@ -582,7 +1182,7 @@
         <member name="M:FixedMathSharp.Fixed4x4.ResetScaleToIdentity">
             <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ResetScaleToIdentity(FixedMathSharp.Fixed4x4)" />
         </member>
-        <member name="M:FixedMathSharp.Fixed4x4.SetTransform(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)">
+        <member name="M:FixedMathSharp.Fixed4x4.SetTransform(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d)">
             <summary>
             Sets the translation, scale, and rotation components onto the matrix.
             </summary>
@@ -611,22 +1211,45 @@
             <param name="scale">The vector representing the scale along each axis.</param>
             <returns>A 4x4 matrix representing the scale transformation.</returns>
         </member>
-        <member name="M:FixedMathSharp.Fixed4x4.CreateTransform(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)">
+        <member name="M:FixedMathSharp.Fixed4x4.CreateTransform(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d)">
             <summary>
-            Creates a matrix from the provided translation, scale, and rotation components.
+            Constructs a transformation matrix from translation, scale, and rotation.
+            This method ensures that the rotation is properly normalized, applies the scale to the
+            rotational basis, and sets the translation component separately.
             </summary>
+            <remarks>
+            - Uses a normalized rotation matrix to maintain numerical stability.
+            - Applies non-uniform scaling to the rotation before setting translation.
+            - Preferred when ensuring transformations remain mathematically correct.
+            - If the rotation is already normalized and combined transformations are needed, consider using <see cref="M:FixedMathSharp.Fixed4x4.ScaleRotateTranslate(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d)"/>.
+            </remarks>
             <param name="translation">The translation vector.</param>
             <param name="scale">The scale vector.</param>
             <param name="rotation">The rotation quaternion.</param>
+            <returns>A transformation matrix incorporating translation, rotation, and scale.</returns>
         </member>
-        <member name="M:FixedMathSharp.Fixed4x4.TRS(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d)">
+        <member name="M:FixedMathSharp.Fixed4x4.ScaleRotateTranslate(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d)">
             <summary>
-            Creates a 4x4 transformation matrix from translation, rotation, and scale.
+            Constructs a transformation matrix from translation, rotation, and scale by multiplying
+            separate matrices in the order: Scale * Rotation * Translation.
             </summary>
-            <param name="translation">Translation vector.</param>
-            <param name="rotation">Rotation as a quaternion.</param>
-            <param name="scale">Scale vector.</param>
-            <returns>A combined transformation matrix.</returns>
+            <remarks>
+            - This method directly multiplies the scale, rotation, and translation matrices.
+            - Ensures that scale is applied first to preserve correct axis scaling.
+            - Then rotation is applied so that rotation is not affected by non-uniform scaling.
+            - Finally, translation moves the object to its correct world position.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4.TranslateRotateScale(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d)">
+            <summary>
+            Constructs a transformation matrix from translation, rotation, and scale by multiplying
+            matrices in the order: Translation * Rotation * Scale (T * R * S).
+            </summary>
+            <remarks>
+            - Use this method when transformations need to be applied **relative to an object's local origin**.
+            - Example use cases include **animation systems**, **hierarchical transformations**, and **UI transformations**.
+            - If you need to apply world-space transformations, use <see cref="M:FixedMathSharp.Fixed4x4.CreateTransform(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d)"/> instead.
+            </remarks>
         </member>
         <member name="M:FixedMathSharp.Fixed4x4.ExtractTranslation(FixedMathSharp.Fixed4x4)">
             <summary>
@@ -634,6 +1257,16 @@
             </summary>
             <param name="matrix">The matrix from which to extract the translation.</param>
             <returns>A Vector3d representing the translation component.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4.ExtractUp(FixedMathSharp.Fixed4x4)">
+            <summary>
+            Extracts the up direction from the 4x4 matrix.
+            </summary>
+            <remarks>
+            This is the surface normal if the matrix represents ground orientation.
+            </remarks>
+            <param name="matrix"></param>
+            <returns>A <see cref="T:FixedMathSharp.Vector3d"/> representing the up direction.</returns>
         </member>
         <member name="M:FixedMathSharp.Fixed4x4.ExtractScale(FixedMathSharp.Fixed4x4)">
             <summary>
@@ -716,7 +1349,7 @@
             <param name="matrix">The matrix to modify. The rotation will replace the upper-left 3x3 portion of the matrix.</param>
             <param name="rotation">The quaternion representing the new rotation to apply.</param>
             <remarks>
-            This method preserves the matrix's translation component. For complete transformation updates, use <see cref="M:FixedMathSharp.Fixed4x4.SetTransform(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)"/>.
+            This method preserves the matrix's translation component. For complete transformation updates, use <see cref="M:FixedMathSharp.Fixed4x4.SetTransform(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d)"/>.
             </remarks>
         </member>
         <member name="M:FixedMathSharp.Fixed4x4.NormalizeRotationMatrix(FixedMathSharp.Fixed4x4)">
@@ -733,7 +1366,7 @@
             - Essential for cases where precise orientation is required, such as animations or physics simulations.
             </remarks>
         </member>
-        <member name="M:FixedMathSharp.Fixed4x4.Invert(FixedMathSharp.Fixed4x4,System.Nullable{FixedMathSharp.Fixed4x4}@)">
+        <member name="M:FixedMathSharp.Fixed4x4.Invert(FixedMathSharp.Fixed4x4,FixedMathSharp.Fixed4x4@)">
             <summary>
             Inverts the matrix if it is invertible (i.e., if the determinant is not zero).
             </summary>
@@ -744,6 +1377,25 @@
             multiplied by a sign based on the element's position. 
             After computing all cofactors, the result is transposed to get the inverse matrix.
             </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4.TransformPoint(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)">
+            <summary>
+            Transforms a point from local space to world space using this transformation matrix.
+            </summary>
+            <remarks>
+            This is the same as doing `<see cref="T:FixedMathSharp.Fixed4x4"/> a * <see cref="T:FixedMathSharp.Vector3d"/> b`
+            </remarks>
+            <param name="matrix">The transformation matrix.</param>
+            <param name="point">The local-space point.</param>
+            <returns>The transformed point in world space.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Fixed4x4.InverseTransformPoint(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)">
+            <summary>
+            Transforms a point from world space into the local space of the matrix.
+            </summary>
+            <param name="matrix">The transformation matrix.</param>
+            <param name="point">The world-space point.</param>
+            <returns>The local-space point relative to the transformation matrix.</returns>
         </member>
         <member name="M:FixedMathSharp.Fixed4x4.op_UnaryNegation(FixedMathSharp.Fixed4x4)">
             <summary>
@@ -762,23 +1414,8 @@
         </member>
         <member name="M:FixedMathSharp.Fixed4x4.op_Multiply(FixedMathSharp.Fixed4x4,FixedMathSharp.Fixed4x4)">
             <summary>
-            Multiplies two matrices using matrix multiplication rules.
+            Multiplies two 4x4 matrices using standard matrix multiplication.
             </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed4x4Extensions.ExtractScale(FixedMathSharp.Fixed4x4)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ExtractScale(FixedMathSharp.Fixed4x4)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed4x4Extensions.ExtractLossyScale(FixedMathSharp.Fixed4x4)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ExtractLossyScale(FixedMathSharp.Fixed4x4)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed4x4Extensions.ExtractTranslation(FixedMathSharp.Fixed4x4)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ExtractTranslation(FixedMathSharp.Fixed4x4)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed4x4Extensions.ExtractRotation(FixedMathSharp.Fixed4x4)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.ExtractRotation(FixedMathSharp.Fixed4x4)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed4x4Extensions.SetGlobalScale(FixedMathSharp.Fixed4x4@,FixedMathSharp.Vector3d)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.SetGlobalScale(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)" />
         </member>
         <member name="T:FixedMathSharp.Fixed64">
             <summary>
@@ -876,7 +1513,17 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Addition(System.Int32,FixedMathSharp.Fixed64)">
             <summary>
-            Adds an int to y 
+            Adds an Fixed64 to x 
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.op_Addition(FixedMathSharp.Fixed64,System.Single)">
+            <summary>
+            Adds a float to x 
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.op_Addition(System.Single,FixedMathSharp.Fixed64)">
+            <summary>
+            Adds a Fixed64 to x 
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
@@ -891,7 +1538,17 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(System.Int32,FixedMathSharp.Fixed64)">
             <summary>
-            Subtracts an int from y 
+            Subtracts a Fixed64 from x 
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,System.Single)">
+            <summary>
+            Subtracts a float from x 
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.op_Subtraction(System.Single,FixedMathSharp.Fixed64)">
+            <summary>
+            Subtracts a Fixed64 from x 
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Multiply(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
@@ -1065,380 +1722,85 @@
             <param name="other">The Fixed64 to compare with.</param>
             <returns>-1 if less than, 0 if equal, 1 if greater than other.</returns>
         </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.Sign(FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed64.Sign(FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.IsInteger(FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.Fixed64.IsInteger(FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.Squared(FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.Squared(FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.Round(FixedMathSharp.Fixed64,System.MidpointRounding)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.Round(FixedMathSharp.Fixed64,System.MidpointRounding)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.RoundToPrecision(FixedMathSharp.Fixed64,System.Int32,System.MidpointRounding)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.RoundToPrecision(FixedMathSharp.Fixed64,System.Int32,System.MidpointRounding)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.ClampOne(FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.ClampOne(FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.Clamp01(FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.Clamp01(FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.Abs(FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.Abs(FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.AbsLessThan(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+        <member name="T:FixedMathSharp.FixedCurveMode">
             <summary>
-            Checks if the absolute value of x is less than y.
-            </summary>
-            <param name="x">The value to compare.</param>
-            <param name="y">The comparison threshold.</param>
-            <returns>True if |x| &lt; y; otherwise false.</returns>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.FastAdd(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.FastAdd(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.FastSub(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.FastSub(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.FastMul(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.FastMul(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.FastMod(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.FastMod(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.Floor(FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.Floor(FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.Ceiling(FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.FixedMath.Ceiling(FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.RoundToInt(FixedMathSharp.Fixed64)">
-            <summary>
-            Rounds the Fixed64 value to the nearest integer.
+            Specifies the interpolation method used when evaluating a <see cref="T:FixedMathSharp.FixedCurve"/>.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.CeilToInt(FixedMathSharp.Fixed64)">
+        <member name="F:FixedMathSharp.FixedCurveMode.Linear">
+            <summary>Linear interpolation between keyframes.</summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedCurveMode.Step">
+            <summary>Step interpolation, instantly jumping between keyframe values.</summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedCurveMode.Smooth">
+            <summary>Smooth interpolation using a cosine function (SmoothStep).</summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedCurveMode.Cubic">
+            <summary>Cubic interpolation for smoother curves using tangents.</summary>
+        </member>
+        <member name="T:FixedMathSharp.FixedCurve">
             <summary>
-            Rounds up the Fixed64 value to the nearest integer.
+            A deterministic fixed-point curve that interpolates values between keyframes.
+            Used for animations, physics calculations, and procedural data.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.FloorToInt(FixedMathSharp.Fixed64)">
+        <member name="M:FixedMathSharp.FixedCurve.#ctor(FixedMathSharp.FixedCurveKey[])">
             <summary>
-            Rounds down the Fixed64 value to the nearest integer.
+            Initializes a new instance of the <see cref="T:FixedMathSharp.FixedCurve"/> with a default linear interpolation mode.
+            </summary>
+            <param name="keyframes">The keyframes defining the curve.</param>
+        </member>
+        <member name="M:FixedMathSharp.FixedCurve.#ctor(FixedMathSharp.FixedCurveMode,FixedMathSharp.FixedCurveKey[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:FixedMathSharp.FixedCurve"/> with a specified interpolation mode.
+            </summary>
+            <param name="mode">The interpolation method to use.</param>
+            <param name="keyframes">The keyframes defining the curve.</param>
+        </member>
+        <member name="M:FixedMathSharp.FixedCurve.Evaluate(FixedMathSharp.Fixed64)">
+            <summary>
+            Evaluates the curve at a given time using the specified interpolation mode.
+            </summary>
+            <param name="time">The time at which to evaluate the curve.</param>
+            <returns>The interpolated value at the given time.</returns>
+        </member>
+        <member name="T:FixedMathSharp.FixedCurveKey">
+            <summary>
+            Represents a keyframe in a <see cref="T:FixedMathSharp.FixedCurve"/>, defining a value at a specific time.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.ToFormattedString(FixedMathSharp.Fixed64)">
+        <member name="F:FixedMathSharp.FixedCurveKey.Time">
+            <summary>The time at which this keyframe occurs.</summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedCurveKey.Value">
+            <summary>The value of the curve at this keyframe.</summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedCurveKey.InTangent">
+            <summary>The incoming tangent for cubic interpolation.</summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedCurveKey.OutTangent">
+            <summary>The outgoing tangent for cubic interpolation.</summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedCurveKey.#ctor(System.Double,System.Double)">
             <summary>
-            Converts the Fixed64 value to a string formatted to 2 decimal places.
+            Creates a keyframe with a specified time and value.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.ToFormattedDouble(FixedMathSharp.Fixed64,System.Int32)">
+        <member name="M:FixedMathSharp.FixedCurveKey.#ctor(System.Double,System.Double,System.Double,System.Double)">
             <summary>
-            Converts the Fixed64 value to a double with specified decimal precision.
-            </summary>
-            <param name="f1">The Fixed64 value to convert.</param>
-            <param name="precision">The number of decimal places to round to.</param>
-            <returns>The formatted double value.</returns>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.ToFormattedFloat(FixedMathSharp.Fixed64)">
-            <summary>
-            Converts the Fixed64 value to a float with 2 decimal points of precision.
+            Creates a keyframe with optional tangents for cubic interpolation.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.ToPreciseFloat(FixedMathSharp.Fixed64)">
+        <member name="M:FixedMathSharp.FixedCurveKey.#ctor(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
-            Converts the Fixed64 value to a precise float representation (without rounding).
+            Creates a keyframe with a specified time and value.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.ToRadians(FixedMathSharp.Fixed64)">
+        <member name="M:FixedMathSharp.FixedCurveKey.#ctor(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
-            Converts the angle in degrees to radians.
+            Creates a keyframe with optional tangents for cubic interpolation.
             </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.ToDegree(FixedMathSharp.Fixed64)">
-            <summary>
-            Converts the angle in radians to degree.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.MoreThanEpsilon(FixedMathSharp.Fixed64)">
-            <summary>
-            Checks if the value is greater than epsilon (positive or negative).
-            Useful for determining if a value is effectively non-zero with a given precision.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.LessThanEpsilon(FixedMathSharp.Fixed64)">
-            <summary>
-            Checks if the value is less than epsilon (i.e., effectively zero).
-            Useful for determining if a value is close enough to zero with a given precision.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64Extensions.FuzzyComponentEqual(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Helper method to compare individual vector components for approximate equality, allowing a fractional difference.
-            Handles zero components by only using the allowed percentage difference.
-            </summary>
-        </member>
-        <member name="T:FixedMathSharp.FixedMath">
-            <summary>
-            A static class that provides a variety of fixed-point math functions.
-            Fixed-point numbers are represented as <see cref="T:FixedMathSharp.Fixed64"/>.
-            </summary>
-        </member>
-        <member name="F:FixedMathSharp.FixedMath.PRECISION_L">
-            <summary>
-            Represents the smallest possible value that can be represented by the Fixed64 format.
-            </summary>
-            <remarks>
-            Precision of this type is 2^-SHIFT_AMOUNT, 
-            i.e. 1 / (2^SHIFT_AMOUNT) where SHIFT_AMOUNT defines the fractional bits.
-            </remarks>
-        </member>
-        <member name="F:FixedMathSharp.FixedMath.EPSILON_L">
-            <summary>
-             The smallest value that a Fixed64 can have different from zero.
-            </summary>
-            <remarks>
-            With the following rules:
-                 anyValue + Epsilon = anyValue
-                 anyValue - Epsilon = anyValue
-                 0 + Epsilon = Epsilon
-                 0 - Epsilon = -Epsilon
-             A value Between any number and Epsilon will result in an arbitrary number due to truncating errors.
-            </remarks>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.CopySign(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Produces a value with the magnitude of the first argument and the sign of the second argument.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Clamp01(FixedMathSharp.Fixed64)">
-            <summary>
-            Clamps value between 0 and 1 and returns value.
-            </summary>
-            <param name="value"></param>
-            <returns></returns>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Clamp(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,System.Nullable{FixedMathSharp.Fixed64})">
-            <summary>
-            Clamps a fixed-point value between the given minimum and maximum values (defaults to Fixed64.Max).
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.ClampOne(FixedMathSharp.Fixed64)">
-            <summary>
-            Clamps the value between -1 and 1 inclusive.
-            </summary>
-            <param name="f1">The Fixed64 value to clamp.</param>
-            <returns>Returns a value clamped between -1 and 1.</returns>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Abs(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the absolute value of a Fixed64 number.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Ceiling(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the smallest integral value that is greater than or equal to the specified number.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Floor(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the largest integer less than or equal to the specified number (floor function).
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Max(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the larger of two fixed-point values.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Min(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the smaller of two fixed-point values.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Round(FixedMathSharp.Fixed64,System.MidpointRounding)">
-            <summary>
-            Rounds a fixed-point number to the nearest integral value, based on the specified rounding mode.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.RoundToPrecision(FixedMathSharp.Fixed64,System.Int32,System.MidpointRounding)">
-            <summary>
-            Rounds a fixed-point number to a specific number of decimal places.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Squared(FixedMathSharp.Fixed64)">
-            <summary>
-            Squares the Fixed64 value.
-            </summary>
-            <param name="value">The Fixed64 value to square.</param>
-            <returns>The squared value.</returns>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.FastAdd(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Adds two fixed-point numbers without performing overflow checking.
-            </summary>  
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.FastSub(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Subtracts two fixed-point numbers without performing overflow checking.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.FastMul(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Multiplies two fixed-point numbers without overflow checking for performance-critical scenarios.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.FastMod(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Fast modulus without the checks performed by the '%' operator.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.LinearInterpolate(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Performs linear interpolation between two fixed-point values based on the interpolant t (0 greater or equal to `t` and less than or equal to 1).
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.MoveTowards(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Moves a value from 'from' to 'to' by a maximum step of 'maxAmount'. 
-            Ensures the value does not exceed 'to'.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.AddOverflowHelper(System.Int64,System.Int64,System.Boolean@)">
-            <summary>
-            Adds two <see cref="T:System.Int64"/> values and checks for overflow.
-            If an overflow occurs during addition, the <paramref name="overflow"/> parameter is set to true.
-            </summary>
-            <param name="x">The first operand to add.</param>
-            <param name="y">The second operand to add.</param>
-            <param name="overflow">
-            A reference parameter that is set to true if an overflow is detected during the addition.
-            The existing value of <paramref name="overflow"/> is preserved if already true.
-            </param>
-            <returns>The sum of <paramref name="x"/> and <paramref name="y"/>.</returns>
-            <remarks>
-            Overflow is detected by checking for a change in the sign bit that indicates a wrap-around.
-            Additionally, a special check is performed for adding <see cref="F:FixedMathSharp.Fixed64.MinValue"/> and -1, 
-            as this is a known edge case for overflow.
-            </remarks>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Pow(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Raises the base number b to the power of exp.
-            Uses logarithms to compute power efficiently for fixed-point values.
-            </summary>
-            <exception cref="T:System.DivideByZeroException">
-            The base was Fixed64.Zero, with a negative expFixed64.Onent
-            </exception>
-            <exception cref="T:System.ArgumentOutOfRangeException">
-            The base was negative, with a non-Fixed64.Zero expFixed64.Onent
-            </exception>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Pow2(FixedMathSharp.Fixed64)">
-            <summary>
-            Raises 2 to the power of x.
-            Provides high accuracy for small values of x.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Log2(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the base-2 logarithm of a specified number.
-            Provides at least 9 decimals of accuracy.
-            </summary>
-            <remarks>
-            This implementation is based on Clay. S. Turner's fast binary logarithm algorithm 
-            (C. S. Turner,  "A Fast Binary Logarithm Algorithm", IEEE Signal Processing Mag., pp. 124,140, Sep. 2010.)
-            </remarks>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Ln(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the natural logarithm of a specified fixed-point number.
-            Provides at least 7 decimals of accuracy.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Sqrt(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the square root of a specified fixed-point number.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.RadToDeg(FixedMathSharp.Fixed64)">
-            <summary>
-            Converts a value in radians to degrees.
-            </summary>
-            <remarks>
-            Uses double precision to avoid precision loss
-            </remarks>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.DegToRad(FixedMathSharp.Fixed64)">
-            <summary>
-            Converts a value in degrees to radians.
-            </summary>
-            <remarks>
-            Uses double precision to avoid precision loss
-            </remarks>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Sin(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the sine of a specified angle in radians.
-            </summary>
-            <remarks>
-            The relative error is less than 1E-10 for x in [-2PI, 2PI], and less than 1E-7 in the worst case.
-            </remarks>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Cos(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the cosine of x.
-            The relative error is less than 1E-10 for x in [-2PI, 2PI], and less than 1E-7 in the worst case.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Tan(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the tangent of x.
-            </summary>
-            <remarks>
-            This function is not well-tested. It may be wildly inaccurate.
-            </remarks>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Asin(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the arc-sine of a fixed-point number x, which is the angle in radians 
-            whose sine is x, using a combination of a Taylor series expansion and trigonometric identities.
-            
-            For values of x near ±1, the identity asin(x) = π/2 - acos(x) is used for stability.
-            For values of x near 0, a Taylor series expansion is used.
-            </summary>
-            <param name="x">The input value (sine) whose arcsine is to be computed. Should be in the range [-1, 1].</param>
-            <returns>The arc-sine of x in radians.</returns>
-            <exception cref="T:System.ArithmeticException">Thrown if x is outside the domain [-1, 1].</exception>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Acos(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the arccosine of the specified number x, calculated using a combination of the atan and sqrt functions.
-            </summary>
-            <param name="x">The input value whose arccosine is to be computed. Should be in the range [-1, 1].</param>
-            <returns>The arccosine of x in radians.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if x is outside the domain [-1, 1].</exception>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Atan(FixedMathSharp.Fixed64)">
-            <summary>
-            Returns the arctangent of the specified number, using a more accurate approximation for larger values.
-            This function has at least 7 decimals of accuracy.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedMath.Atan2(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-            Computes the angle whose tangent is the quotient of two specified numbers.
-            </summary>
-            <remarks>
-            Uses a fixed-point arithmetic approximation for the arc tangent function, which is more efficient than using floating-point arithmetic, 
-            especially on systems where floating-point operations are expensive.
-            </remarks>
-            <param name="y">The y-coordinate of the point to which the angle is measured.</param>
-            <param name="x">The x-coordinate of the point to which the angle is measured.</param>
-            <returns>An angle, θ, measured in radians, such that -π ≤ θ ≤ π, and tan(θ) = y / x, 
-            taking into account the quadrants of the inputs to determine the sign of the result.</returns>
         </member>
         <member name="T:FixedMathSharp.FixedQuaternion">
             <summary>
@@ -1449,6 +1811,11 @@
         <member name="F:FixedMathSharp.FixedQuaternion.Identity">
             <summary>
             Identity quaternion (0, 0, 0, 1).
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedQuaternion.Zero">
+            <summary>
+            Empty quaternion (0, 0, 0, 0).
             </summary>
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.#ctor(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
@@ -1503,6 +1870,11 @@
             <param name="cos">Cosine of the rotation angle.</param>
             <param name="axis">The axis to rotate around (default: Vector3d.Up).</param>
             <returns>A new quaternion representing the rotated result.</returns>
+        </member>
+        <member name="M:FixedMathSharp.FixedQuaternion.IsNormalized">
+            <summary>
+            Checks if this vector has been normalized by checking if the magnitude is close to 1.
+            </summary>
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.GetNormalized(FixedMathSharp.FixedQuaternion)">
             <summary>
@@ -1562,6 +1934,36 @@
             </summary>
             <remarks>
             The order of operations is YZX or yaw-roll-pitch, commonly used in applications such as robotics.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedQuaternion.QuaternionLog(FixedMathSharp.FixedQuaternion)">
+            <summary>
+            Computes the logarithm of a quaternion, which represents the rotational displacement.
+            This is useful for interpolation and angular velocity calculations.
+            </summary>
+            <param name="q">The quaternion to compute the logarithm of.</param>
+            <returns>A Vector3d representing the logarithm of the quaternion (axis-angle representation).</returns>
+            <remarks>
+            The logarithm of a unit quaternion is given by:
+            log(q) = (θ * v̂), where:
+            - θ = 2 * acos(w) is the rotation angle.
+            - v̂ = (x, y, z) / ||(x, y, z)|| is the unit vector representing the axis of rotation.
+            If the quaternion is close to identity, the function returns a zero vector to avoid numerical instability.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedQuaternion.ToAngularVelocity(FixedMathSharp.FixedQuaternion,FixedMathSharp.FixedQuaternion,FixedMathSharp.Fixed64)">
+            <summary>
+            Computes the angular velocity required to move from `previousRotation` to `currentRotation` over a given time step.
+            </summary>
+            <param name="currentRotation">The current orientation as a quaternion.</param>
+            <param name="previousRotation">The previous orientation as a quaternion.</param>
+            <param name="deltaTime">The time step over which the rotation occurs.</param>
+            <returns>A Vector3d representing the angular velocity (in radians per second).</returns>
+            <remarks>
+            This function calculates the change in rotation over `deltaTime` and converts it into angular velocity.
+            - First, it computes the relative rotation: `rotationDelta = currentRotation * previousRotation.Inverse()`.
+            - Then, it applies `QuaternionLog(rotationDelta)` to extract the axis-angle representation.
+            - Finally, it divides by `deltaTime` to compute the angular velocity.
             </remarks>
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.Lerp(FixedMathSharp.FixedQuaternion,FixedMathSharp.FixedQuaternion,FixedMathSharp.Fixed64)">
@@ -1625,24 +2027,6 @@
             <summary>
             Returns a formatted string for this quaternion.
             </summary>
-        </member>
-        <member name="M:FixedMathSharp.FixedQuaternionExtensions.FuzzyEqualAbsolute(FixedMathSharp.FixedQuaternion,FixedMathSharp.FixedQuaternion,FixedMathSharp.Fixed64)">
-            <summary>
-            Compares two quaternions for approximate equality, allowing a fixed absolute difference between components.
-            </summary>
-            <param name="q1">The current quaternion.</param>
-            <param name="q2">The quaternion to compare against.</param>
-            <param name="allowedDifference">The allowed absolute difference between each component.</param>
-            <returns>True if the components are within the allowed difference, false otherwise.</returns>
-        </member>
-        <member name="M:FixedMathSharp.FixedQuaternionExtensions.FuzzyEqual(FixedMathSharp.FixedQuaternion,FixedMathSharp.FixedQuaternion,System.Nullable{FixedMathSharp.Fixed64})">
-            <summary>
-            Compares two quaternions for approximate equality, allowing a fractional percentage (defaults to ~1%) difference between components.
-            </summary>
-            <param name="q1">The current quaternion.</param>
-            <param name="q2">The quaternion to compare against.</param>
-            <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
-            <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
         </member>
         <member name="T:FixedMathSharp.FixedRange">
             <summary>
@@ -1759,69 +2143,6 @@
             Computes the hash code for the FixedRange instance.
             </summary>
             <returns>The hash code of the range.</returns>
-        </member>
-        <member name="T:FixedMathSharp.Utility.ThreadLocalRandom">
-            <summary>
-            Provides thread-safe, deterministic random number generation for use in simulations, games, 
-            and physics engines. This utility ensures randomness is consistent across multiple threads, 
-            avoiding common pitfalls of shared Random instances and aiding reproducible calculations.
-            </summary>
-        </member>
-        <member name="F:FixedMathSharp.Utility.ThreadLocalRandom.globalRandom">
-            <summary>
-            Random number generator used to generate seeds,
-            which are then used to create new random number
-            generators on a per-thread basis.
-            </summary>
-        </member>
-        <member name="F:FixedMathSharp.Utility.ThreadLocalRandom.threadRandom">
-            <summary>
-            Random number generator
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NewRandom">
-            <summary>
-            Creates a new instance of Random. The seed is derived
-            from a global (static) instance of Random, rather
-            than time.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Utility.ThreadLocalRandom.Instance">
-            <summary>
-            Returns an instance of Random which can be used freely
-            within the current thread.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next">
-            <summary>See <see cref="M:System.Random.Next" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next(System.Int32)">
-            <summary>See <see cref="M:System.Random.Next(System.Int32)" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next(System.Int32,System.Int32)">
-            <summary>See <see cref="M:System.Random.Next(System.Int32,System.Int32)" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextFixed64(FixedMathSharp.Fixed64)">
-            <summary>
-             Returns a random Fixed64 number that is less than `max`.
-            </summary>
-            <param name="max"></param>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextFixed64(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-             Returns a random Fixed64 number that is greater than or equal to `min`, and less than `max`.
-            </summary>
-            <param name="min"></param>
-            <param name="max"></param>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextDouble">
-            <summary>See <see cref="M:System.Random.NextDouble" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextDouble(System.Double,System.Double)">
-            <summary>See <see cref="M:System.Random.NextDouble" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextBytes(System.Byte[])">
-            <summary>See <see cref="M:System.Random.NextBytes(System.Byte[])" /></summary>
         </member>
         <member name="T:FixedMathSharp.Vector2d">
             <summary>
@@ -2250,56 +2571,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.ClampOneInPlace(FixedMathSharp.Vector2d)">
-            <summary>
-            Clamps each component of the vector to the range [-1, 1] in place and returns the modified vector.
-            </summary>
-            <param name="v">The vector to clamp.</param>
-            <returns>The clamped vector with each component between -1 and 1.</returns>
-        </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.CheckDistance(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
-            <summary>
-            Checks if the distance between two vectors is less than or equal to a specified factor.
-            </summary>
-            <param name="me">The current vector.</param>
-            <param name="other">The vector to compare distance to.</param>
-            <param name="factor">The maximum allowable distance.</param>
-            <returns>True if the distance between the vectors is less than or equal to the factor, false otherwise.</returns>  
-        </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.Rotate(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
-            <inheritdoc cref="M:FixedMathSharp.Vector2d.Rotate(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.Abs(FixedMathSharp.Vector2d)">
-            <inheritdoc cref="M:FixedMathSharp.Vector2d.Abs(FixedMathSharp.Vector2d)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.Sign(FixedMathSharp.Vector2d)">
-            <inheritdoc cref="M:FixedMathSharp.Vector2d.Sign(FixedMathSharp.Vector2d)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.ToDegrees(FixedMathSharp.Vector2d)">
-            <inheritdoc cref="M:FixedMathSharp.Vector2d.ToDegrees(FixedMathSharp.Vector2d)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.ToRadians(FixedMathSharp.Vector2d)">
-            <inheritdoc cref="M:FixedMathSharp.Vector2d.ToRadians(FixedMathSharp.Vector2d)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.FuzzyEqualAbsolute(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
-            <summary>
-            Compares two vectors for approximate equality, allowing a fixed absolute difference.
-            </summary>
-            <param name="me">The current vector.</param>
-            <param name="other">The vector to compare against.</param>
-            <param name="allowedDifference">The allowed absolute difference between each component.</param>
-            <returns>True if the components are within the allowed difference, false otherwise.</returns>
-        </member>
-        <member name="M:FixedMathSharp.Vector2dExtensions.FuzzyEqual(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,System.Nullable{FixedMathSharp.Fixed64})">
-            <summary>
-            Compares two vectors for approximate equality, allowing a fractional difference (percentage).
-            Handles zero components by only using the allowed percentage difference.
-            </summary>
-            <param name="me">The current vector.</param>
-            <param name="other">The vector to compare against.</param>
-            <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
-            <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
-        </member>
         <member name="T:FixedMathSharp.Vector3d">
             <summary>
             Represents a 3D vector with fixed-point precision, supporting a wide range of vector operations such as rotation, scaling, interpolation, and projection.
@@ -2635,6 +2906,14 @@
             <param name="max">The maximum bounds.</param>
             <returns>A vector with each component clamped between min and max.</returns>
         </member>
+        <member name="M:FixedMathSharp.Vector3d.ClampMagnitude(FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
+            <summary>
+            Clamps the given Vector3d within the specified magnitude.
+            </summary>
+            <param name="value"></param>
+            <param name="maxMagnitude"></param>
+            <returns></returns>
+        </member>
         <member name="M:FixedMathSharp.Vector3d.AreParallel(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <summary>
             Determines if two vectors are exactly parallel by checking if their cross product is zero.
@@ -2804,58 +3083,68 @@
             <param name="degrees">The vector with components in degrees.</param>
             <returns>A new vector with components converted to radians.</returns>
         </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.ClampOneInPlace(FixedMathSharp.Vector3d)">
+        <member name="T:FixedMathSharp.Utility.ThreadLocalRandom">
             <summary>
-            Clamps each component of the vector to the range [-1, 1] in place and returns the modified vector.
+            Provides thread-safe, deterministic random number generation for use in simulations, games, 
+            and physics engines. This utility ensures randomness is consistent across multiple threads, 
+            avoiding common pitfalls of shared Random instances and aiding reproducible calculations.
             </summary>
-            <param name="v">The vector to clamp.</param>
-            <returns>The clamped vector with each component between -1 and 1.</returns>
         </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.CheckDistance(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
+        <member name="F:FixedMathSharp.Utility.ThreadLocalRandom.globalRandom">
             <summary>
-            Checks if the distance between two vectors is less than or equal to a specified factor.
+            Random number generator used to generate seeds,
+            which are then used to create new random number
+            generators on a per-thread basis.
             </summary>
-            <param name="me">The current vector.</param>
-            <param name="other">The vector to compare distance to.</param>
-            <param name="factor">The maximum allowable distance.</param>
-            <returns>True if the distance between the vectors is less than or equal to the factor, false otherwise.</returns>
         </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.Rotate(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)">
-            <inheritdoc cref="M:FixedMathSharp.Vector3d.Rotate(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.InverseRotate(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)">
-            <inheritdoc cref="M:FixedMathSharp.Vector3d.InverseRotate(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.ToDegrees(FixedMathSharp.Vector3d)">
-            <inheritdoc cref="M:FixedMathSharp.Vector3d.ToDegrees(FixedMathSharp.Vector3d)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.ToRadians(FixedMathSharp.Vector3d)">
-            <inheritdoc cref="M:FixedMathSharp.Vector3d.ToRadians(FixedMathSharp.Vector3d)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.Abs(FixedMathSharp.Vector3d)">
-            <inheritdoc cref="M:FixedMathSharp.Vector3d.Abs(FixedMathSharp.Vector3d)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.Sign(FixedMathSharp.Vector3d)">
-            <inheritdoc cref="M:FixedMathSharp.Vector3d.Sign(FixedMathSharp.Vector3d)" />
-        </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.FuzzyEqualAbsolute(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
+        <member name="F:FixedMathSharp.Utility.ThreadLocalRandom.threadRandom">
             <summary>
-            Compares two vectors for approximate equality, allowing a fixed absolute difference.
+            Random number generator
             </summary>
-            <param name="me">The current vector.</param>
-            <param name="other">The vector to compare against.</param>
-            <param name="allowedDifference">The allowed absolute difference between each component.</param>
-            <returns>True if the components are within the allowed difference, false otherwise.</returns>
         </member>
-        <member name="M:FixedMathSharp.Vector3dExtensions.FuzzyEqual(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,System.Nullable{FixedMathSharp.Fixed64})">
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NewRandom">
             <summary>
-            Compares two vectors for approximate equality, allowing a fractional difference (percentage).
-            Handles zero components by only using the allowed percentage difference.
+            Creates a new instance of Random. The seed is derived
+            from a global (static) instance of Random, rather
+            than time.
             </summary>
-            <param name="me">The current vector.</param>
-            <param name="other">The vector to compare against.</param>
-            <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
-            <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
+        </member>
+        <member name="P:FixedMathSharp.Utility.ThreadLocalRandom.Instance">
+            <summary>
+            Returns an instance of Random which can be used freely
+            within the current thread.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next">
+            <summary>See <see cref="M:System.Random.Next" /></summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next(System.Int32)">
+            <summary>See <see cref="M:System.Random.Next(System.Int32)" /></summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next(System.Int32,System.Int32)">
+            <summary>See <see cref="M:System.Random.Next(System.Int32,System.Int32)" /></summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextFixed64(FixedMathSharp.Fixed64)">
+            <summary>
+             Returns a random Fixed64 number that is less than `max`.
+            </summary>
+            <param name="max"></param>
+        </member>
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextFixed64(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+             Returns a random Fixed64 number that is greater than or equal to `min`, and less than `max`.
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextDouble">
+            <summary>See <see cref="M:System.Random.NextDouble" /></summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextDouble(System.Double,System.Double)">
+            <summary>See <see cref="M:System.Random.NextDouble" /></summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextBytes(System.Byte[])">
+            <summary>See <see cref="M:System.Random.NextBytes(System.Byte[])" /></summary>
         </member>
     </members>
 </doc>
