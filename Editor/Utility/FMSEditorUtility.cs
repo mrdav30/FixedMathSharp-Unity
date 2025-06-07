@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -108,3 +109,4 @@ namespace FixedMathSharp.Editor
         #endregion
     }
 }
+#endif
