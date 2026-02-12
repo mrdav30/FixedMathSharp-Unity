@@ -95,16 +95,6 @@
             - Supports more precise intersection tests than BoundingArea, making it ideal for detailed spatial queries.
             </remarks>
         </member>
-        <member name="F:FixedMathSharp.BoundingBox._center">
-            <summary>
-            The center of the bounding box.
-            </summary>
-        </member>
-        <member name="F:FixedMathSharp.BoundingBox._scope">
-            <summary>
-            The range (half-size) of the bounding box in all directions. Always half of the total size.
-            </summary>
-        </member>
         <member name="F:FixedMathSharp.BoundingBox._min">
             <summary>
             The minimum corner of the bounding box.
@@ -126,10 +116,19 @@
             </summary>
         </member>
         <member name="P:FixedMathSharp.BoundingBox.Center">
-            <inheritdoc cref="F:FixedMathSharp.BoundingBox._center" />
+            <summary>
+            The center of the bounding box.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.BoundingBox.Proportions">
+            <summary>
+            The total size of the box (Width, Height, Depth). This is always twice the scope.
+            </summary>
         </member>
         <member name="P:FixedMathSharp.BoundingBox.Scope">
-            <inheritdoc cref="F:FixedMathSharp.BoundingBox._scope" />
+            <summary>
+            The range (half-size) of the bounding box in all directions. Always half of the total size.
+            </summary>
         </member>
         <member name="P:FixedMathSharp.BoundingBox.Min">
             <inheritdoc cref="F:FixedMathSharp.BoundingBox._min" />
@@ -139,11 +138,6 @@
         </member>
         <member name="P:FixedMathSharp.BoundingBox.Vertices">
             <inheritdoc cref="F:FixedMathSharp.BoundingBox._vertices" />
-        </member>
-        <member name="P:FixedMathSharp.BoundingBox.Size">
-            <summary>
-            The total size of the box (Width, Height, Depth). This is always twice the scope.
-            </summary>
         </member>
         <member name="M:FixedMathSharp.BoundingBox.Orient(FixedMathSharp.Vector3d,System.Nullable{FixedMathSharp.Vector3d})">
             <summary>
@@ -210,7 +204,7 @@
             Finds the closest point on the surface of the bounding box to the specified point.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.BoundingBox.GenerateVertices">
+        <member name="M:FixedMathSharp.BoundingBox.GetOrGenerateVertices">
             <summary>
             Generates the vertices of the bounding box based on its center and scope.
             </summary>
@@ -383,10 +377,20 @@
             <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="M:FixedMathSharp.FixedMath.Clamp(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,System.Nullable{FixedMathSharp.Fixed64})">
+        <member name="M:FixedMathSharp.FixedMath.Clamp(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
-            Clamps a fixed-point value between the given minimum and maximum values (defaults to Fixed64.Max).
+            Clamps a fixed-point value between the given minimum and maximum values.
             </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.Clamp``1(``0,``0,``0)">
+            <summary>
+            Clamps a value to the inclusive range [min, max].
+            </summary>
+            <typeparam name="T">The type of the value, must implement IComparable&lt;T&gt;.</typeparam>
+            <param name="value">The value to clamp.</param>
+            <param name="min">The minimum allowed value.</param>
+            <param name="max">The maximum allowed value.</param>
+            <returns>The clamped value.</returns>
         </member>
         <member name="M:FixedMathSharp.FixedMath.ClampOne(FixedMathSharp.Fixed64)">
             <summary>
@@ -3083,68 +3087,89 @@
             <param name="degrees">The vector with components in degrees.</param>
             <returns>A new vector with components converted to radians.</returns>
         </member>
+        <member name="T:FixedMathSharp.Utility.DeterministicRandom">
+            <summary>
+            Fast, seedable, deterministic RNG suitable for lockstep sims and map gen.
+            Uses xoroshiro128++ with splitmix64 seeding. No allocations, no time/GUID.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.FromWorldFeature(System.UInt64,System.UInt64,System.UInt64)">
+            <summary>
+            Create a stream deterministically 
+            Derived from (worldSeed, featureKey[,index]).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.NextU64">
+            <summary>
+            xoroshiro128++ next 64 bits.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.Next">
+            <summary>
+            Next non-negative Int32 in [0, int.MaxValue].
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.Next(System.Int32)">
+            <summary>
+            Unbiased int in [0, maxExclusive).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.Next(System.Int32,System.Int32)">
+            <summary>
+            Unbiased int in [min, maxExclusive).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.NextDouble">
+            <summary>
+            Double in [0,1).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.NextBytes(System.Span{System.Byte})">
+            <summary>
+            Fill span with random bytes.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.NextFixed6401">
+            <summary>
+            Random Fixed64 in [0,1).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.NextFixed64(FixedMathSharp.Fixed64)">
+            <summary>
+            Random Fixed64 in [0, maxExclusive).
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Utility.DeterministicRandom.NextFixed64(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Random Fixed64 in [minInclusive, maxExclusive).
+            </summary>
+        </member>
         <member name="T:FixedMathSharp.Utility.ThreadLocalRandom">
             <summary>
-            Provides thread-safe, deterministic random number generation for use in simulations, games, 
-            and physics engines. This utility ensures randomness is consistent across multiple threads, 
-            avoiding common pitfalls of shared Random instances and aiding reproducible calculations.
+            Deterministic per-thread RNG facade.
             </summary>
         </member>
-        <member name="F:FixedMathSharp.Utility.ThreadLocalRandom.globalRandom">
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Initialize(System.UInt64,System.Func{System.Int32})">
             <summary>
-            Random number generator used to generate seeds,
-            which are then used to create new random number
-            generators on a per-thread basis.
+            Initialize global deterministic seeding. 
+            Provide a stable threadIndex (0..T-1) for each thread.
             </summary>
         </member>
-        <member name="F:FixedMathSharp.Utility.ThreadLocalRandom.threadRandom">
+        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NewRandom(System.UInt64)">
             <summary>
-            Random number generator
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NewRandom">
-            <summary>
-            Creates a new instance of Random. The seed is derived
-            from a global (static) instance of Random, rather
-            than time.
+            Create a new independent RNG from a specific seed (does not affect thread Instance).
             </summary>
         </member>
         <member name="P:FixedMathSharp.Utility.ThreadLocalRandom.Instance">
             <summary>
-            Returns an instance of Random which can be used freely
-            within the current thread.
+            Per-thread RNG instance (requires Initialize to be called first).
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next">
-            <summary>See <see cref="M:System.Random.Next" /></summary>
+        <member name="T:MessagePack.GeneratedMessagePackResolver">
+            <summary>A MessagePack resolver that uses generated formatters for types in this assembly.</summary>
         </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next(System.Int32)">
-            <summary>See <see cref="M:System.Random.Next(System.Int32)" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Next(System.Int32,System.Int32)">
-            <summary>See <see cref="M:System.Random.Next(System.Int32,System.Int32)" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextFixed64(FixedMathSharp.Fixed64)">
-            <summary>
-             Returns a random Fixed64 number that is less than `max`.
-            </summary>
-            <param name="max"></param>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextFixed64(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
-            <summary>
-             Returns a random Fixed64 number that is greater than or equal to `min`, and less than `max`.
-            </summary>
-            <param name="min"></param>
-            <param name="max"></param>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextDouble">
-            <summary>See <see cref="M:System.Random.NextDouble" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextDouble(System.Double,System.Double)">
-            <summary>See <see cref="M:System.Random.NextDouble" /></summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NextBytes(System.Byte[])">
-            <summary>See <see cref="M:System.Random.NextBytes(System.Byte[])" /></summary>
+        <member name="F:MessagePack.GeneratedMessagePackResolver.Instance">
+            <summary>An instance of this resolver that only returns formatters specifically generated for types in this assembly.</summary>
         </member>
     </members>
 </doc>
