@@ -1,4 +1,6 @@
-FixedMathSharp-Unity
+
+# FixedMathSharp-Unity
+
 ==============
 
 ![FixedMathSharp Icon](https://raw.githubusercontent.com/mrdav30/fixedmathsharp/main/icon.png)
@@ -17,19 +19,22 @@ This package is a Unity-specific implementation of the [FixedMathSharp](https://
 - **Vector & Matrix Support** – Includes `Vector2d`, `Vector3d`, `FixedQuaternion`, and `Fixed4x4`.
 - **Bounding Volume Utilities** – Use `BoundingBox`, `BoundingSphere`, and `BoundingArea` for collision checks.
 - **Unity Integration** – Compatible with **Unity’s Job System** & **Burst Compiler**.
+- **Full Serialization Support:** Out-of-the-box round-trip serialization via `MemoryPack` across all serializable structs.
 
 ---
 
 ## 🚀 Installation
 
 ### **Via Unity Package Manager (UPM)**
+
 1. Open **Unity Package Manager** (`Window > Package Manager`).
 2. Click **Add package from git URL...**.
 3. Enter:
 
-https://github.com/mrdav30/FixedMathSharp-Unity.git
+<https://github.com/mrdav30/FixedMathSharp-Unity.git>
 
 ### **Manual Import**
+
 1. Download the latest `FixedMathSharp.unitypackage` from the [Releases](https://github.com/mrdav30/FixedMathSharp-Unity/releases).
 2. In Unity, go to **Assets > Import Package > Custom Package...**.
 3. Select and import `FixedMathSharp.unitypackage`.
@@ -38,7 +43,8 @@ https://github.com/mrdav30/FixedMathSharp-Unity.git
 
 ## 📖 Usage Examples
 
-### Basic Arithmetic with `Fixed64`:
+### Basic Arithmetic with `Fixed64`
+
 ```csharp
 Fixed64 a = new Fixed64(1.5);
 Fixed64 b = new Fixed64(2.5);
@@ -46,7 +52,8 @@ Fixed64 result = a + b;
 Console.WriteLine(result); // Output: 4.0
 ```
 
-### Vector Operations:
+### Vector Operations
+
 ```csharp
 Vector3d v1 = new Vector3d(1, 2, 3);
 Vector3d v2 = new Vector3d(4, 5, 6);
@@ -54,7 +61,8 @@ Fixed64 dotProduct = Vector3d.Dot(v1, v2);
 Console.WriteLine(dotProduct); // Output: 32
 ```
 
-### Quaternion Rotation:
+### Quaternion Rotation
+
 ```csharp
 FixedQuaternion rotation = FixedQuaternion.FromAxisAngle(Vector3d.Up, FixedMath.PiOver2); // 90 degrees around Y-axis
 Vector3d point = new Vector3d(1, 0, 0);
@@ -62,7 +70,8 @@ Vector3d rotatedPoint = rotation.Rotate(point);
 Console.WriteLine(rotatedPoint); // Output: (0, 0, -1)
 ```
 
-### Matrix Transformations:
+### Matrix Transformations
+
 ```csharp
 Fixed4x4 matrix = Fixed4x4.Identity;
 Vector3d position = new Vector3d(1, 2, 3);
@@ -71,6 +80,7 @@ Console.WriteLine(matrix);
 ```
 
 ### Bounding Shapes and Intersection
+
 ```csharp
 BoundingBox box = new BoundingBox(new Vector3d(0, 0, 0), new Vector3d(5, 5, 5));
 BoundingSphere sphere = new BoundingSphere(new Vector3d(3, 3, 3), new Fixed64(1));
@@ -78,7 +88,8 @@ bool intersects = box.Intersects(sphere);
 Console.WriteLine(intersects); // Output: True
 ```
 
-### Trigonometry Example:
+### Trigonometry Example
+
 ```csharp
 Fixed64 angle = FixedMath.PiOver4; // 45 degrees
 Fixed64 sinValue = FixedTrigonometry.Sin(angle);
@@ -89,7 +100,7 @@ Console.WriteLine(sinValue); // Output: ~0.707
 
 ## 🛠️ Compatibility
 
-- **.NET Framework:** 4.7.2+
+- **.NET Standard** 2.1
 - **Unity3D Version:** 2022.3+
 - **Platforms:** Windows, Linux, macOS, WebGL, Mobile
 
@@ -109,8 +120,14 @@ for details.
 
 ---
 
-## 📧 Contact
+## 💬 Community & Support
 
-For questions or support, reach out to **mrdav30** via GitHub or open an issue in the repository.
+For questions, discussions, or general support, join the official Discord community:
+
+👉 **[Join the Discord Server](https://discord.gg/mhwK2QFNBA)**
+
+For bug reports or feature requests, please open an issue in this repository.
+
+We welcome feedback, contributors, and community discussion across all projects.
 
 ---

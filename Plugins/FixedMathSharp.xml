@@ -17,6 +17,13 @@
             - Simplified bounding volume checks where rotation or complex shape fitting is not needed.
             - Can be used as a broad-phase bounding volume to cull objects before more precise checks with BoundingBox or BoundingSphere.
             </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector3d</b> Corner1<br/>
+            <b>FixedMathSharp.Vector3d</b> Corner2<br/>
+            </code>
+            </remarks>
         </member>
         <member name="F:FixedMathSharp.BoundingArea.Corner1">
             <summary>
@@ -94,15 +101,28 @@
             - Used in physics engines, rendering pipelines, and 3D simulations to represent object boundaries.
             - Supports more precise intersection tests than BoundingArea, making it ideal for detailed spatial queries.
             </remarks>
+            <remarks>
+            MemoryPack GenerateType: Object<br/>
+            <code>
+            <b>FixedMathSharp.Vector3d</b> Min<br/>
+            <b>FixedMathSharp.Vector3d</b> Max<br/>
+            <b>byte</b> Version<br/>
+            </code>
+            </remarks>
         </member>
-        <member name="F:FixedMathSharp.BoundingBox._min">
+        <member name="P:FixedMathSharp.BoundingBox.Min">
             <summary>
             The minimum corner of the bounding box.
             </summary>
         </member>
-        <member name="F:FixedMathSharp.BoundingBox._max">
+        <member name="P:FixedMathSharp.BoundingBox.Max">
             <summary>
             The maximum corner of the bounding box.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.BoundingBox.Version">
+            <summary>
+            Serialization/compatibility version of this <see cref="T:FixedMathSharp.BoundingBox"/> instance.
             </summary>
         </member>
         <member name="F:FixedMathSharp.BoundingBox._vertices">
@@ -129,12 +149,6 @@
             <summary>
             The range (half-size) of the bounding box in all directions. Always half of the total size.
             </summary>
-        </member>
-        <member name="P:FixedMathSharp.BoundingBox.Min">
-            <inheritdoc cref="F:FixedMathSharp.BoundingBox._min" />
-        </member>
-        <member name="P:FixedMathSharp.BoundingBox.Max">
-            <inheritdoc cref="F:FixedMathSharp.BoundingBox._max" />
         </member>
         <member name="P:FixedMathSharp.BoundingBox.Vertices">
             <inheritdoc cref="F:FixedMathSharp.BoundingBox._vertices" />
@@ -257,6 +271,13 @@
             - Ideal for broad-phase collision detection, proximity checks, and culling in physics engines and rendering pipelines.
             - Useful when fast, rotationally invariant checks are needed, such as detecting overlaps or distances between moving objects.
             - Suitable for encapsulating objects with roughly spherical shapes or objects that rotate frequently, where the bounding box may need constant updates.
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector3d</b> Center<br/>
+            <b>FixedMathSharp.Fixed64</b> Radius<br/>
+            </code>
             </remarks>
         </member>
         <member name="F:FixedMathSharp.BoundingSphere.Center">
@@ -951,6 +972,20 @@
             - Used in physics engines for inertia tensors or to represent local orientations.
             - Useful when optimizing transformations, as it omits the overhead of translation and perspective.
             </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Fixed64</b> m00<br/>
+            <b>FixedMathSharp.Fixed64</b> m01<br/>
+            <b>FixedMathSharp.Fixed64</b> m02<br/>
+            <b>FixedMathSharp.Fixed64</b> m10<br/>
+            <b>FixedMathSharp.Fixed64</b> m11<br/>
+            <b>FixedMathSharp.Fixed64</b> m12<br/>
+            <b>FixedMathSharp.Fixed64</b> m20<br/>
+            <b>FixedMathSharp.Fixed64</b> m21<br/>
+            <b>FixedMathSharp.Fixed64</b> m22<br/>
+            </code>
+            </remarks>
         </member>
         <member name="F:FixedMathSharp.Fixed3x3.Identity">
             <summary>
@@ -1152,6 +1187,27 @@
             - Combining multiple transformations (e.g., model-view-projection matrices).
             - Applying translations, which require an extra dimension for homogeneous coordinates.
             - Useful in animation, physics engines, and 3D rendering for full transformation control.
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Fixed64</b> m00<br/>
+            <b>FixedMathSharp.Fixed64</b> m01<br/>
+            <b>FixedMathSharp.Fixed64</b> m02<br/>
+            <b>FixedMathSharp.Fixed64</b> m03<br/>
+            <b>FixedMathSharp.Fixed64</b> m10<br/>
+            <b>FixedMathSharp.Fixed64</b> m11<br/>
+            <b>FixedMathSharp.Fixed64</b> m12<br/>
+            <b>FixedMathSharp.Fixed64</b> m13<br/>
+            <b>FixedMathSharp.Fixed64</b> m20<br/>
+            <b>FixedMathSharp.Fixed64</b> m21<br/>
+            <b>FixedMathSharp.Fixed64</b> m22<br/>
+            <b>FixedMathSharp.Fixed64</b> m23<br/>
+            <b>FixedMathSharp.Fixed64</b> m30<br/>
+            <b>FixedMathSharp.Fixed64</b> m31<br/>
+            <b>FixedMathSharp.Fixed64</b> m32<br/>
+            <b>FixedMathSharp.Fixed64</b> m33<br/>
+            </code>
             </remarks>
         </member>
         <member name="F:FixedMathSharp.Fixed4x4.Identity">
@@ -1428,6 +1484,12 @@
             are used for the fractional part and (64 - SHIFT_AMOUNT) bits for the integer part.
             The precision is determined by SHIFT_AMOUNT, which defines the resolution of fractional values.
             </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>long</b> m_rawValue<br/>
+            </code>
+            </remarks>
         </member>
         <member name="F:FixedMathSharp.Fixed64.m_rawValue">
             <summary>
@@ -1748,6 +1810,13 @@
             A deterministic fixed-point curve that interpolates values between keyframes.
             Used for animations, physics calculations, and procedural data.
             </summary>
+            <remarks>
+            MemoryPack GenerateType: Object<br/>
+            <code>
+            <b>FixedMathSharp.FixedCurveMode</b> Mode<br/>
+            <b>FixedMathSharp.FixedCurveKey[]</b> Keyframes<br/>
+            </code>
+            </remarks>
         </member>
         <member name="M:FixedMathSharp.FixedCurve.#ctor(FixedMathSharp.FixedCurveKey[])">
             <summary>
@@ -1773,6 +1842,15 @@
             <summary>
             Represents a keyframe in a <see cref="T:FixedMathSharp.FixedCurve"/>, defining a value at a specific time.
             </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Fixed64</b> Time<br/>
+            <b>FixedMathSharp.Fixed64</b> Value<br/>
+            <b>FixedMathSharp.Fixed64</b> InTangent<br/>
+            <b>FixedMathSharp.Fixed64</b> OutTangent<br/>
+            </code>
+            </remarks>
         </member>
         <member name="F:FixedMathSharp.FixedCurveKey.Time">
             <summary>The time at which this keyframe occurs.</summary>
@@ -1811,6 +1889,15 @@
             Represents a quaternion (x, y, z, w) with fixed-point numbers.
             Quaternions are useful for representing rotations and can be used to perform smooth rotations and avoid gimbal lock.
             </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Fixed64</b> x<br/>
+            <b>FixedMathSharp.Fixed64</b> y<br/>
+            <b>FixedMathSharp.Fixed64</b> z<br/>
+            <b>FixedMathSharp.Fixed64</b> w<br/>
+            </code>
+            </remarks>
         </member>
         <member name="F:FixedMathSharp.FixedQuaternion.Identity">
             <summary>
@@ -2036,6 +2123,13 @@
             <summary>
             Represents a range of values with fixed precision.
             </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Fixed64</b> Min<br/>
+            <b>FixedMathSharp.Fixed64</b> Max<br/>
+            </code>
+            </remarks>
         </member>
         <member name="F:FixedMathSharp.FixedRange.MinRange">
             <summary>
@@ -2163,6 +2257,13 @@
             - Performing vector transformations, including rotations and reflections.
             - Handling interpolation and distance calculations in physics or simulation systems.
             - Useful for fixed-point math scenarios where floating-point precision is insufficient or not desired.
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Fixed64</b> x<br/>
+            <b>FixedMathSharp.Fixed64</b> y<br/>
+            </code>
             </remarks>
         </member>
         <member name="F:FixedMathSharp.Vector2d.x">
@@ -2588,6 +2689,14 @@
             - Performing vector transformations, including rotations using quaternions.
             - Calculating distances, angles, projections, and interpolation between vectors.
             - Essential for fixed-point math scenarios where floating-point precision isn't suitable.
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Fixed64</b> x<br/>
+            <b>FixedMathSharp.Fixed64</b> y<br/>
+            <b>FixedMathSharp.Fixed64</b> z<br/>
+            </code>
             </remarks>
         </member>
         <member name="F:FixedMathSharp.Vector3d.x">
@@ -3143,33 +3252,6 @@
             <summary>
             Random Fixed64 in [minInclusive, maxExclusive).
             </summary>
-        </member>
-        <member name="T:FixedMathSharp.Utility.ThreadLocalRandom">
-            <summary>
-            Deterministic per-thread RNG facade.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.Initialize(System.UInt64,System.Func{System.Int32})">
-            <summary>
-            Initialize global deterministic seeding. 
-            Provide a stable threadIndex (0..T-1) for each thread.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Utility.ThreadLocalRandom.NewRandom(System.UInt64)">
-            <summary>
-            Create a new independent RNG from a specific seed (does not affect thread Instance).
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Utility.ThreadLocalRandom.Instance">
-            <summary>
-            Per-thread RNG instance (requires Initialize to be called first).
-            </summary>
-        </member>
-        <member name="T:MessagePack.GeneratedMessagePackResolver">
-            <summary>A MessagePack resolver that uses generated formatters for types in this assembly.</summary>
-        </member>
-        <member name="F:MessagePack.GeneratedMessagePackResolver.Instance">
-            <summary>An instance of this resolver that only returns formatters specifically generated for types in this assembly.</summary>
         </member>
     </members>
 </doc>

@@ -1,7 +1,9 @@
 {
     "name": "FixedMathSharp.Runtime",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+		"MessagePack"
+	],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

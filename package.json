@@ -1,6 +1,6 @@
 {
   "name": "com.mrdav30.fixedmathsharp",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "displayName": "FixedMathSharp",
   "description": "A high-precision, deterministic fixed-point math library for Unity and .NET.",
   "unity": "2022.3",
@@ -18,7 +18,7 @@
     "lockstep"
   ],
   "dependencies": {
-	"com.github.messagepack-csharp": "https://github.com/MessagePack-CSharp/MessagePack-CSharp.git?path=src/MessagePack.UnityClient/Assets/Scripts/MessagePack#v3.1.4",
+    "com.cysharp.memorypack": "https://github.com/Cysharp/MemoryPack.git?path=src/MemoryPack.Unity/Assets/MemoryPack.Unity"
   },
   "repository": {
     "type": "git",
