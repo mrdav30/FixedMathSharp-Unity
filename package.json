@@ -1,6 +1,6 @@
 {
   "name": "com.mrdav30.fixedmathsharp",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "displayName": "FixedMathSharp",
   "description": "A high-precision, deterministic fixed-point math library for Unity and .NET.",
   "unity": "2022.3",
@@ -17,9 +17,6 @@
     "game-development",
     "lockstep"
   ],
-  "dependencies": {
-    "com.cysharp.memorypack": "https://github.com/Cysharp/MemoryPack.git?path=src/MemoryPack.Unity/Assets/MemoryPack.Unity"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/mrdav30/FixedMathSharp-Unity.git"

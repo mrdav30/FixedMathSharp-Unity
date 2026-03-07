@@ -104,26 +104,16 @@
             <remarks>
             MemoryPack GenerateType: Object<br/>
             <code>
-            <b>FixedMathSharp.Vector3d</b> Min<br/>
-            <b>FixedMathSharp.Vector3d</b> Max<br/>
-            <b>byte</b> Version<br/>
+            <b>FixedMathSharp.BoundingBox.BoundingBoxState</b> State<br/>
             </code>
             </remarks>
-        </member>
-        <member name="P:FixedMathSharp.BoundingBox.Min">
-            <summary>
-            The minimum corner of the bounding box.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.BoundingBox.Max">
-            <summary>
-            The maximum corner of the bounding box.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.BoundingBox.Version">
-            <summary>
-            Serialization/compatibility version of this <see cref="T:FixedMathSharp.BoundingBox"/> instance.
-            </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector3d</b> Min<br/>
+            <b>FixedMathSharp.Vector3d</b> Max<br/>
+            </code>
+            </remarks>
         </member>
         <member name="F:FixedMathSharp.BoundingBox._vertices">
             <summary>
@@ -133,6 +123,16 @@
         <member name="M:FixedMathSharp.BoundingBox.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <summary>
             Initializes a new instance of the BoundingBox struct with the specified center and size.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.BoundingBox.Min">
+            <summary>
+            The minimum corner of the bounding box.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.BoundingBox.Max">
+            <summary>
+            The maximum corner of the bounding box.
             </summary>
         </member>
         <member name="P:FixedMathSharp.BoundingBox.Center">
@@ -1491,16 +1491,16 @@
             </code>
             </remarks>
         </member>
-        <member name="F:FixedMathSharp.Fixed64.m_rawValue">
-            <summary>
-            The underlying raw long value representing the fixed-point number.
-            </summary>
-        </member>
         <member name="F:FixedMathSharp.Fixed64.Epsilon">
             <inheritdoc cref="F:FixedMathSharp.FixedMath.EPSILON_L" />
         </member>
         <member name="F:FixedMathSharp.Fixed64.Precision">
             <inheritdoc cref="F:FixedMathSharp.FixedMath.PRECISION_L" />
+        </member>
+        <member name="F:FixedMathSharp.Fixed64.m_rawValue">
+            <summary>
+            The underlying raw long value representing the fixed-point number.
+            </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.#ctor(System.Int64)">
             <summary>
@@ -2266,16 +2266,6 @@
             </code>
             </remarks>
         </member>
-        <member name="F:FixedMathSharp.Vector2d.x">
-            <summary>
-            The X component of the vector.
-            </summary>
-        </member>
-        <member name="F:FixedMathSharp.Vector2d.y">
-            <summary>
-            The Y component of the vector.
-            </summary>
-        </member>
         <member name="F:FixedMathSharp.Vector2d.DefaultRotation">
             <summary>
             (1, 0)
@@ -2314,6 +2304,16 @@
         <member name="F:FixedMathSharp.Vector2d.Zero">
             <summary>
             (0, 0)
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Vector2d.x">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Vector2d.y">
+            <summary>
+            The Y component of the vector.
             </summary>
         </member>
         <member name="P:FixedMathSharp.Vector2d.RotatedRight">
@@ -2699,21 +2699,6 @@
             </code>
             </remarks>
         </member>
-        <member name="F:FixedMathSharp.Vector3d.x">
-            <summary>
-            The X component of the vector.
-            </summary>
-        </member>
-        <member name="F:FixedMathSharp.Vector3d.y">
-            <summary>
-            The Y component of the vector.
-            </summary>
-        </member>
-        <member name="F:FixedMathSharp.Vector3d.z">
-            <summary>
-            The Z component of the vector.
-            </summary>
-        </member>
         <member name="F:FixedMathSharp.Vector3d.Up">
             <summary>
             The upward direction vector (0, 1, 0).
@@ -2757,6 +2742,21 @@
         <member name="F:FixedMathSharp.Vector3d.Zero">
             <summary>
             (0, 0, 0)
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Vector3d.x">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Vector3d.y">
+            <summary>
+            The Y component of the vector.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Vector3d.z">
+            <summary>
+            The Z component of the vector.
             </summary>
         </member>
         <member name="P:FixedMathSharp.Vector3d.RightHandNormal">
