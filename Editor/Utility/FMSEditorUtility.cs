@@ -7,6 +7,9 @@ namespace FixedMathSharp.Editor
 {
     public static class FMSEditorUtility
     {
+        private const float MatrixRowLabelWidth = 24f;
+        private const float MatrixCellSpacing = 2f;
+
         #region EditorGUI
 
         public static void DoubleField(Rect position, GUIContent label, ref Fixed64 value, double scale = 1d)
@@ -62,6 +65,29 @@ namespace FixedMathSharp.Editor
             }
 
             EditorGUIUtility.labelWidth = labelWidth;
+        }
+
+        public static Fixed64 GetFixed64Value(SerializedProperty property)
+        {
+            SerializedProperty rawValue = property?.FindPropertyRelative("m_rawValue");
+            return rawValue == null ? Fixed64.Zero : Fixed64.FromRaw(rawValue.longValue);
+        }
+
+        public static void DrawReadOnlyMatrixRow(Rect position, string rowLabel, params Fixed64[] values)
+        {
+            Rect rowLabelRect = new Rect(position.x, position.y, MatrixRowLabelWidth, position.height);
+            EditorGUI.LabelField(rowLabelRect, rowLabel);
+
+            float totalSpacing = MatrixCellSpacing * (values.Length - 1);
+            float cellWidth = (position.width - MatrixRowLabelWidth - totalSpacing) / values.Length;
+            Rect cellRect = new Rect(rowLabelRect.xMax, position.y, cellWidth, position.height);
+
+            using var disabled = new EditorGUI.DisabledScope(true);
+            for (int i = 0; i < values.Length; i++)
+            {
+                EditorGUI.TextField(cellRect, values[i].ToFormattedDouble(3).ToString("0.###"));
+                cellRect.x += cellWidth + MatrixCellSpacing;
+            }
         }
 
         #endregion
