@@ -10,6 +10,35 @@ namespace FixedMathSharp
     public static class Fixed3x3UnityExtensions
     {
         /// <summary>
+        /// Converts a FixedMathSharp Fixed3x3 into a Unity Matrix4x4 by copying it into the upper-left 3x3 region.
+        /// </summary>
+        /// <remarks>
+        /// Translation is set to zero and the homogeneous bottom-right element is set to one. The upper-left 3x3 is
+        /// preserved as-is, so this works for both rotation-only and rotation-scale matrices.
+        /// </remarks>
+        /// <param name="matrix">The Fixed3x3 to convert.</param>
+        /// <returns>A Unity Matrix4x4 containing the Fixed3x3 in its upper-left region.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Matrix4x4 ToMatrix4x4(this Fixed3x3 matrix)
+        {
+            Matrix4x4 unityMatrix = Matrix4x4.identity;
+
+            unityMatrix.m00 = (float)matrix.m00;
+            unityMatrix.m01 = (float)matrix.m01;
+            unityMatrix.m02 = (float)matrix.m02;
+
+            unityMatrix.m10 = (float)matrix.m10;
+            unityMatrix.m11 = (float)matrix.m11;
+            unityMatrix.m12 = (float)matrix.m12;
+
+            unityMatrix.m20 = (float)matrix.m20;
+            unityMatrix.m21 = (float)matrix.m21;
+            unityMatrix.m22 = (float)matrix.m22;
+
+            return unityMatrix;
+        }
+
+        /// <summary>
         /// Creates a Unity Transform from a local-space Fixed3x3 rotation matrix.
         /// </summary>
         /// <param name="matrix">The local-space rotation matrix to apply.</param>
