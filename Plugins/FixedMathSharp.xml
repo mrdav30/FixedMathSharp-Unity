@@ -711,6 +711,9 @@
         <member name="M:FixedMathSharp.Fixed4x4Extensions.SetRotation(FixedMathSharp.Fixed4x4@,FixedMathSharp.FixedQuaternion)">
             <inheritdoc cref="M:FixedMathSharp.Fixed4x4.SetRotation(FixedMathSharp.Fixed4x4,FixedMathSharp.FixedQuaternion)" />
         </member>
+        <member name="M:FixedMathSharp.Fixed4x4Extensions.NormalizeRotationMatrix(FixedMathSharp.Fixed4x4@)">
+            <inheritdoc cref="M:FixedMathSharp.Fixed4x4.NormalizeRotationMatrix(FixedMathSharp.Fixed4x4)" />
+        </member>
         <member name="M:FixedMathSharp.Fixed4x4Extensions.TransformPoint(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)">
             <inheritdoc cref="M:FixedMathSharp.Fixed4x4.TransformPoint(FixedMathSharp.Fixed4x4,FixedMathSharp.Vector3d)" />
         </member>
@@ -2676,6 +2679,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:FixedMathSharp.Vector2d.AllComponentsGreaterThanEpsilon">
+            <summary>
+            Checks whether all components are strictly greater than <see cref="F:FixedMathSharp.Fixed64.Epsilon"/>.
+            </summary>
+        </member>
         <member name="T:FixedMathSharp.Vector3d">
             <summary>
             Represents a 3D vector with fixed-point precision, supporting a wide range of vector operations such as rotation, scaling, interpolation, and projection.
@@ -2896,6 +2904,11 @@
         <member name="M:FixedMathSharp.Vector3d.IsNormalized">
             <summary>
             Checks if this vector has been normalized by checking if the magnitude is close to 1.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.AllComponentsGreaterThanEpsilon">
+            <summary>
+            Checks whether all components are strictly greater than <see cref="F:FixedMathSharp.Fixed64.Epsilon"/>.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Vector3d.Distance(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
