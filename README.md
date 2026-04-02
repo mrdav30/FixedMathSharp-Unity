@@ -1,7 +1,4 @@
-
 # FixedMathSharp-Unity
-
-==============
 
 ![FixedMathSharp Icon](https://raw.githubusercontent.com/mrdav30/fixedmathsharp/main/icon.png)
 
@@ -18,6 +15,9 @@ This package is a Unity-specific implementation of the [FixedMathSharp](https://
 - **Math & Trigonometry** – Optimized `FixedMath` and `FixedTrigonometry` utilities.
 - **Vector & Matrix Support** – Includes `Vector2d`, `Vector3d`, `FixedQuaternion`, and `Fixed4x4`.
 - **Bounding Volume Utilities** – Use `BoundingBox`, `BoundingSphere`, and `BoundingArea` for collision checks.
+- **Unity Conversion Helpers** – Convert between Unity `Transform`, `Matrix4x4`, `Bounds`, and FixedMathSharp matrix and bounds types.
+- **Round-Trip Transform Interop** – Capture Unity transform data into `Fixed4x4`/`Fixed3x3`, then apply it back onto preview transforms for validation or tooling.
+- **Editor Debugging Support** – Includes inspector support for viewing `Fixed3x3` and `Fixed4x4` data more easily in Unity.
 - **Unity Integration** – Compatible with **Unity’s Job System** & **Burst Compiler**.
 - **Full Serialization Support:** Out-of-the-box round-trip serialization via `MemoryPack` across all serializable structs.
 
@@ -96,6 +96,108 @@ Fixed64 sinValue = FixedTrigonometry.Sin(angle);
 Console.WriteLine(sinValue); // Output: ~0.707
 ```
 
+### Unity Transform Interop
+
+```csharp
+Transform source = transform;
+
+Fixed4x4 worldMatrix = source.ToFixed4x4WorldMatrix();
+Fixed3x3 worldRotation = source.ToFixed3x3WorldRotationMatrix();
+Fixed3x3 worldRotationScale = source.ToFixed3x3WorldRotationScaleMatrix();
+```
+
+```csharp
+worldMatrix.ApplyToTransformWorld(targetTransform);
+worldRotation.ApplyRotationToTransformWorld(rotationOnlyTarget);
+worldRotationScale.ApplyRotationScaleToTransformWorld(rotationScaleTarget);
+```
+
+### Unity Matrix Interop
+
+```csharp
+Matrix4x4 unityMatrix = transform.localToWorldMatrix;
+
+Fixed4x4 fixedMatrix = unityMatrix.ToFixed4x4();
+Fixed3x3 fixedRotation = unityMatrix.ToFixed3x3RotationMatrix();
+Fixed3x3 fixedRotationScale = unityMatrix.ToFixed3x3RotationScaleMatrix();
+
+Matrix4x4 roundTripMatrix = fixedMatrix.ToMatrix4x4();
+```
+
+### Unity Bounds Interop
+
+```csharp
+Bounds unityBounds = renderer.bounds;
+
+BoundingBox fixedBoundingBox = unityBounds.ToBoundingBox();
+BoundingArea fixedBoundingArea = unityBounds.ToBoundingArea();
+
+Bounds boxRoundTrip = fixedBoundingBox.ToBounds();
+Bounds areaRoundTrip = fixedBoundingArea.ToBounds();
+```
+
+---
+
+## 🎬 Example Scene
+
+The package includes a ready-to-use demo scene and demo components under `Examples/`:
+
+- `Examples/DemoScene.unity`
+- `Examples/FixedTransformInteropDemo.cs`
+- `Examples/FixedBoundsInteropDemo.cs`
+
+`DemoScene.unity` is intended to visually validate the new Unity interop helpers:
+
+- `Transform -> Fixed4x4`
+- `Transform -> Fixed3x3`
+- `Fixed4x4/Fixed3x3 -> Transform`
+- `Bounds <-> BoundingBox`
+- `Bounds <-> BoundingArea`
+
+The transform demo captures local and world matrix data from a source `Transform`, exposes the fixed values in the inspector, and applies round-tripped results onto preview targets. The bounds demo captures Unity `Bounds`, converts them into FixedMathSharp bounds types, and draws round-tripped gizmos for quick visual comparison.
+
+---
+
+## 🔄 Unity Interop Overview
+
+The current Unity-facing helpers include:
+
+- `Transform` to `Fixed4x4`
+  - `ToFixed4x4LocalMatrix()`
+  - `ToFixed4x4WorldMatrix()`
+- `Transform` to `Fixed3x3`
+  - `ToFixed3x3LocalRotationMatrix()`
+  - `ToFixed3x3WorldRotationMatrix()`
+  - `ToFixed3x3LocalRotationScaleMatrix()`
+  - `ToFixed3x3WorldRotationScaleMatrix()`
+- `Fixed4x4` to Unity
+  - `ToMatrix4x4()`
+  - `ApplyToTransformLocal()`
+  - `ApplyToTransformWorld()`
+  - `ToTransformLocal()`
+  - `ToTransformWorld()`
+- `Fixed3x3` to Unity
+  - `ToMatrix4x4()`
+  - `ApplyRotationToTransformLocal()`
+  - `ApplyRotationToTransformWorld()`
+  - `ApplyRotationScaleToTransformLocal()`
+  - `ApplyRotationScaleToTransformWorld()`
+  - `ToTransformRotationLocal()`
+  - `ToTransformRotationWorld()`
+  - `ToTransformRotationScaleLocal()`
+  - `ToTransformRotationScaleWorld()`
+- `Matrix4x4` to FixedMathSharp
+  - `ToFixed4x4()`
+  - `ToFixed3x3RotationMatrix()`
+  - `ToFixed3x3RotationScaleMatrix()`
+- `Bounds` interop
+  - `ToBoundingBox()`
+  - `ToBoundingArea()`
+  - `BoundingBox.ToBounds()`
+  - `BoundingArea.ToBounds()`
+
+These helpers are designed to preserve FixedMathSharp’s deterministic math model while still fitting naturally into Unity workflows, editor tooling, and visual debugging.
+
 ---
 
 ## 🛠️ Compatibility
@@ -108,8 +210,13 @@ Console.WriteLine(sinValue); // Output: ~0.707
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the `LICENSE` file
-for details.
+This project is licensed under the MIT License.
+
+See the following files for details:
+
+- LICENSE – standard MIT license
+- NOTICE – additional terms regarding project branding and redistribution
+- COPYRIGHT – authorship information
 
 ---
 
