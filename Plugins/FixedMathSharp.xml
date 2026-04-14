@@ -364,27 +364,16 @@
             Fixed-point numbers are represented as <see cref="T:FixedMathSharp.Fixed64"/>.
             </summary>
         </member>
-        <member name="F:FixedMathSharp.FixedMath.PRECISION_L">
+        <member name="F:FixedMathSharp.FixedMath.MIN_INCREMENT_L">
             <summary>
-            Represents the smallest possible value that can be represented by the Fixed64 format.
+            The smallest non-zero raw increment representable by Fixed64.
             </summary>
-            <remarks>
-            Precision of this type is 2^-SHIFT_AMOUNT, 
-            i.e. 1 / (2^SHIFT_AMOUNT) where SHIFT_AMOUNT defines the fractional bits.
-            </remarks>
         </member>
-        <member name="F:FixedMathSharp.FixedMath.EPSILON_L">
+        <member name="F:FixedMathSharp.FixedMath.DEFAULT_TOLERANCE_L">
             <summary>
-             The smallest value that a Fixed64 can have different from zero.
+            Default tolerance for fuzzy comparisons.
+            Approximately 2^-24 (~5.96e-8) in value space.
             </summary>
-            <remarks>
-            With the following rules:
-                 anyValue + Epsilon = anyValue
-                 anyValue - Epsilon = anyValue
-                 0 + Epsilon = Epsilon
-                 0 - Epsilon = -Epsilon
-             A value Between any number and Epsilon will result in an arbitrary number due to truncating errors.
-            </remarks>
         </member>
         <member name="M:FixedMathSharp.FixedMath.CopySign(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
@@ -539,6 +528,16 @@
             as this is a known edge case for overflow.
             </remarks>
         </member>
+        <member name="F:FixedMathSharp.FixedMath.Deg2Rad">
+            <summary>
+            Degrees to radians conversion factor (π / 180)
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.FixedMath.Rad2Deg">
+            <summary>
+            Radians to degrees conversion factor (180 / π)
+            </summary>
+        </member>
         <member name="M:FixedMathSharp.FixedMath.Pow(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Raises the base number b to the power of exp.
@@ -582,17 +581,11 @@
             <summary>
             Converts a value in radians to degrees.
             </summary>
-            <remarks>
-            Uses double precision to avoid precision loss
-            </remarks>
         </member>
         <member name="M:FixedMathSharp.FixedMath.DegToRad(FixedMathSharp.Fixed64)">
             <summary>
             Converts a value in degrees to radians.
             </summary>
-            <remarks>
-            Uses double precision to avoid precision loss
-            </remarks>
         </member>
         <member name="M:FixedMathSharp.FixedMath.Sin(FixedMathSharp.Fixed64)">
             <summary>
@@ -1494,11 +1487,11 @@
             </code>
             </remarks>
         </member>
-        <member name="F:FixedMathSharp.Fixed64.Epsilon">
-            <inheritdoc cref="F:FixedMathSharp.FixedMath.EPSILON_L" />
+        <member name="F:FixedMathSharp.Fixed64.MinIncrement">
+            <inheritdoc cref="F:FixedMathSharp.FixedMath.MIN_INCREMENT_L" />
         </member>
-        <member name="F:FixedMathSharp.Fixed64.Precision">
-            <inheritdoc cref="F:FixedMathSharp.FixedMath.PRECISION_L" />
+        <member name="F:FixedMathSharp.Fixed64.Epsilon">
+            <inheritdoc cref="F:FixedMathSharp.FixedMath.DEFAULT_TOLERANCE_L" />
         </member>
         <member name="F:FixedMathSharp.Fixed64.m_rawValue">
             <summary>
@@ -1521,6 +1514,10 @@
             <summary>
             Constructs a Fixed64 from a double-precision floating-point value.
             </summary>
+            <remarks>
+            The value is multiplied by the scaling factor (2^SHIFT_AMOUNT) and 
+            rounded to the nearest integer to fit into the fixed-point representation.
+            </remarks>
             <param name="value">Double value to convert to </param>
         </member>
         <member name="M:FixedMathSharp.Fixed64.Offset(System.Int32)">
@@ -1585,16 +1582,6 @@
             Adds an Fixed64 to x 
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64.op_Addition(FixedMathSharp.Fixed64,System.Single)">
-            <summary>
-            Adds a float to x 
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64.op_Addition(System.Single,FixedMathSharp.Fixed64)">
-            <summary>
-            Adds a Fixed64 to x 
-            </summary>
-        </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Subtracts one Fixed64 number from another, with saturating behavior in case of overflow.
@@ -1610,20 +1597,41 @@
             Subtracts a Fixed64 from x 
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,System.Single)">
-            <summary>
-            Subtracts a float from x 
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Fixed64.op_Subtraction(System.Single,FixedMathSharp.Fixed64)">
-            <summary>
-            Subtracts a Fixed64 from x 
-            </summary>
-        </member>
         <member name="M:FixedMathSharp.Fixed64.op_Multiply(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Multiplies two Fixed64 numbers, handling overflow and rounding.
             </summary>
+            <summary>
+            Multiplies two Fixed64 numbers using full-width 128-bit intermediate precision
+            and round-half-to-even semantics on the discarded fractional bits.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.AbsToUInt64(System.Int64)">
+            <summary>
+            Returns the absolute value of a signed 64-bit integer as an unsigned 64-bit magnitude,
+            safely handling long.MinValue.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.Multiply64To128(System.UInt64,System.UInt64,System.UInt64@,System.UInt64@)">
+            <summary>
+            Computes the exact unsigned 128-bit product of two 64-bit unsigned integers.
+            The result is returned as hi:lo, where product = (hi &lt;&lt; 64) | lo.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.ShiftRightRoundedToEven(System.UInt64,System.UInt64,System.Int32,System.Boolean@)">
+            <summary>
+            Shifts the unsigned 128-bit value (hi:lo) right by <paramref name="shift"/> bits,
+            applying round-half-to-even to the discarded bits.
+            </summary>
+            <param name="hi">Upper 64 bits of the 128-bit value.</param>
+            <param name="lo">Lower 64 bits of the 128-bit value.</param>
+            <param name="shift">Number of bits to shift right. Must be in the range 1..63.</param>
+            <param name="overflowed">
+            True if rounding caused the 64-bit shifted result to overflow.
+            </param>
+            <returns>
+            The rounded 64-bit result of ((hi:lo) >> shift).
+            </returns>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Multiply(FixedMathSharp.Fixed64,System.Int32)">
             <summary>
@@ -1632,7 +1640,7 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Multiply(System.Int32,FixedMathSharp.Fixed64)">
             <summary>
-            Multiplies an integer by a 
+            Multiplies an integer by a Fixed64.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Division(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
@@ -1643,6 +1651,11 @@
         <member name="M:FixedMathSharp.Fixed64.op_Division(FixedMathSharp.Fixed64,System.Int32)">
             <summary>
             Divides a Fixed64 by an integer.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Fixed64.op_Division(System.Int32,FixedMathSharp.Fixed64)">
+            <summary>
+            Divides an integer by a Fixed64
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Modulus(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
@@ -2024,10 +2037,11 @@
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.FromEulerAngles(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
-            Converts Euler angles (pitch, yaw, roll) to a quaternion and normalizes the result afterwards. Assumes the input angles are in radians.
+            Converts Euler angles (pitch, yaw, roll) to a quaternion and normalizes the result afterwards. 
+            Assumes the input angles are in radians.
             </summary>
             <remarks>
-            The order of operations is YZX or yaw-roll-pitch, commonly used in applications such as robotics.
+            The order of operations is YXZ or yaw-pitch-roll
             </remarks>
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.QuaternionLog(FixedMathSharp.FixedQuaternion)">
@@ -2096,14 +2110,15 @@
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.ToEulerAngles">
             <summary>
-            Converts this FixedQuaternion to Euler angles (pitch, yaw, roll).
+            Converts this quaternion to Euler angles in degrees.
+            Returns angles as (pitch, yaw, roll), where:
+            pitch = rotation around X
+            yaw   = rotation around Y
+            roll  = rotation around Z
+            
+            The extraction matches FromEulerAngles(), which composes rotations in YXZ order:
+            q = qy * qx * qz
             </summary>
-            <remarks>
-            Handles the case where the pitch angle (asin of sinp) would be out of the range -π/2 to π/2. 
-            This is known as the gimbal lock situation, where the pitch angle reaches ±90 degrees and we lose one degree of freedom in our rotation (we can't distinguish between yaw and roll). 
-            In this case, we simply set the pitch to ±90 degrees depending on the sign of sinp.
-            </remarks>
-            <returns>A Vector3d representing the Euler angles (in degrees) equivalent to this FixedQuaternion in YZX order (yaw, pitch, roll).</returns>
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.ToDirection">
             <summary>
@@ -2910,6 +2925,20 @@
             <summary>
             Checks whether all components are strictly greater than <see cref="F:FixedMathSharp.Fixed64.Epsilon"/>.
             </summary>
+        </member>
+        <member name="M:FixedMathSharp.Vector3d.SnapSmallComponentsToZero(System.Nullable{FixedMathSharp.Fixed64})">
+            <summary>
+            Returns a new vector with components whose absolute values are less than the specified threshold set to zero.
+            </summary>
+            <remarks>
+            This method is useful for eliminating insignificant floating-point errors by zeroing out very small vector components. 
+            The default threshold is suitable for most cases where near-zero values are considered noise.
+            </remarks>
+            <param name="threshold">
+            The minimum absolute value a component must have to be retained. 
+            If null, a default epsilon value is used.
+            </param>
+            <returns>A new Vector3d instance with small components snapped to zero based on the specified threshold.</returns>
         </member>
         <member name="M:FixedMathSharp.Vector3d.Distance(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>

@@ -1,6 +1,6 @@
 {
   "name": "com.mrdav30.fixedmathsharp",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "displayName": "FixedMathSharp",
   "description": "A high-precision, deterministic fixed-point math library for Unity and .NET.",
   "unity": "2022.3",
