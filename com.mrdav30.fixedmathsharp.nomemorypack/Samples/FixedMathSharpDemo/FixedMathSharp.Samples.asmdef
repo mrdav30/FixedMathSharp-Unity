@@ -1,0 +1,16 @@
+{
+    "name": "FixedMathSharp.NoMemoryPack.Samples",
+    "rootNamespace": "FixedMathSharp.NoMemoryPack.Samples",
+    "references": [
+        "FixedMathSharp.NoMemoryPack.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

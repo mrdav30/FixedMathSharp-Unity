@@ -1,0 +1,31 @@
+{
+  "name": "com.mrdav30.fixedmathsharp.nomemorypack",
+  "version": "3.0.1",
+  "displayName": "FixedMathSharp",
+  "description": "A high-precision, deterministic fixed-point math library for Unity and .NET without MemoryPack dependency which can cause issues with Unity Burst AOT compilation. This package provides the core fixed-point math functionality while allowing developers to choose their own serialization solution.",
+  "unity": "2022.3",
+  "author": {
+    "name": "David Oravsky",
+    "email": "david.oravsky@gmail.com",
+    "url": "https://github.com/mrdav30"
+  },
+  "keywords": [
+    "math",
+    "fixed-point",
+    "deterministic",
+    "physics",
+    "game-development",
+    "lockstep"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrdav30/FixedMathSharp-Unity.git"
+  },
+  "samples": [
+    {
+      "displayName": "Demo Scene",
+      "description": "A sample scene demonstrating package usage",
+      "path": "Samples/FixedMathSharpDemo/Scenes/DemoScene"
+    }
+  ]
+}
