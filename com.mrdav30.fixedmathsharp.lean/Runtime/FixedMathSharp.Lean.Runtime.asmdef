@@ -1,12 +1,8 @@
 {
-    "name": "FixedMathSharp.NoMemoryPack.Editor",
+    "name": "FixedMathSharp.Lean.Runtime",
     "rootNamespace": "",
-    "references": [
-        "FixedMathSharp.NoMemoryPack.Runtime"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "references": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

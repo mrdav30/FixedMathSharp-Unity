@@ -1,16 +1,16 @@
-# FixedMathSharp for Unity (NoMemoryPack)
+# FixedMathSharp for Unity (Lean Variant)
 
 Unity package for FixedMathSharp without the `MemoryPack` dependency.
 
 This is the recommended variant for Unity Burst AOT scenarios. `MemoryPack`'s Unity
 support is centered on IL2CPP through its .NET source-generator path, so the
-no-MemoryPack build is the safer choice when Burst AOT compatibility is the priority.
+`Lean` build is the safer choice when Burst AOT compatibility is the priority.
 
 ## Install
 
 Add this package from Git URL in Unity Package Manager:
 
-`https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.nomemorypack`
+`https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean`
 
 ## When To Use This Package
 

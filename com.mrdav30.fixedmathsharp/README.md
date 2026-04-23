@@ -4,7 +4,7 @@ Standard Unity package for FixedMathSharp with `MemoryPack` support enabled.
 
 Use this variant when you want the Unity integration plus the built-in `MemoryPack`
 serialization path. If you are targeting Unity Burst AOT and want the safer option,
-use the `NoMemoryPack` package instead.
+use the `Lean` package instead.
 
 ## Install
 
@@ -38,4 +38,4 @@ Add this package from Git URL in Unity Package Manager:
 - Repo overview and variant selection:
   [FixedMathSharp-Unity](https://github.com/mrdav30/FixedMathSharp-Unity)
 - No-MemoryPack variant:
-  `https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.nomemorypack`
+  `https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean`

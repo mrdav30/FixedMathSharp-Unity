@@ -5,7 +5,7 @@ Unity package host for FixedMathSharp.
 This repository contains two installable Unity Package Manager variants:
 
 - `com.mrdav30.fixedmathsharp`
-- `com.mrdav30.fixedmathsharp.nomemorypack`
+- `com.mrdav30.fixedmathsharp.lean`
 
 Both packages provide the same core deterministic fixed-point math library and Unity
 interop helpers. The difference is whether the package includes `MemoryPack`.
@@ -26,13 +26,13 @@ Use it when:
 - You want the built-in `MemoryPack` serialization path.
 - Burst AOT compatibility is not your main concern.
 
-### `com.mrdav30.fixedmathsharp.nomemorypack`
+### `com.mrdav30.fixedmathsharp.lean`
 
 Package without `MemoryPack`.
 
 Install:
 
-`https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.nomemorypack`
+`https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean`
 
 Use it when:
 
@@ -43,7 +43,7 @@ Use it when:
 
 ## Why Two Variants?
 
-If you use Unity Burst AOT, prefer the `NoMemoryPack` build. `MemoryPack`'s Unity
+If you use Unity Burst AOT, prefer the `Lean` build. `MemoryPack`'s Unity
 support is centered on IL2CPP via its .NET source-generator path, so the
 no-MemoryPack variant is the safer choice for Burst AOT scenarios.
 

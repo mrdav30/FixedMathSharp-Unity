@@ -1,15 +1,17 @@
 {
-    "name": "FixedMathSharp.NoMemoryPack.Samples",
-    "rootNamespace": "FixedMathSharp.NoMemoryPack.Samples",
+    "name": "FixedMathSharp.Lean.Editor",
+    "rootNamespace": "",
     "references": [
-        "FixedMathSharp.NoMemoryPack.Runtime"
+        "GUID:ee06434641accdc4bbbc7acbdb9ac78f"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
