@@ -347,7 +347,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 125952668}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f809f4a454daf2d40a67d1c6a472dd25, type: 3}
+  m_Script: {fileID: 11500000, guid: a8f6379cb58ddaa40a1b9d697b0470bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FixedMathSharp.FixedTransformInteropDemo
   sourceTransform: {fileID: 431460628}
@@ -394,27 +394,27 @@ MonoBehaviour:
       m_rawValue: 4294967296
   worldFixed4x4:
     m00:
-      m_rawValue: 2375189808
+      m_rawValue: 2375189536
     m01:
-      m_rawValue: 856966879
+      m_rawValue: 856966781
     m02:
-      m_rawValue: 5460525928
+      m_rawValue: 5460525303
     m03:
       m_rawValue: 0
     m10:
-      m_rawValue: 2323941229
+      m_rawValue: 2323941065
     m11:
-      m_rawValue: 2166570072
+      m_rawValue: 2166569919
     m12:
-      m_rawValue: -1350874187
+      m_rawValue: -1350874091
     m13:
       m_rawValue: 0
     m20:
-      m_rawValue: -4800472043
+      m_rawValue: -4800471272
     m21:
-      m_rawValue: 5876104109
+      m_rawValue: 5876103166
     m22:
-      m_rawValue: 1165895609
+      m_rawValue: 1165895421
     m23:
       m_rawValue: 0
     m30:
@@ -519,17 +519,17 @@ MonoBehaviour:
     e32: 0
     e33: 1
   worldFixedAsUnityMatrix:
-    e00: 0.55301696
-    e01: 0.19952814
-    e02: 1.2713778
+    e00: 0.5530169
+    e01: 0.19952813
+    e02: 1.2713776
     e03: -4.264095
     e10: 0.5410847
     e11: 0.5044439
-    e12: -0.31452492
+    e12: -0.3145249
     e13: 2.3585176
-    e20: -1.117697
-    e21: 1.3681371
-    e22: 0.2714562
+    e20: -1.1176968
+    e21: 1.3681369
+    e22: 0.27145618
     e23: -1.5862104
     e30: 0
     e31: 0
@@ -945,7 +945,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 692448572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9102db4e247f8604b974d19772180f2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 05fd12122e0752247a58841679d3822a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FixedMathSharp.FixedBoundsInteropDemo
   sourceRenderer: {fileID: 789434610}
@@ -953,8 +953,8 @@ MonoBehaviour:
   autoRefresh: 1
   drawGizmos: 1
   sourceBoundsColor: {r: 1, g: 1, b: 1, a: 1}
-  boundingBoxColor: {r: 0.1551745, g: 1, b: 0, a: 1}
-  boundingAreaColor: {r: 0, g: 0.15068674, b: 1, a: 1}
+  boundingBoxColor: {r: 0, g: 1, b: 0, a: 1}
+  boundingAreaColor: {r: 0, g: 1, b: 1, a: 1}
   hasValidBounds: 1
   unityBounds:
     m_Center: {x: 8, y: 1, z: 0}
@@ -1006,7 +1006,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.39223465, y: 0.5198223, z: 0.17994861, w: 0.73726207}
   m_LocalPosition: {x: -4.264095, y: 2.3585176, z: -1.5862104}
-  m_LocalScale: {x: 1.4007286, y: 0.8038422, z: 1.7873819}
+  m_LocalScale: {x: 1.4007285, y: 0.8038421, z: 1.7873816}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 94172704}
@@ -1638,7 +1638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1945902254}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.39223465, y: 0.5198223, z: 0.1799486, w: 0.73726207}
+  m_LocalRotation: {x: 0.39223465, y: 0.51982224, z: 0.17994861, w: 0.73726207}
   m_LocalPosition: {x: -2, y: 1, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

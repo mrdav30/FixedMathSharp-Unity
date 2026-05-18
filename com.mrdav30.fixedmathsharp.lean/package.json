@@ -1,6 +1,6 @@
 {
   "name": "com.mrdav30.fixedmathsharp.lean",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "displayName": "FixedMathSharp.Lean",
   "description": "A high-precision, deterministic fixed-point math library for Unity and .NET without MemoryPack dependency which can cause issues with Unity Burst AOT compilation. This package provides the core fixed-point math functionality while allowing developers to choose their own serialization solution.",
   "unity": "2022.3",
@@ -25,7 +25,7 @@
     {
       "displayName": "Demo Scene",
       "description": "A sample scene demonstrating package usage",
-      "path": "Samples/FixedMathSharpDemo/Scenes/DemoScene"
+      "path": "Samples/FixedMathSharpDemo/Scenes/DemoScene.Lean"
     }
   ]
 }
