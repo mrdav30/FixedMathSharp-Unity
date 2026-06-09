@@ -10,7 +10,8 @@ namespace FixedMathSharp.Editor
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
 			FixedNumberAngleAttribute angleAttribute = (FixedNumberAngleAttribute)attribute;
-			Fixed64 value = Fixed64.FromRaw(property.longValue);
+            if (!(property.GetFixedPropertyValue() is Fixed64 value))
+                return;
 
 			// Calculate the angle, rounding to 2 decimal places
 			Fixed64 angle = FixedMath.RoundToPrecision(FixedMath.RadToDeg(FixedMath.Asin(value)), 2);
@@ -22,7 +23,7 @@ namespace FixedMathSharp.Editor
 			if (max > Fixed64.Zero && angle > max)
 				angle = max;
 
-			property.longValue = FixedMath.Sin(FixedMath.DegToRad(angle)).m_rawValue;
+            property.SetFixedPropertyValue(FixedMath.Sin(FixedMath.DegToRad(angle)));
 		}
 	}
 }

@@ -2,7 +2,7 @@
     "name": "FixedMathSharp.Lean.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:ee06434641accdc4bbbc7acbdb9ac78f"
+        "FixedMathSharp.Lean.Runtime"
     ],
     "includePlatforms": [
         "Editor"

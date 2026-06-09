@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEditor;
@@ -20,7 +21,7 @@ namespace FixedMathSharp.Editor
     /// </summary>
     internal static class FixedSerializedPropertyExtensions
     {
-        private static readonly Regex arrayElementRegex = new(@"\GArray\.data\[(\d+)\]", RegexOptions.Compiled);
+        private static readonly Regex pathComponentRegex = new(@"([^.\[\]]+)|\[(\d+)\]", RegexOptions.Compiled);
 
         internal static object GetFixedPropertyValue(this SerializedProperty property)
         {
@@ -37,45 +38,34 @@ namespace FixedMathSharp.Editor
 
         private static void SetValueNoRecord(this SerializedProperty property, object value)
         {
-            var container = GetTargetObjectOfProperty(property, out var deferredToken);
-            if (container == null)
+            List<FixedPropertyPathComponent> components = ParsePropertyPath(property.propertyPath);
+            if (components.Count == 0)
             {
-                Debug.LogError("Container is null, unable to set value.");
+                Debug.LogError($"Property path is empty, unable to set {property.name}.");
                 return;
             }
 
-            Debug.Assert(!container.GetType().IsValueType, $"Cannot use SetValue on a struct (temporary). Change {container.GetType().Name} to a class or use a parent reference.");
-
-            SetPathComponentValue(container, deferredToken, value);
+            SetPathValue(property.serializedObject.targetObject, components, 0, value);
         }
 
-        private static bool NextPathComponent(string propertyPath, ref int index, out FixedPropertyPathComponent component)
+        private static List<FixedPropertyPathComponent> ParsePropertyPath(string propertyPath)
         {
-            component = new FixedPropertyPathComponent();
+            string normalizedPath = propertyPath.Replace(".Array.data[", "[");
+            List<FixedPropertyPathComponent> components = new();
 
-            if (index >= propertyPath.Length) return false;
-
-            var arrayElementMatch = arrayElementRegex.Match(propertyPath, index);
-            if (arrayElementMatch.Success)
+            foreach (Match match in pathComponentRegex.Matches(normalizedPath))
             {
-                index += arrayElementMatch.Length + 1; // Skip past next '.'
-                component.elementIndex = int.Parse(arrayElementMatch.Groups[1].Value);
-                return true;
+                if (match.Groups[1].Success)
+                {
+                    components.Add(new FixedPropertyPathComponent { propertyName = match.Groups[1].Value });
+                }
+                else if (match.Groups[2].Success)
+                {
+                    components.Add(new FixedPropertyPathComponent { elementIndex = int.Parse(match.Groups[2].Value) });
+                }
             }
 
-            int dot = propertyPath.IndexOf('.', index);
-            if (dot == -1)
-            {
-                component.propertyName = propertyPath.Substring(index);
-                index = propertyPath.Length;
-            }
-            else
-            {
-                component.propertyName = propertyPath.Substring(index, dot - index);
-                index = dot + 1; // Skip past next '.'
-            }
-
-            return true;
+            return components;
         }
 
         private static object GetPathComponentValue(object container, FixedPropertyPathComponent component)
@@ -96,6 +86,27 @@ namespace FixedMathSharp.Editor
                 ((IList)container)[component.elementIndex] = value;
             else
                 SetMemberValue(container, component.propertyName, value);
+        }
+
+        private static object SetPathValue(object container, List<FixedPropertyPathComponent> components, int componentIndex, object value)
+        {
+            if (container == null)
+            {
+                Debug.LogError($"Container is null, unable to set path component {componentIndex}.");
+                return null;
+            }
+
+            FixedPropertyPathComponent component = components[componentIndex];
+            if (componentIndex == components.Count - 1)
+            {
+                SetPathComponentValue(container, component, value);
+                return container;
+            }
+
+            object child = GetPathComponentValue(container, component);
+            object updatedChild = SetPathValue(child, components, componentIndex + 1, value);
+            SetPathComponentValue(container, component, updatedChild);
+            return container;
         }
 
         private static object GetMemberValue(object container, string name)
@@ -138,17 +149,15 @@ namespace FixedMathSharp.Editor
         private static object GetTargetObjectOfProperty(SerializedProperty prop, out FixedPropertyPathComponent lastComponent, bool stopBeforeLast = false)
         {
             object obj = prop.serializedObject.targetObject;
-            var path = prop.propertyPath.Replace(".Array.data[", "[");
-            var elements = path.Split('.');
+            List<FixedPropertyPathComponent> components = ParsePropertyPath(prop.propertyPath);
+            int componentCount = stopBeforeLast ? components.Count - 1 : components.Count;
 
             lastComponent = new FixedPropertyPathComponent();
-            for (int i = 0; i < elements.Length - (stopBeforeLast ? 1 : 0); i++)
+            for (int i = 0; i < componentCount; i++)
             {
-                if (NextPathComponent(elements[i], ref i, out var component))
-                {
-                    obj = GetPathComponentValue(obj, component);
-                    lastComponent = component;
-                }
+                FixedPropertyPathComponent component = components[i];
+                obj = GetPathComponentValue(obj, component);
+                lastComponent = component;
             }
             return obj;
         }

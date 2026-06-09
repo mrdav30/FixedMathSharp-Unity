@@ -22,6 +22,7 @@ namespace FixedMathSharp.Editor
 
                 using var indent = new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel);
                 // Display euler angles in the inspector and get the new values after editing
+                EditorGUI.BeginChangeCheck();
                 FMSEditorUtility.Vector3dField(contentPosition, GUIContent.none, ref eulerAngles);
 
                 // Convert the edited euler angles back to a quaternion (in radians) and set the quaternion value
@@ -29,14 +30,7 @@ namespace FixedMathSharp.Editor
 
                 if (EditorGUI.EndChangeCheck() && !Application.isPlaying)
                 {
-                    SerializedProperty x = property.FindPropertyRelative("x").FindPropertyRelative("m_rawValue");
-                    x.longValue = newQuaternion.X.m_rawValue;
-                    SerializedProperty y = property.FindPropertyRelative("y").FindPropertyRelative("m_rawValue");
-                    y.longValue = newQuaternion.Y.m_rawValue;
-                    SerializedProperty z = property.FindPropertyRelative("z").FindPropertyRelative("m_rawValue");
-                    z.longValue = newQuaternion.Z.m_rawValue;
-                    SerializedProperty w = property.FindPropertyRelative("w").FindPropertyRelative("m_rawValue");
-                    w.longValue = newQuaternion.W.m_rawValue;
+                    property.SetFixedPropertyValue(newQuaternion);
                 }
             }
             else

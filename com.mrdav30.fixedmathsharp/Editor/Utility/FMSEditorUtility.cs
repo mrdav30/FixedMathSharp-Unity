@@ -71,7 +71,12 @@ namespace FixedMathSharp.Editor
         public static Fixed64 GetFixed64Value(SerializedProperty property)
         {
             SerializedProperty rawValue = property?.FindPropertyRelative("m_rawValue");
-            return rawValue == null ? Fixed64.Zero : Fixed64.FromRaw(rawValue.longValue);
+            if (rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer)
+                return Fixed64.FromRaw(rawValue.longValue);
+
+            return property != null && property.GetFixedPropertyValue() is Fixed64 value
+                ? value
+                : Fixed64.Zero;
         }
 
         public static void DrawReadOnlyMatrixRow(Rect position, string rowLabel, params Fixed64[] values)
@@ -103,24 +108,46 @@ namespace FixedMathSharp.Editor
         public static void FixedNumberField(string label, ref SerializedProperty property)
         {
             SerializedProperty rawValue = property.FindPropertyRelative("m_rawValue");
-            if (rawValue == null)
+            bool hasSerializedRawValue = rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer;
+            bool hasReflectedValue = property.GetFixedPropertyValue() is Fixed64;
+
+            if (!hasSerializedRawValue && !hasReflectedValue)
                 return;
 
-            double newValue = EditorGUILayout.DoubleField(label, Fixed64.ToDouble(rawValue.longValue));
+            Fixed64 currentValue = hasSerializedRawValue
+                ? Fixed64.FromRaw(rawValue.longValue)
+                : (Fixed64)property.GetFixedPropertyValue();
 
-            rawValue.longValue = Fixed64.FromDouble(newValue).m_rawValue;
+            double newValue = EditorGUILayout.DoubleField(label, (double)currentValue);
+
+            Fixed64 newFixedValue = Fixed64.FromDouble(newValue);
+            if (hasSerializedRawValue)
+                rawValue.longValue = newFixedValue.m_rawValue;
+            else
+                property.SetFixedPropertyValue(newFixedValue);
         }
 
         public static void FixedNumberField(string label, ref SerializedProperty property, float min, float max)
         {
             SerializedProperty rawValue = property.FindPropertyRelative("m_rawValue");
-            if (rawValue == null)
+            bool hasSerializedRawValue = rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer;
+            bool hasReflectedValue = property.GetFixedPropertyValue() is Fixed64;
+
+            if (!hasSerializedRawValue && !hasReflectedValue)
                 return;
 
-            EditorGUILayout.LabelField(label);
-            float newValue = EditorGUILayout.Slider(Fixed64.ToFloat(rawValue.longValue), min, max);
+            Fixed64 currentValue = hasSerializedRawValue
+                ? Fixed64.FromRaw(rawValue.longValue)
+                : (Fixed64)property.GetFixedPropertyValue();
 
-            rawValue.longValue = Fixed64.FromDouble(newValue).m_rawValue;
+            EditorGUILayout.LabelField(label);
+            float newValue = EditorGUILayout.Slider((float)currentValue, min, max);
+
+            Fixed64 newFixedValue = Fixed64.FromDouble(newValue);
+            if (hasSerializedRawValue)
+                rawValue.longValue = newFixedValue.m_rawValue;
+            else
+                property.SetFixedPropertyValue(newFixedValue);
         }
 
         public static void Vector2dField(string Label, ref Vector2d vector)

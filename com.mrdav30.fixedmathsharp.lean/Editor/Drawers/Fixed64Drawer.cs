@@ -16,22 +16,32 @@ namespace FixedMathSharp.Editor
             Rect contentPosition = EditorGUI.PrefixLabel(position, label);
 
             SerializedProperty rawValue = property.FindPropertyRelative("m_rawValue");
-            if (rawValue == null)
+            bool hasSerializedRawValue = rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer;
+            bool hasReflectedValue = property.GetFixedPropertyValue() is Fixed64;
+            if (!hasSerializedRawValue && !hasReflectedValue)
                 return;
 
             EditorGUI.BeginProperty(contentPosition, label, property);
             {
                 EditorGUI.BeginChangeCheck();
+                Fixed64 currentValue = hasSerializedRawValue
+                    ? Fixed64.FromRaw(rawValue.longValue)
+                    : (Fixed64)property.GetFixedPropertyValue();
 
                 Fixed64 newVal = FMSEditorUtility.FixedNumberField(
                                     contentPosition,
                                     GUIContent.none,
-                                    rawValue.longValue);
+                                    currentValue.m_rawValue);
 
                 if (EditorGUI.EndChangeCheck())
                 {
-                    rawValue.longValue = newVal.m_rawValue;
-                    property.serializedObject.ApplyModifiedProperties();
+                    if (hasSerializedRawValue)
+                    {
+                        rawValue.longValue = newVal.m_rawValue;
+                        property.serializedObject.ApplyModifiedProperties();
+                    }
+                    else
+                        property.SetFixedPropertyValue(newVal);
                 }
             }
             EditorGUI.EndProperty();
