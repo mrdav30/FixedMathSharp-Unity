@@ -23,19 +23,126 @@ namespace FixedMathSharp
         {
             Matrix4x4 unityMatrix = Matrix4x4.identity;
 
-            unityMatrix.m00 = (float)matrix.m00;
-            unityMatrix.m01 = (float)matrix.m01;
-            unityMatrix.m02 = (float)matrix.m02;
+            unityMatrix.m00 = (float)matrix.M11;
+            unityMatrix.m01 = (float)matrix.M12;
+            unityMatrix.m02 = (float)matrix.M13;
 
-            unityMatrix.m10 = (float)matrix.m10;
-            unityMatrix.m11 = (float)matrix.m11;
-            unityMatrix.m12 = (float)matrix.m12;
+            unityMatrix.m10 = (float)matrix.M21;
+            unityMatrix.m11 = (float)matrix.M22;
+            unityMatrix.m12 = (float)matrix.M23;
 
-            unityMatrix.m20 = (float)matrix.m20;
-            unityMatrix.m21 = (float)matrix.m21;
-            unityMatrix.m22 = (float)matrix.m22;
+            unityMatrix.m20 = (float)matrix.M31;
+            unityMatrix.m21 = (float)matrix.M32;
+            unityMatrix.m22 = (float)matrix.M33;
 
             return unityMatrix;
+        }
+
+        /// <summary>
+        /// Converts a Unity Matrix4x4 into a FixedMathSharp Fixed3x3 by copying the upper-left 3x3 region as-is.
+        /// </summary>
+        /// <remarks>
+        /// Use this when the source matrix should preserve both rotation and scale in the resulting Fixed3x3.
+        /// Translation and perspective terms are ignored.
+        /// </remarks>
+        /// <param name="matrix">The Unity Matrix4x4 to convert.</param>
+        /// <returns>A Fixed3x3 containing the upper-left 3x3 region of the source matrix.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed3x3 ToFixed3x3RotationScaleMatrix(this Matrix4x4 matrix)
+        {
+            return new Fixed3x3(
+                (Fixed64)matrix.m00, (Fixed64)matrix.m01, (Fixed64)matrix.m02,
+                (Fixed64)matrix.m10, (Fixed64)matrix.m11, (Fixed64)matrix.m12,
+                (Fixed64)matrix.m20, (Fixed64)matrix.m21, (Fixed64)matrix.m22
+            );
+        }
+
+        /// <summary>
+        /// Converts a Unity Matrix4x4 into a FixedMathSharp Fixed3x3 rotation matrix.
+        /// </summary>
+        /// <remarks>
+        /// This first copies the upper-left 3x3 region, then normalizes it so the result represents rotation only.
+        /// Use <see cref="ToFixed3x3RotationScaleMatrix(UnityEngine.Matrix4x4)"/> when scale should be preserved.
+        /// </remarks>
+        /// <param name="matrix">The Unity Matrix4x4 to convert.</param>
+        /// <returns>A normalized Fixed3x3 rotation matrix.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed3x3 ToFixed3x3RotationMatrix(this Matrix4x4 matrix)
+        {
+            Fixed3x3 rotationScaleMatrix = matrix.ToFixed3x3RotationScaleMatrix();
+            return rotationScaleMatrix.NormalizeInPlace();
+        }
+
+        /// <summary>
+        /// Converts a Unity Transform into a world-space Fixed3x3 rotation matrix.
+        /// </summary>
+        /// <param name="transform">The Unity Transform to convert.</param>
+        /// <returns>A Fixed3x3 representing the transform's world rotation.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed3x3 ToFixed3x3WorldRotationMatrix(this Transform transform)
+        {
+            return transform.rotation.ToFixedQuaternion().ToMatrix3x3();
+        }
+
+        /// <summary>
+        /// Converts a Unity Transform into a local-space Fixed3x3 rotation matrix.
+        /// </summary>
+        /// <param name="transform">The Unity Transform to convert.</param>
+        /// <returns>A Fixed3x3 representing the transform's local rotation.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed3x3 ToFixed3x3LocalRotationMatrix(this Transform transform)
+        {
+            return transform.localRotation.ToFixedQuaternion().ToMatrix3x3();
+        }
+
+        /// <summary>
+        /// Converts a Unity Transform into a world-space Fixed3x3 rotation-scale matrix.
+        /// </summary>
+        /// <param name="transform">The Unity Transform to convert.</param>
+        /// <returns>
+        /// A Fixed3x3 representing the transform's world rotation with lossy scale applied to each basis row.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed3x3 ToFixed3x3WorldRotationScaleMatrix(this Transform transform)
+        {
+            return CreateRotationScaleMatrix(
+                transform.rotation.ToFixedQuaternion(),
+                transform.lossyScale.ToVector3d());
+        }
+
+        /// <summary>
+        /// Converts a Unity Transform into a local-space Fixed3x3 rotation-scale matrix.
+        /// </summary>
+        /// <param name="transform">The Unity Transform to convert.</param>
+        /// <returns>
+        /// A Fixed3x3 representing the transform's local rotation with local scale applied to each basis row.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed3x3 ToFixed3x3LocalRotationScaleMatrix(this Transform transform)
+        {
+            return CreateRotationScaleMatrix(
+                transform.localRotation.ToFixedQuaternion(),
+                transform.localScale.ToVector3d());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Fixed3x3 CreateRotationScaleMatrix(FixedQuaternion rotation, Vector3d scale)
+        {
+            Fixed3x3 matrix = rotation.ToMatrix3x3();
+
+            matrix.M11 *= scale.X;
+            matrix.M12 *= scale.X;
+            matrix.M13 *= scale.X;
+
+            matrix.M21 *= scale.Y;
+            matrix.M22 *= scale.Y;
+            matrix.M23 *= scale.Y;
+
+            matrix.M31 *= scale.Z;
+            matrix.M32 *= scale.Z;
+            matrix.M33 *= scale.Z;
+
+            return matrix;
         }
 
         /// <summary>
@@ -171,7 +278,7 @@ namespace FixedMathSharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Quaternion ExtractUnityRotation(Fixed3x3 matrix)
         {
-            Fixed3x3 normalizedMatrix = matrix.Normalize();
+            Fixed3x3 normalizedMatrix = Fixed3x3.GetNormalized(matrix);
             return FixedQuaternion.FromMatrix(normalizedMatrix).ToQuaternion();
         }
 
@@ -179,26 +286,26 @@ namespace FixedMathSharp
         {
             scale = Fixed3x3.ExtractScale(matrix);
 
-            Fixed64 scaleX = scale.x == Fixed64.Zero ? Fixed64.One : scale.x;
-            Fixed64 scaleY = scale.y == Fixed64.Zero ? Fixed64.One : scale.y;
-            Fixed64 scaleZ = scale.z == Fixed64.Zero ? Fixed64.One : scale.z;
+            Fixed64 scaleX = scale.X == Fixed64.Zero ? Fixed64.One : scale.X;
+            Fixed64 scaleY = scale.Y == Fixed64.Zero ? Fixed64.One : scale.Y;
+            Fixed64 scaleZ = scale.Z == Fixed64.Zero ? Fixed64.One : scale.Z;
 
             Fixed3x3 normalizedMatrix = new Fixed3x3(
-                matrix.m00 / scaleX, matrix.m01 / scaleX, matrix.m02 / scaleX,
-                matrix.m10 / scaleY, matrix.m11 / scaleY, matrix.m12 / scaleY,
-                matrix.m20 / scaleZ, matrix.m21 / scaleZ, matrix.m22 / scaleZ
+                matrix.M11 / scaleX, matrix.M12 / scaleX, matrix.M13 / scaleX,
+                matrix.M21 / scaleY, matrix.M22 / scaleY, matrix.M23 / scaleY,
+                matrix.M31 / scaleZ, matrix.M32 / scaleZ, matrix.M33 / scaleZ
             );
 
             Fixed64 determinant = normalizedMatrix.GetDeterminant();
             if (determinant < Fixed64.Zero)
             {
-                scale.x = -scale.x;
-                normalizedMatrix.m00 = -normalizedMatrix.m00;
-                normalizedMatrix.m01 = -normalizedMatrix.m01;
-                normalizedMatrix.m02 = -normalizedMatrix.m02;
+                scale.X = -scale.X;
+                normalizedMatrix.M11 = -normalizedMatrix.M11;
+                normalizedMatrix.M12 = -normalizedMatrix.M12;
+                normalizedMatrix.M13 = -normalizedMatrix.M13;
             }
 
-            rotation = FixedQuaternion.FromMatrix(normalizedMatrix.Normalize());
+            rotation = FixedQuaternion.FromMatrix(Fixed3x3.GetNormalized(normalizedMatrix));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

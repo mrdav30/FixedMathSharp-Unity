@@ -1,0 +1,15 @@
+{
+  "packageRoot": ".",
+  "packageVersion": "5.0.0",
+  "dependencyVersions": {},
+  "packages": [
+    {
+      "path": "com.mrdav30.fixedmathsharp",
+      "updatePackageVersion": true
+    },
+    {
+      "path": "com.mrdav30.fixedmathsharp.lean",
+      "updatePackageVersion": true
+    }
+  ]
+}

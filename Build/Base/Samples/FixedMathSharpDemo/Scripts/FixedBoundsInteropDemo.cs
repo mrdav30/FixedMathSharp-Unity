@@ -1,4 +1,7 @@
+using FixedMathSharp.Bounds;
 using UnityEngine;
+
+using UnityBounds = UnityEngine.Bounds;
 
 namespace FixedMathSharp
 {
@@ -24,11 +27,11 @@ namespace FixedMathSharp
 
         [Header("Captured Bounds")]
         [SerializeField] private bool hasValidBounds;
-        [SerializeField] private Bounds unityBounds;
-        [SerializeField] private BoundingBox fixedBoundingBox;
-        [SerializeField] private BoundingArea fixedBoundingArea;
-        [SerializeField] private Bounds roundTripBoundingBoxBounds;
-        [SerializeField] private Bounds roundTripBoundingAreaBounds;
+        [SerializeField] private UnityBounds unityBounds;
+        [SerializeField] private FixedBoundBox fixedBoundingBox;
+        [SerializeField] private FixedBoundArea fixedBoundingArea;
+        [SerializeField] private UnityBounds roundTripBoundingBoxBounds;
+        [SerializeField] private UnityBounds roundTripBoundingAreaBounds;
 
         private void OnEnable()
         {
@@ -50,7 +53,7 @@ namespace FixedMathSharp
         [ContextMenu("Refresh Demo Data")]
         public void RefreshDemoData()
         {
-            if (!TryGetSourceBounds(out Bounds bounds))
+            if (!TryGetSourceBounds(out UnityBounds bounds))
             {
                 hasValidBounds = false;
                 return;
@@ -74,7 +77,7 @@ namespace FixedMathSharp
             DrawBounds(roundTripBoundingAreaBounds, boundingAreaColor);
         }
 
-        private bool TryGetSourceBounds(out Bounds bounds)
+        private bool TryGetSourceBounds(out UnityBounds bounds)
         {
             if (sourceRenderer != null)
             {
@@ -104,7 +107,7 @@ namespace FixedMathSharp
             return false;
         }
 
-        private static void DrawBounds(Bounds bounds, Color color)
+        private static void DrawBounds(UnityBounds bounds, Color color)
         {
             Gizmos.color = color;
             Gizmos.DrawWireCube(bounds.center, bounds.size);

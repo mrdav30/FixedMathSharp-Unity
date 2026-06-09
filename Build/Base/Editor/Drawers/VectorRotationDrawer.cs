@@ -41,7 +41,7 @@ namespace FixedMathSharp.Editor
                 Fixed64 newAngleInRadians = FixedMath.DegToRad(angleInDegrees);
 
                 // Check if the change in angle is significant enough to update
-                if ((newAngleInRadians - angleInRadians).Abs() >= new Fixed64(.001f))
+                if ((newAngleInRadians - angleInRadians).Abs() >= Fixed64.FromDouble(.001f))
                 {
                     Fixed64 cos = FixedMath.Cos(newAngleInRadians);
                     Fixed64 sin = FixedMath.Sin(newAngleInRadians);

@@ -11,7 +11,7 @@ namespace FixedMathSharp
         /// <returns>A FixedMathSharp Vector2d.</returns>
         public static Vector2d ToVector2d(this Vector2 vec2)
         {
-            return new Vector2d(vec2.x, vec2.y);
+            return Vector2d.FromDouble(vec2.x, vec2.y);
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace FixedMathSharp
         /// <returns>A FixedMathSharp Vector2d.</returns>
         public static Vector2d ToVector2d(this Vector3 vec)
         {
-            return new Vector2d(vec.x, vec.z);
+            return Vector2d.FromDouble(vec.x, vec.z);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace FixedMathSharp
         /// <returns>A Unity Vector2.</returns>
         public static Vector2 ToVector2(this Vector2d vec)
         {
-            return new Vector2(vec.x.ToPreciseFloat(), vec.y.ToPreciseFloat());
+            return new Vector2((float)vec.X, (float)vec.Y);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace FixedMathSharp
         /// <returns>A Unity Vector3.</returns>
         public static Vector3 ToVector3(this Vector2d vec, float y = 0f)
         {
-            return new Vector3(vec.x.ToPreciseFloat(), y, vec.y.ToPreciseFloat());
+            return new Vector3((float)vec.X, y, (float)vec.Y);
         }
     }
 }

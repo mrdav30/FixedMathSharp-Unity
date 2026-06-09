@@ -9,21 +9,21 @@ namespace FixedMathSharp.Editor
     /// </summary>
     [CustomPropertyDrawer(typeof(Fixed3x3))]
     [CustomPropertyDrawer(typeof(Fixed4x4))]
-    public class MatrixDrawer : PropertyDrawer
+    public class FixedMatrixDrawer : PropertyDrawer
     {
         private static readonly string[][] Fixed3x3FieldNames =
         {
-            new[] { "m00", "m01", "m02" },
-            new[] { "m10", "m11", "m12" },
-            new[] { "m20", "m21", "m22" }
+            new[] { "M11", "M12", "M13" },
+            new[] { "M21", "M22", "M23" },
+            new[] { "M31", "M32", "M33" }
         };
 
         private static readonly string[][] Fixed4x4FieldNames =
         {
-            new[] { "m00", "m01", "m02", "m03" },
-            new[] { "m10", "m11", "m12", "m13" },
-            new[] { "m20", "m21", "m22", "m23" },
-            new[] { "m30", "m31", "m32", "m33" }
+            new[] { "M11", "M12", "M13", "M14" },
+            new[] { "M21", "M22", "M23", "M24" },
+            new[] { "M31", "M32", "M33", "M34" },
+            new[] { "M41", "M42", "M43", "M44" }
         };
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

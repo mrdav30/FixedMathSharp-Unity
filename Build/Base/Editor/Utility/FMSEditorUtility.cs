@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
@@ -53,11 +54,11 @@ namespace FixedMathSharp.Editor
             Rect fieldRect = new Rect(position.x, position.y, position.width / 3.5f, position.height);
 
             EditorGUI.BeginChangeCheck();
-            Fixed64 x = (Fixed64)EditorGUI.DoubleField(fieldRect, "X", vector.x.ToFormattedDouble(3));
+            Fixed64 x = (Fixed64)EditorGUI.DoubleField(fieldRect, "X", (double)vector.X);
             fieldRect.x += fieldWidth;
-            Fixed64 y = (Fixed64)EditorGUI.DoubleField(fieldRect, "Y", vector.y.ToFormattedDouble(3));
+            Fixed64 y = (Fixed64)EditorGUI.DoubleField(fieldRect, "Y", (double)vector.Y);
             fieldRect.x += fieldWidth;
-            Fixed64 z = (Fixed64)EditorGUI.DoubleField(fieldRect, "Z", vector.z.ToFormattedDouble(3));
+            Fixed64 z = (Fixed64)EditorGUI.DoubleField(fieldRect, "Z", (double)vector.Z);
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -85,7 +86,7 @@ namespace FixedMathSharp.Editor
             using var disabled = new EditorGUI.DisabledScope(true);
             for (int i = 0; i < values.Length; i++)
             {
-                EditorGUI.TextField(cellRect, values[i].ToFormattedDouble(3).ToString("0.###"));
+                EditorGUI.TextField(cellRect, values[i].ToString("0.###"));
                 cellRect.x += cellWidth + MatrixCellSpacing;
             }
         }
@@ -107,7 +108,7 @@ namespace FixedMathSharp.Editor
 
             double newValue = EditorGUILayout.DoubleField(label, Fixed64.ToDouble(rawValue.longValue));
 
-            rawValue.longValue = new Fixed64(newValue).m_rawValue;
+            rawValue.longValue = Fixed64.FromDouble(newValue).m_rawValue;
         }
 
         public static void FixedNumberField(string label, ref SerializedProperty property, float min, float max)
@@ -119,7 +120,7 @@ namespace FixedMathSharp.Editor
             EditorGUILayout.LabelField(label);
             float newValue = EditorGUILayout.Slider(Fixed64.ToFloat(rawValue.longValue), min, max);
 
-            rawValue.longValue = new Fixed64(newValue).m_rawValue;
+            rawValue.longValue = Fixed64.FromDouble(newValue).m_rawValue;
         }
 
         public static void Vector2dField(string Label, ref Vector2d vector)

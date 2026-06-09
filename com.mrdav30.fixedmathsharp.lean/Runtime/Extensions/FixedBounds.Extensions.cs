@@ -1,12 +1,14 @@
+using FixedMathSharp.Bounds;
 using System.Runtime.CompilerServices;
-using UnityEngine;
+
+using UnityBounds = UnityEngine.Bounds;
 
 namespace FixedMathSharp
 {
     /// <summary>
     /// Provides extension methods for converting between Unity Bounds and FixedMathSharp bounds types.
     /// </summary>
-    public static class BoundsUnityExtensions
+    public static class FixedBoundsUnityExtensions
     {
         /// <summary>
         /// Converts a FixedMathSharp BoundingBox into Unity Bounds.
@@ -14,9 +16,9 @@ namespace FixedMathSharp
         /// <param name="boundingBox">The BoundingBox to convert.</param>
         /// <returns>A Unity Bounds with equivalent minimum and maximum corners.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Bounds ToBounds(this BoundingBox boundingBox)
+        public static UnityBounds ToBounds(this FixedBoundBox boundingBox)
         {
-            Bounds bounds = new Bounds();
+            UnityBounds bounds = new UnityBounds();
             bounds.SetMinMax(boundingBox.Min.ToVector3(), boundingBox.Max.ToVector3());
             return bounds;
         }
@@ -27,9 +29,9 @@ namespace FixedMathSharp
         /// <param name="boundingArea">The BoundingArea to convert.</param>
         /// <returns>A Unity Bounds with equivalent minimum and maximum corners.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Bounds ToBounds(this BoundingArea boundingArea)
+        public static UnityBounds ToBounds(this FixedBoundArea boundingArea)
         {
-            Bounds bounds = new Bounds();
+            UnityBounds bounds = new UnityBounds();
             bounds.SetMinMax(boundingArea.Min.ToVector3(), boundingArea.Max.ToVector3());
             return bounds;
         }
@@ -38,11 +40,11 @@ namespace FixedMathSharp
         /// Converts Unity Bounds into a FixedMathSharp BoundingBox.
         /// </summary>
         /// <param name="bounds">The Unity Bounds to convert.</param>
-        /// <returns>A BoundingBox with equivalent minimum and maximum corners.</returns>
+        /// <returns>A FixedBoundBox with equivalent minimum and maximum corners.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static BoundingBox ToBoundingBox(this Bounds bounds)
+        public static FixedBoundBox ToBoundingBox(this UnityBounds bounds)
         {
-            BoundingBox boundingBox = default;
+            FixedBoundBox boundingBox = default;
             boundingBox.SetMinMax(bounds.min.ToVector3d(), bounds.max.ToVector3d());
             return boundingBox;
         }
@@ -51,11 +53,11 @@ namespace FixedMathSharp
         /// Converts Unity Bounds into a FixedMathSharp BoundingArea.
         /// </summary>
         /// <param name="bounds">The Unity Bounds to convert.</param>
-        /// <returns>A BoundingArea with equivalent minimum and maximum corners.</returns>
+        /// <returns>A FixedBoundArea with equivalent minimum and maximum corners.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static BoundingArea ToBoundingArea(this Bounds bounds)
+        public static FixedBoundArea ToBoundingArea(this UnityBounds bounds)
         {
-            return new BoundingArea(bounds.min.ToVector3d(), bounds.max.ToVector3d());
+            return new FixedBoundArea(bounds.min.ToVector3d(), bounds.max.ToVector3d());
         }
     }
 }

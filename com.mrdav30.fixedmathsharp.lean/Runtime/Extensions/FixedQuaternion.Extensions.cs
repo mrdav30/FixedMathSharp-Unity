@@ -30,10 +30,10 @@ namespace FixedMathSharp
         public static Quaternion ToQuaternion(this FixedQuaternion quat)
         {
             return new Quaternion(
-                (float)quat.x,
-                (float)quat.y,
-                (float)quat.z,
-                (float)quat.w
+                (float)quat.X,
+                (float)quat.Y,
+                (float)quat.Z,
+                (float)quat.W
             );
         }
     }

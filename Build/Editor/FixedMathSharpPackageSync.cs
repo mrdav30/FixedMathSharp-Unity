@@ -297,7 +297,7 @@ namespace FixedMathSharp.Build.Editor
             Directory
         }
 
-        private struct ManagedEntry
+        private readonly struct ManagedEntry
         {
             public ManagedEntryKind Kind { get; }
             public string RelativePath { get; }

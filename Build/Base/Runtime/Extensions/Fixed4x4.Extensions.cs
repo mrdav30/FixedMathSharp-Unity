@@ -24,27 +24,48 @@ namespace FixedMathSharp
         {
             Matrix4x4 unityMatrix = new Matrix4x4();
 
-            unityMatrix.m00 = (float)matrix.m00;
-            unityMatrix.m01 = (float)matrix.m01;
-            unityMatrix.m02 = (float)matrix.m02;
-            unityMatrix.m03 = (float)matrix.m30;
+            unityMatrix.m00 = (float)matrix.M11;
+            unityMatrix.m01 = (float)matrix.M12;
+            unityMatrix.m02 = (float)matrix.M13;
+            unityMatrix.m03 = (float)matrix.M14;
 
-            unityMatrix.m10 = (float)matrix.m10;
-            unityMatrix.m11 = (float)matrix.m11;
-            unityMatrix.m12 = (float)matrix.m12;
-            unityMatrix.m13 = (float)matrix.m31;
+            unityMatrix.m10 = (float)matrix.M21;
+            unityMatrix.m11 = (float)matrix.M22;
+            unityMatrix.m12 = (float)matrix.M23;
+            unityMatrix.m13 = (float)matrix.M24;
 
-            unityMatrix.m20 = (float)matrix.m20;
-            unityMatrix.m21 = (float)matrix.m21;
-            unityMatrix.m22 = (float)matrix.m22;
-            unityMatrix.m23 = (float)matrix.m32;
+            unityMatrix.m20 = (float)matrix.M31;
+            unityMatrix.m21 = (float)matrix.M32;
+            unityMatrix.m22 = (float)matrix.M33;
+            unityMatrix.m23 = (float)matrix.M34;
 
-            unityMatrix.m30 = (float)matrix.m03;
-            unityMatrix.m31 = (float)matrix.m13;
-            unityMatrix.m32 = (float)matrix.m23;
-            unityMatrix.m33 = (float)matrix.m33;
+            unityMatrix.m30 = (float)matrix.M41;
+            unityMatrix.m31 = (float)matrix.M42;
+            unityMatrix.m32 = (float)matrix.M43;
+            unityMatrix.m33 = (float)matrix.M44;
 
             return unityMatrix;
+        }
+
+        /// <summary>
+        /// Converts a Unity Matrix4x4 into a FixedMathSharp Fixed4x4.
+        /// </summary>
+        /// <remarks>
+        /// This performs a semantic matrix conversion rather than a raw field copy. Unity stores translation in
+        /// <c>m03/m13/m23</c>, while FixedMathSharp stores translation in <c>m30/m31/m32</c>. This method remaps
+        /// those elements so transformed points behave consistently across both matrix types.
+        /// </remarks>
+        /// <param name="matrix">The Unity Matrix4x4 to convert.</param>
+        /// <returns>A Fixed4x4 with equivalent transform semantics.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed4x4 ToFixed4x4(this Matrix4x4 matrix)
+        {
+            return new Fixed4x4(
+                (Fixed64)matrix.m00, (Fixed64)matrix.m01, (Fixed64)matrix.m02, (Fixed64)matrix.m30,
+                (Fixed64)matrix.m10, (Fixed64)matrix.m11, (Fixed64)matrix.m12, (Fixed64)matrix.m31,
+                (Fixed64)matrix.m20, (Fixed64)matrix.m21, (Fixed64)matrix.m22, (Fixed64)matrix.m32,
+                (Fixed64)matrix.m03, (Fixed64)matrix.m13, (Fixed64)matrix.m23, (Fixed64)matrix.m33
+            );
         }
 
         /// <summary>
@@ -117,6 +138,35 @@ namespace FixedMathSharp
             Fixed4x4 localMatrix = matrix * parentWorldInverse;
             localMatrix.ApplyToTransformLocal(transform);
         }
+
+        /// <summary>
+        /// Converts a Unity Transform into a world-space Fixed4x4 transform matrix.
+        /// </summary>
+        /// <param name="transform">The Unity Transform to convert.</param>
+        /// <returns>A Fixed4x4 representing the transform's world position, rotation, and scale.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed4x4 ToFixed4x4WorldMatrix(this Transform transform)
+        {
+            return Fixed4x4.CreateTransform(
+                transform.position.ToVector3d(),
+                transform.rotation.ToFixedQuaternion(),
+                transform.lossyScale.ToVector3d());
+        }
+
+        /// <summary>
+        /// Converts a Unity Transform into a local-space Fixed4x4 transform matrix.
+        /// </summary>
+        /// <param name="transform">The Unity Transform to convert.</param>
+        /// <returns>A Fixed4x4 representing the transform's local position, rotation, and scale.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Fixed4x4 ToFixed4x4LocalMatrix(this Transform transform)
+        {
+            return Fixed4x4.CreateTransform(
+                transform.localPosition.ToVector3d(),
+                transform.localRotation.ToFixedQuaternion(),
+                transform.localScale.ToVector3d());
+        }
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DecomposeToUnityTransform(Fixed4x4 matrix, out Vector3 position, out Quaternion rotation, out Vector3 scale)

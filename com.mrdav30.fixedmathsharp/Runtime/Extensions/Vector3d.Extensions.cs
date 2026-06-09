@@ -16,7 +16,7 @@ namespace FixedMathSharp
         /// <returns>A FixedMathSharp Vector3d with the given components.</returns>
         public static Vector3d ToVector3d(this Vector2 vec, float y = 0)
         {
-            return new Vector3d(vec.x, y, vec.y);
+            return Vector3d.FromDouble(vec.x, y, vec.y);
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace FixedMathSharp
         /// <returns>A FixedMathSharp Vector3d with the corresponding components from the Unity Vector3.</returns>
         public static Vector3d ToVector3d(this Vector3 vec)
         {
-            return new Vector3d(vec.x, vec.y, vec.z);
+            return Vector3d.FromDouble(vec.x, vec.y, vec.z);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace FixedMathSharp
         /// <returns>A Unity Vector2 with the x and y components from the FixedMathSharp Vector3d.</returns>
         public static Vector2 ToVector2(this Vector3d vec)
         {
-            return new Vector2(vec.x.ToPreciseFloat(), vec.y.ToPreciseFloat());
+            return new Vector2((float)vec.X, (float)vec.Y);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace FixedMathSharp
         /// <returns>A Unity Vector3 with the corresponding components from the FixedMathSharp Vector3d.</returns>
         public static Vector3 ToVector3(this Vector3d vec)
         {
-            return new Vector3(vec.x.ToPreciseFloat(), vec.y.ToPreciseFloat(), vec.z.ToPreciseFloat());
+            return new Vector3((float)vec.X, (float)vec.Y, (float)vec.Z);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace FixedMathSharp
         /// <returns>A Unity Vector3 with the specified y-component and the other components from the FixedMathSharp Vector3d.</returns>
         public static Vector3 ToVector3(this Vector3d vec, float y = 0f)
         {
-            return new Vector3(vec.x.ToPreciseFloat(), y, vec.z.ToPreciseFloat());
+            return new Vector3((float)vec.X, y, (float)vec.Z);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace FixedMathSharp
         /// <returns>A Unity Vector4 with the x, y, and z components from the FixedMathSharp Vector3d and the specified w-component.</returns>
         public static Vector4 ToVector4(this Vector3d vec, float w = 0f)
         {
-            return new Vector4(vec.x.ToPreciseFloat(), vec.y.ToPreciseFloat(), vec.z.ToPreciseFloat(), w);
+            return new Vector4((float)vec.X, (float)vec.Y, (float)vec.Z, w);
         }
     }
 }

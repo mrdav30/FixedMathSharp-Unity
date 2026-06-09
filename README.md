@@ -1,6 +1,6 @@
 # FixedMathSharp-Unity
 
-Unity package host for FixedMathSharp.
+Unity package host for [FixedMathSharp](https://github.com/mrdav30/FixedMathSharp).
 
 This repository contains two installable Unity Package Manager variants:
 

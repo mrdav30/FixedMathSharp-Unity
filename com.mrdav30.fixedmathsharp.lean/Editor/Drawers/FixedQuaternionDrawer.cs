@@ -25,18 +25,18 @@ namespace FixedMathSharp.Editor
                 FMSEditorUtility.Vector3dField(contentPosition, GUIContent.none, ref eulerAngles);
 
                 // Convert the edited euler angles back to a quaternion (in radians) and set the quaternion value
-                FixedQuaternion newQuaternion = FixedQuaternion.FromEulerAnglesInDegrees(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+                FixedQuaternion newQuaternion = FixedQuaternion.FromEulerAnglesInDegrees(eulerAngles.X, eulerAngles.Y, eulerAngles.Z);
 
                 if (EditorGUI.EndChangeCheck() && !Application.isPlaying)
                 {
                     SerializedProperty x = property.FindPropertyRelative("x").FindPropertyRelative("m_rawValue");
-                    x.longValue = newQuaternion.x.m_rawValue;
+                    x.longValue = newQuaternion.X.m_rawValue;
                     SerializedProperty y = property.FindPropertyRelative("y").FindPropertyRelative("m_rawValue");
-                    y.longValue = newQuaternion.y.m_rawValue;
+                    y.longValue = newQuaternion.Y.m_rawValue;
                     SerializedProperty z = property.FindPropertyRelative("z").FindPropertyRelative("m_rawValue");
-                    z.longValue = newQuaternion.z.m_rawValue;
+                    z.longValue = newQuaternion.Z.m_rawValue;
                     SerializedProperty w = property.FindPropertyRelative("w").FindPropertyRelative("m_rawValue");
-                    w.longValue = newQuaternion.w.m_rawValue;
+                    w.longValue = newQuaternion.W.m_rawValue;
                 }
             }
             else
