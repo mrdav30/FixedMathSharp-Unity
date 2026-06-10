@@ -15,11 +15,31 @@ namespace FixedMathSharp
         }
 
         /// <summary>
-        /// Converts a Unity Vector3 to a FixedMathSharp Vector2d, using the x and z components of the Vector3.
+        /// Converts a Unity Vector3 to a FixedMathSharp Vector2d on Unity's XZ plane.
         /// </summary>
         /// <param name="vec">The Unity Vector3 to convert.</param>
         /// <returns>A FixedMathSharp Vector2d.</returns>
         public static Vector2d ToVector2d(this Vector3 vec)
+        {
+            return vec.ToVector2dXZ();
+        }
+
+        /// <summary>
+        /// Converts a Unity Vector3 to a FixedMathSharp Vector2d using the x and y components.
+        /// </summary>
+        /// <param name="vec">The Unity Vector3 to convert.</param>
+        /// <returns>A FixedMathSharp Vector2d projected onto the XY plane.</returns>
+        public static Vector2d ToVector2dXY(this Vector3 vec)
+        {
+            return Vector2d.FromDouble(vec.x, vec.y);
+        }
+
+        /// <summary>
+        /// Converts a Unity Vector3 to a FixedMathSharp Vector2d using the x and z components.
+        /// </summary>
+        /// <param name="vec">The Unity Vector3 to convert.</param>
+        /// <returns>A FixedMathSharp Vector2d projected onto the XZ plane.</returns>
+        public static Vector2d ToVector2dXZ(this Vector3 vec)
         {
             return Vector2d.FromDouble(vec.x, vec.z);
         }
@@ -35,12 +55,34 @@ namespace FixedMathSharp
         }
 
         /// <summary>
-        /// Converts a FixedMathSharp Vector2d to a Unity Vector3, with the specified y-value.
+        /// Converts a FixedMathSharp Vector2d to a Unity Vector3 on Unity's XZ plane, with the specified y-value.
         /// </summary>
         /// <param name="vec">The FixedMathSharp Vector2d to convert.</param>
         /// <param name="y">The y-value to use in the resulting Vector3.</param>
         /// <returns>A Unity Vector3.</returns>
         public static Vector3 ToVector3(this Vector2d vec, float y = 0f)
+        {
+            return vec.ToVector3XZ(y);
+        }
+
+        /// <summary>
+        /// Converts a FixedMathSharp Vector2d to a Unity Vector3 on the XY plane, with the specified z-value.
+        /// </summary>
+        /// <param name="vec">The FixedMathSharp Vector2d to convert.</param>
+        /// <param name="z">The z-value to use in the resulting Vector3.</param>
+        /// <returns>A Unity Vector3 with x/y populated from the Vector2d.</returns>
+        public static Vector3 ToVector3XY(this Vector2d vec, float z = 0f)
+        {
+            return new Vector3((float)vec.X, (float)vec.Y, z);
+        }
+
+        /// <summary>
+        /// Converts a FixedMathSharp Vector2d to a Unity Vector3 on the XZ plane, with the specified y-value.
+        /// </summary>
+        /// <param name="vec">The FixedMathSharp Vector2d to convert.</param>
+        /// <param name="y">The y-value to use in the resulting Vector3.</param>
+        /// <returns>A Unity Vector3 with x/z populated from the Vector2d.</returns>
+        public static Vector3 ToVector3XZ(this Vector2d vec, float y = 0f)
         {
             return new Vector3((float)vec.X, y, (float)vec.Y);
         }

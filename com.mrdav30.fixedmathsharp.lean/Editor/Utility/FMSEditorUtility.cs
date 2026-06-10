@@ -70,13 +70,41 @@ namespace FixedMathSharp.Editor
 
         public static Fixed64 GetFixed64Value(SerializedProperty property)
         {
-            SerializedProperty rawValue = property?.FindPropertyRelative("m_rawValue");
-            if (rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer)
-                return Fixed64.FromRaw(rawValue.longValue);
-
-            return property != null && property.GetFixedPropertyValue() is Fixed64 value
+            return TryGetFixed64Value(property, out Fixed64 value, out _)
                 ? value
                 : Fixed64.Zero;
+        }
+
+        internal static bool TryGetFixed64Value(SerializedProperty property, out Fixed64 value, out SerializedProperty rawValue)
+        {
+            rawValue = property?.FindPropertyRelative("m_rawValue");
+            if (rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer)
+            {
+                value = Fixed64.FromRaw(rawValue.longValue);
+                return true;
+            }
+
+            if (property != null && property.GetFixedPropertyValue() is Fixed64 reflectedValue)
+            {
+                value = reflectedValue;
+                return true;
+            }
+
+            value = Fixed64.Zero;
+            return false;
+        }
+
+        internal static void SetFixed64Value(SerializedProperty property, SerializedProperty rawValue, Fixed64 value)
+        {
+            if (rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer)
+            {
+                rawValue.longValue = value.m_rawValue;
+                property.serializedObject.ApplyModifiedProperties();
+            }
+            else
+            {
+                property.SetFixedPropertyValue(value);
+            }
         }
 
         public static void DrawReadOnlyMatrixRow(Rect position, string rowLabel, params Fixed64[] values)
@@ -107,47 +135,31 @@ namespace FixedMathSharp.Editor
 
         public static void FixedNumberField(string label, ref SerializedProperty property)
         {
-            SerializedProperty rawValue = property.FindPropertyRelative("m_rawValue");
-            bool hasSerializedRawValue = rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer;
-            bool hasReflectedValue = property.GetFixedPropertyValue() is Fixed64;
-
-            if (!hasSerializedRawValue && !hasReflectedValue)
+            if (!TryGetFixed64Value(property, out Fixed64 currentValue, out SerializedProperty rawValue))
                 return;
 
-            Fixed64 currentValue = hasSerializedRawValue
-                ? Fixed64.FromRaw(rawValue.longValue)
-                : (Fixed64)property.GetFixedPropertyValue();
-
+            EditorGUI.BeginChangeCheck();
             double newValue = EditorGUILayout.DoubleField(label, (double)currentValue);
+            if (!EditorGUI.EndChangeCheck())
+                return;
 
             Fixed64 newFixedValue = Fixed64.FromDouble(newValue);
-            if (hasSerializedRawValue)
-                rawValue.longValue = newFixedValue.m_rawValue;
-            else
-                property.SetFixedPropertyValue(newFixedValue);
+            SetFixed64Value(property, rawValue, newFixedValue);
         }
 
         public static void FixedNumberField(string label, ref SerializedProperty property, float min, float max)
         {
-            SerializedProperty rawValue = property.FindPropertyRelative("m_rawValue");
-            bool hasSerializedRawValue = rawValue != null && rawValue.propertyType == SerializedPropertyType.Integer;
-            bool hasReflectedValue = property.GetFixedPropertyValue() is Fixed64;
-
-            if (!hasSerializedRawValue && !hasReflectedValue)
+            if (!TryGetFixed64Value(property, out Fixed64 currentValue, out SerializedProperty rawValue))
                 return;
 
-            Fixed64 currentValue = hasSerializedRawValue
-                ? Fixed64.FromRaw(rawValue.longValue)
-                : (Fixed64)property.GetFixedPropertyValue();
-
             EditorGUILayout.LabelField(label);
+            EditorGUI.BeginChangeCheck();
             float newValue = EditorGUILayout.Slider((float)currentValue, min, max);
+            if (!EditorGUI.EndChangeCheck())
+                return;
 
             Fixed64 newFixedValue = Fixed64.FromDouble(newValue);
-            if (hasSerializedRawValue)
-                rawValue.longValue = newFixedValue.m_rawValue;
-            else
-                property.SetFixedPropertyValue(newFixedValue);
+            SetFixed64Value(property, rawValue, newFixedValue);
         }
 
         public static void Vector2dField(string Label, ref Vector2d vector)

@@ -5,26 +5,45 @@ using UnityEngine;
 namespace FixedMathSharp.Editor
 {
     [CustomPropertyDrawer(typeof(FixedNumberAngleAttribute))]
-	public class FixedNumberAngleDrawer : PropertyDrawer
-	{
-		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-		{
-			FixedNumberAngleAttribute angleAttribute = (FixedNumberAngleAttribute)attribute;
-            if (!(property.GetFixedPropertyValue() is Fixed64 value))
-                return;
+    public class FixedNumberAngleDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+            try
+            {
+                FixedNumberAngleAttribute angleAttribute = (FixedNumberAngleAttribute)attribute;
+                if (!(property.GetFixedPropertyValue() is Fixed64 value))
+                    return;
 
-			// Calculate the angle, rounding to 2 decimal places
-			Fixed64 angle = FixedMath.RoundToPrecision(FixedMath.RadToDeg(FixedMath.Asin(value)), 2);
+                value = ClampUnit(value);
 
-			FMSEditorUtility.DoubleField(position, label, ref angle, angleAttribute.Timescale);
+                Fixed64 angle = FixedMath.RoundToPrecision(FixedMath.RadToDeg(FixedMath.Asin(value)), 2);
+                Fixed64 max = angleAttribute.Max > 0d
+                    ? Fixed64.FromDouble(angleAttribute.Max)
+                    : Fixed64.Zero;
 
-			// Check if the max value is valid, and clamp the angle if necessary
-			Fixed64 max = Fixed64.FromDouble(angleAttribute.Max);
-			if (max > Fixed64.Zero && angle > max)
-				angle = max;
+                EditorGUI.BeginChangeCheck();
+                FMSEditorUtility.DoubleField(position, label, ref angle, angleAttribute.Timescale);
+                if (max > Fixed64.Zero && angle > max)
+                    angle = max;
 
-            property.SetFixedPropertyValue(FixedMath.Sin(FixedMath.DegToRad(angle)));
-		}
-	}
+                if (EditorGUI.EndChangeCheck())
+                    property.SetFixedPropertyValue(FixedMath.Sin(FixedMath.DegToRad(angle)));
+            }
+            finally
+            {
+                EditorGUI.EndProperty();
+            }
+        }
+
+        private static Fixed64 ClampUnit(Fixed64 value)
+        {
+            if (value < Fixed64.Zero - Fixed64.One)
+                return Fixed64.Zero - Fixed64.One;
+
+            return value > Fixed64.One ? Fixed64.One : value;
+        }
+    }
 }
 #endif

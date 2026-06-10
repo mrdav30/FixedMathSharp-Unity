@@ -27,21 +27,21 @@ namespace FixedMathSharp
             unityMatrix.m00 = (float)matrix.M11;
             unityMatrix.m01 = (float)matrix.M12;
             unityMatrix.m02 = (float)matrix.M13;
-            unityMatrix.m03 = (float)matrix.M14;
+            unityMatrix.m03 = (float)matrix.M41;
 
             unityMatrix.m10 = (float)matrix.M21;
             unityMatrix.m11 = (float)matrix.M22;
             unityMatrix.m12 = (float)matrix.M23;
-            unityMatrix.m13 = (float)matrix.M24;
+            unityMatrix.m13 = (float)matrix.M42;
 
             unityMatrix.m20 = (float)matrix.M31;
             unityMatrix.m21 = (float)matrix.M32;
             unityMatrix.m22 = (float)matrix.M33;
-            unityMatrix.m23 = (float)matrix.M34;
+            unityMatrix.m23 = (float)matrix.M43;
 
-            unityMatrix.m30 = (float)matrix.M41;
-            unityMatrix.m31 = (float)matrix.M42;
-            unityMatrix.m32 = (float)matrix.M43;
+            unityMatrix.m30 = (float)matrix.M14;
+            unityMatrix.m31 = (float)matrix.M24;
+            unityMatrix.m32 = (float)matrix.M34;
             unityMatrix.m33 = (float)matrix.M44;
 
             return unityMatrix;

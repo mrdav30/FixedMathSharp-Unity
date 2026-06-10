@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -21,7 +22,10 @@ namespace FixedMathSharp.Editor
     /// </summary>
     internal static class FixedSerializedPropertyExtensions
     {
+        private const BindingFlags InstanceMemberFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
         private static readonly Regex pathComponentRegex = new(@"([^.\[\]]+)|\[(\d+)\]", RegexOptions.Compiled);
+        private static readonly Dictionary<string, FixedPropertyPathComponent[]> pathComponentCache = new();
+        private static readonly Dictionary<string, MemberInfo> memberCache = new();
 
         internal static object GetFixedPropertyValue(this SerializedProperty property)
         {
@@ -38,8 +42,8 @@ namespace FixedMathSharp.Editor
 
         private static void SetValueNoRecord(this SerializedProperty property, object value)
         {
-            List<FixedPropertyPathComponent> components = ParsePropertyPath(property.propertyPath);
-            if (components.Count == 0)
+            FixedPropertyPathComponent[] components = ParsePropertyPath(property.propertyPath);
+            if (components.Length == 0)
             {
                 Debug.LogError($"Property path is empty, unable to set {property.name}.");
                 return;
@@ -48,8 +52,11 @@ namespace FixedMathSharp.Editor
             SetPathValue(property.serializedObject.targetObject, components, 0, value);
         }
 
-        private static List<FixedPropertyPathComponent> ParsePropertyPath(string propertyPath)
+        private static FixedPropertyPathComponent[] ParsePropertyPath(string propertyPath)
         {
+            if (pathComponentCache.TryGetValue(propertyPath, out FixedPropertyPathComponent[] cachedComponents))
+                return cachedComponents;
+
             string normalizedPath = propertyPath.Replace(".Array.data[", "[");
             List<FixedPropertyPathComponent> components = new();
 
@@ -65,7 +72,9 @@ namespace FixedMathSharp.Editor
                 }
             }
 
-            return components;
+            FixedPropertyPathComponent[] result = components.ToArray();
+            pathComponentCache[propertyPath] = result;
+            return result;
         }
 
         private static object GetPathComponentValue(object container, FixedPropertyPathComponent component)
@@ -88,7 +97,7 @@ namespace FixedMathSharp.Editor
                 SetMemberValue(container, component.propertyName, value);
         }
 
-        private static object SetPathValue(object container, List<FixedPropertyPathComponent> components, int componentIndex, object value)
+        private static object SetPathValue(object container, FixedPropertyPathComponent[] components, int componentIndex, object value)
         {
             if (container == null)
             {
@@ -97,7 +106,7 @@ namespace FixedMathSharp.Editor
             }
 
             FixedPropertyPathComponent component = components[componentIndex];
-            if (componentIndex == components.Count - 1)
+            if (componentIndex == components.Length - 1)
             {
                 SetPathComponentValue(container, component, value);
                 return container;
@@ -112,45 +121,72 @@ namespace FixedMathSharp.Editor
         private static object GetMemberValue(object container, string name)
         {
             if (container == null) return null;
-            var type = container.GetType();
-            var members = type.GetMember(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-            foreach (var member in members)
+
+            MemberInfo member = GetCachedMember(container.GetType(), name);
+            switch (member)
             {
-                if (member is FieldInfo field)
+                case FieldInfo field:
                     return field.GetValue(container);
-                else if (member is PropertyInfo property)
+
+                case PropertyInfo property:
                     return property.GetValue(container);
+
+                default:
+                    return null;
             }
-            return null;
         }
 
         private static void SetMemberValue(object container, string name, object value)
         {
             if (container == null) return;
 
-            var type = container.GetType();
-            var members = type.GetMember(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-            foreach (var member in members)
+            MemberInfo member = GetCachedMember(container.GetType(), name);
+            switch (member)
             {
-                if (member is FieldInfo field)
-                {
+                case FieldInfo field:
                     field.SetValue(container, value);
                     return;
-                }
-                else if (member is PropertyInfo property)
-                {
+
+                case PropertyInfo property when property.CanWrite:
                     property.SetValue(container, value);
                     return;
-                }
             }
+
             Debug.Assert(false, $"Failed to set member {container}.{name} via reflection");
+        }
+
+        private static MemberInfo GetCachedMember(Type type, string name)
+        {
+            string key = $"{type.AssemblyQualifiedName}:{name}";
+            if (memberCache.TryGetValue(key, out MemberInfo member))
+                return member;
+
+            member = FindMember(type, name);
+            memberCache[key] = member;
+            return member;
+        }
+
+        private static MemberInfo FindMember(Type type, string name)
+        {
+            for (Type currentType = type; currentType != null; currentType = currentType.BaseType)
+            {
+                FieldInfo field = currentType.GetField(name, InstanceMemberFlags);
+                if (field != null)
+                    return field;
+
+                PropertyInfo property = currentType.GetProperty(name, InstanceMemberFlags);
+                if (property != null)
+                    return property;
+            }
+
+            return null;
         }
 
         private static object GetTargetObjectOfProperty(SerializedProperty prop, out FixedPropertyPathComponent lastComponent, bool stopBeforeLast = false)
         {
             object obj = prop.serializedObject.targetObject;
-            List<FixedPropertyPathComponent> components = ParsePropertyPath(prop.propertyPath);
-            int componentCount = stopBeforeLast ? components.Count - 1 : components.Count;
+            FixedPropertyPathComponent[] components = ParsePropertyPath(prop.propertyPath);
+            int componentCount = stopBeforeLast ? components.Length - 1 : components.Length;
 
             lastComponent = new FixedPropertyPathComponent();
             for (int i = 0; i < componentCount; i++)

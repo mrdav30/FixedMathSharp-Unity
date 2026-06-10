@@ -7,61 +7,45 @@ namespace FixedMathSharp.Editor
     [CustomPropertyDrawer(typeof(VectorRotationAttribute))]
     public class VectorRotationDrawer : PropertyDrawer
     {
-        private float height = 0f;
+        private static readonly GUIContent AngleLabel = new("Angle");
+        private static readonly GUIContent UnsupportedLabel = new("Use with Vector2d");
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return height;
+            return EditorGUIUtility.singleLineHeight;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-
-            // Begin tracking changes
-            EditorGUI.BeginChangeCheck();
-
-            VectorRotationAttribute at = (VectorRotationAttribute)attribute;
-
-            SerializedProperty x = property.FindPropertyRelative("x");
-            SerializedProperty y = property.FindPropertyRelative("y");
-            if(x.GetFixedPropertyValue() is Fixed64 FixedX && y.GetFixedPropertyValue() is Fixed64 FixedY)
+            try
             {
-                // Calculate the angle in radians and degrees
-                Fixed64 angleInRadians = FixedMath.Atan2(FixedY, FixedX);
-                Fixed64 angleInDegrees = FixedMath.RadToDeg(angleInRadians) * (int)at.Timescale;
-
-                height = 15f;
-                position.height = height;
-
-                // Draw the angle in degrees in the inspector
-                FMSEditorUtility.DoubleField(position, "Angle", ref angleInDegrees, at.Timescale);
-
-                // Convert the new angle back to radians
-                Fixed64 newAngleInRadians = FixedMath.DegToRad(angleInDegrees);
-
-                // Check if the change in angle is significant enough to update
-                if ((newAngleInRadians - angleInRadians).Abs() >= Fixed64.FromDouble(.001f))
+                if (property.GetFixedPropertyValue() is Vector2d vector)
                 {
-                    Fixed64 cos = FixedMath.Cos(newAngleInRadians);
-                    Fixed64 sin = FixedMath.Sin(newAngleInRadians);
+                    VectorRotationAttribute at = (VectorRotationAttribute)attribute;
+                    Fixed64 angleInRadians = FixedMath.Atan2(vector.Y, vector.X);
+                    Fixed64 angleInDegrees = FixedMath.RadToDeg(angleInRadians);
 
-                    // Update the vector components based on the new angle
-                    property.SetFixedPropertyValue(new Vector2d(cos, sin));
+                    EditorGUI.BeginChangeCheck();
+                    FMSEditorUtility.DoubleField(position, AngleLabel, ref angleInDegrees, at.Timescale);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Fixed64 newAngleInRadians = FixedMath.DegToRad(angleInDegrees);
+                        Fixed64 cos = FixedMath.Cos(newAngleInRadians);
+                        Fixed64 sin = FixedMath.Sin(newAngleInRadians);
+
+                        property.SetFixedPropertyValue(new Vector2d(cos, sin));
+                    }
                 }
-
-                // Apply changes only if something has been modified
-                if (EditorGUI.EndChangeCheck())
+                else
                 {
-                    property.serializedObject.ApplyModifiedProperties();
+                    EditorGUI.LabelField(position, label, UnsupportedLabel);
                 }
             }
-            else
+            finally
             {
-                Debug.LogWarning("Property value for x|y is null or not a Fixed64.");
+                EditorGUI.EndProperty();
             }
-
-            EditorGUI.EndProperty();
         }
     }
 }
