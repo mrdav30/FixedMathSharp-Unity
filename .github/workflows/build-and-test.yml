@@ -126,8 +126,8 @@ jobs:
           checkName: Unity EditMode ${{ matrix.package_display_name }}
 
       - name: Upload Unity test artifacts
-        if: always()
+        if: failure()
         uses: actions/upload-artifact@v7
         with:
           name: unity-editmode-${{ matrix.artifact_suffix }}
-          path: ${{ steps.tests.outputs.artifactsPath }}
+          path: artifacts/${{ matrix.artifact_suffix }}

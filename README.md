@@ -1,5 +1,7 @@
 # FixedMathSharp-Unity
 
+[![Build](https://github.com/mrdav30/FixedMathSharp-Unity/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/mrdav30/FixedMathSharp-Unity/actions/workflows/build-and-test.yml)
+
 Unity package host for [FixedMathSharp](https://github.com/mrdav30/FixedMathSharp).
 
 This repository contains two installable Unity Package Manager variants:
