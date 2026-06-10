@@ -122,7 +122,7 @@ jobs:
           testMode: EditMode
           customParameters: -assemblyNames FixedMathSharp.Unity.Tests.EditMode -runSynchronously
           artifactsPath: artifacts/${{ matrix.artifact_suffix }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          githubToken: ${{ github.token }}
           checkName: Unity EditMode ${{ matrix.package_display_name }}
 
       - name: Upload Unity test artifacts
