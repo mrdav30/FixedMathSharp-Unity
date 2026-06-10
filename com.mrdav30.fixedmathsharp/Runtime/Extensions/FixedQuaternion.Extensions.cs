@@ -5,11 +5,22 @@ namespace FixedMathSharp
     /// <summary>
     /// Provides extension methods for converting between Unity Quaternions and FixedMathSharp FixedQuaternions.
     /// </summary>
+    /// <remarks>
+    /// Unity and FixedMathSharp both use <c>+X</c> as right, <c>+Y</c> as up, and <c>+Z</c> as
+    /// forward for 3D direction naming. These helpers therefore use direct component mappings.
+    /// Convert directions into Unity/FixedMathSharp's canonical basis before creating quaternions
+    /// when data comes from an external convention.
+    /// </remarks>
     public static partial class FixedQuaternionExtensions
     {
         /// <summary>
         /// Converts a Unity Quaternion to a FixedMathSharp FixedQuaternion.
         /// </summary>
+        /// <remarks>
+        /// This is a direct component mapping. It preserves Unity-facing basis behavior for
+        /// quaternions such as <see cref="Quaternion.LookRotation(Vector3, Vector3)"/> when the
+        /// supplied directions use the shared <c>+Z</c> forward convention.
+        /// </remarks>
         /// <param name="quat">The Unity Quaternion to convert.</param>
         /// <returns>A FixedQuaternion with components corresponding to the input Unity Quaternion.</returns>
         public static FixedQuaternion ToFixedQuaternion(this Quaternion quat)
@@ -25,6 +36,10 @@ namespace FixedMathSharp
         /// <summary>
         /// Converts a FixedMathSharp FixedQuaternion to a Unity Quaternion.
         /// </summary>
+        /// <remarks>
+        /// This is a direct component mapping. FixedMathSharp rotations created in the canonical
+        /// <c>+X</c>/<c>+Y</c>/<c>+Z</c> basis preserve their right/up/forward behavior in Unity.
+        /// </remarks>
         /// <param name="quat">The FixedQuaternion to convert.</param>
         /// <returns>A Unity Quaternion with components corresponding to the input FixedQuaternion.</returns>
         public static Quaternion ToQuaternion(this FixedQuaternion quat)

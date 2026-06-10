@@ -33,6 +33,16 @@ Add this package from Git URL in Unity Package Manager:
 - Sample demo scene
 - No `MemoryPack` dependency
 
+## Coordinate Conventions
+
+FixedMathSharp's canonical 3D basis is `+X` right, `+Y` up, and `+Z` forward.
+Unity uses the same semantic basis for `Vector3.right`, `Vector3.up`, and
+`Vector3.forward`, so vector and quaternion adapters use direct component mappings.
+
+Matrix and `Transform` helpers are semantic conversions. Unity's `Matrix4x4` and
+`Transform` APIs use Unity's storage and application rules, while FixedMathSharp
+uses row-vector matrices with translation in `M41`/`M42`/`M43`.
+
 ## Related Packages
 
 - Repo overview and variant selection:
