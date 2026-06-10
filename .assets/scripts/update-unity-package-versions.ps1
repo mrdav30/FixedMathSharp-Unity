@@ -1,3 +1,25 @@
+<#
+.SYNOPSIS
+Synchronizes Unity package manifest and dependency versions from config.
+
+.DESCRIPTION
+Reads unity-package-versions.json and compares the configured package version
+and dependency versions against the package manifests and installer scripts.
+By default the script runs in dry-run mode and reports pending changes. Pass
+-Apply to update files or -ValidateOnly to fail when configured versions are out
+of sync.
+
+.PARAMETER ConfigPath
+Path to the JSON version configuration file. Defaults to
+.assets/unity-package-versions.json.
+
+.PARAMETER Apply
+Writes any required package manifest and installer dependency version changes.
+
+.PARAMETER ValidateOnly
+Reports version drift as errors and exits with a failure instead of writing
+changes.
+#>
 [CmdletBinding()]
 param(
     [string]$ConfigPath = (Join-Path (Split-Path -Parent $PSScriptRoot) "unity-package-versions.json"),

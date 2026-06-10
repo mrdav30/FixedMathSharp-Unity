@@ -16,11 +16,11 @@ namespace FixedMathSharp.Build.Editor
         private static readonly PackageDefinition[] Packages =
         {
             new PackageDefinition(
-                "Assets/Packages/com.mrdav30.FixedMathSharp",
-                "Assets/Packages/com.mrdav30.FixedMathSharp/package.json"),
+                "Assets/Packages/com.mrdav30.fixedmathsharp",
+                "Assets/Packages/com.mrdav30.fixedmathsharp/package.json"),
             new PackageDefinition(
-                "Assets/Packages/com.mrdav30.FixedMathSharp.lean",
-                "Assets/Packages/com.mrdav30.FixedMathSharp.lean/package.json")
+                "Assets/Packages/com.mrdav30.fixedmathsharp.lean",
+                "Assets/Packages/com.mrdav30.fixedmathsharp.lean/package.json")
         };
 
         [MenuItem("Tools/FixedMathSharp/Export Unity Packages")]
