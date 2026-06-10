@@ -1,0 +1,133 @@
+name: build-and-test
+
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+      - 'gh-pages'
+    tags-ignore:
+      - 'v*'
+  pull_request:
+    branches:
+      - 'main'
+      - 'develop'
+
+permissions:
+  contents: read
+  checks: write
+
+concurrency:
+  group: unity-build-and-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unity-editmode:
+    name: Unity EditMode (${{ matrix.package_display_name }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - package_display_name: FixedMathSharp
+            package_name: com.mrdav30.fixedmathsharp
+            package_path: com.mrdav30.fixedmathsharp
+            runtime_assembly: FixedMathSharp.Runtime
+            artifact_suffix: standard
+          - package_display_name: FixedMathSharp Lean
+            package_name: com.mrdav30.fixedmathsharp.lean
+            package_path: com.mrdav30.fixedmathsharp.lean
+            runtime_assembly: FixedMathSharp.Lean.Runtime
+            artifact_suffix: lean
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Prepare Unity test project
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          project_path=".ci/unity-project"
+          rm -rf "$project_path"
+          mkdir -p "$project_path/Assets/Tests/EditMode"
+          mkdir -p "$project_path/Packages"
+          mkdir -p "$project_path/ProjectSettings"
+
+          cp Tests/EditMode/*.cs "$project_path/Assets/Tests/EditMode/"
+
+          cat > "$project_path/Assets/Tests/EditMode/FixedMathSharp.Unity.Tests.EditMode.asmdef" <<JSON
+          {
+              "name": "FixedMathSharp.Unity.Tests.EditMode",
+              "references": [
+                  "${{ matrix.runtime_assembly }}",
+                  "UnityEngine.TestRunner",
+                  "UnityEditor.TestRunner"
+              ],
+              "includePlatforms": [
+                  "Editor"
+              ],
+              "excludePlatforms": [],
+              "allowUnsafeCode": false,
+              "overrideReferences": true,
+              "precompiledReferences": [
+                  "nunit.framework.dll",
+                  "FixedMathSharp.dll"
+              ],
+              "autoReferenced": false,
+              "defineConstraints": [
+                  "UNITY_INCLUDE_TESTS"
+              ],
+              "versionDefines": []
+          }
+          JSON
+
+          cat > "$project_path/Packages/manifest.json" <<JSON
+          {
+            "dependencies": {
+              "${{ matrix.package_name }}": "file:../../../${{ matrix.package_path }}",
+              "com.unity.modules.physics": "1.0.0",
+              "com.unity.test-framework": "1.6.0"
+            }
+          }
+          JSON
+
+          cat > "$project_path/ProjectSettings/ProjectVersion.txt" <<'EOF'
+          m_EditorVersion: 6000.3.9f1
+          m_EditorVersionWithRevision: 6000.3.9f1 (7a9955a4f2fa)
+          EOF
+
+      - name: Cache Unity Library
+        uses: actions/cache@v5
+        with:
+          path: .ci/unity-project/Library
+          key: unity-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-${{ hashFiles('Tests/EditMode/**/*.cs', 'Tests/EditMode/**/*.asmdef', 'com.mrdav30.fixedmathsharp/**/*.cs', 'com.mrdav30.fixedmathsharp/**/*.asmdef', 'com.mrdav30.fixedmathsharp/package.json', 'com.mrdav30.fixedmathsharp.lean/**/*.cs', 'com.mrdav30.fixedmathsharp.lean/**/*.asmdef', 'com.mrdav30.fixedmathsharp.lean/package.json') }}
+          restore-keys: |
+            unity-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-
+
+      - name: Run Unity EditMode tests
+        id: tests
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: .ci/unity-project
+          unityVersion: 6000.3.9f1
+          testMode: EditMode
+          customParameters: -assemblyNames FixedMathSharp.Unity.Tests.EditMode -runSynchronously
+          artifactsPath: artifacts/${{ matrix.artifact_suffix }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Unity EditMode ${{ matrix.package_display_name }}
+
+      - name: Upload Unity test artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: unity-editmode-${{ matrix.artifact_suffix }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
