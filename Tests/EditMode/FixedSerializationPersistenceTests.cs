@@ -8,7 +8,7 @@ namespace FixedMathSharp.Unity.Tests
 {
     public sealed class FixedSerializationPersistenceTests
     {
-        private const string TestAssetFolder = "Assets/Packages/Tests/EditMode/GeneratedSerializationPersistenceTests";
+        private const string TestAssetFolder = "Assets/GeneratedSerializationPersistenceTests";
 
         private static readonly FixedSerializationProbeSnapshot ExpectedSnapshot = new()
         {
@@ -20,25 +20,20 @@ namespace FixedMathSharp.Unity.Tests
                 Fixed64.FromRaw(0x33333333),
                 Fixed64.FromRaw(0x44444444),
                 Fixed64.FromRaw(0x55555555)),
-            NestedValue = new FixedSerializationNestedProbe
-            {
-                Value = Fixed64.FromRaw(0x66666666)
-            },
-            ListValue = new FixedSerializationListProbe
-            {
-                Value = Fixed64.FromRaw(0x77777777),
-                Position = new Vector3d(
-                    Fixed64.FromRaw(0x11112222),
-                    Fixed64.FromRaw(0x33334444),
-                    Fixed64.FromRaw(0x55556666))
-            }
+            NestedValue = Fixed64.FromRaw(0x66666666),
+            ListCount = 1,
+            ListValue = Fixed64.FromRaw(0x77777777),
+            ListPosition = new Vector3d(
+                Fixed64.FromRaw(0x11112222),
+                Fixed64.FromRaw(0x33334444),
+                Fixed64.FromRaw(0x55556666))
         };
 
         [SetUp]
         public void SetUp()
         {
             DeleteTestAssets();
-            AssetDatabase.CreateFolder("Assets/Packages/Tests/EditMode", "GeneratedSerializationPersistenceTests");
+            AssetDatabase.CreateFolder("Assets", "GeneratedSerializationPersistenceTests");
         }
 
         [TearDown]
@@ -52,7 +47,7 @@ namespace FixedMathSharp.Unity.Tests
         {
             string assetPath = $"{TestAssetFolder}/FixedSerializationProbe.asset";
             FixedSerializationScriptableProbe asset = ScriptableObject.CreateInstance<FixedSerializationScriptableProbe>();
-            asset.SetSnapshot(ExpectedSnapshot);
+            SetSnapshot(asset, ExpectedSnapshot);
 
             AssetDatabase.CreateAsset(asset, assetPath);
             AssetDatabase.SaveAssets();
@@ -64,7 +59,7 @@ namespace FixedMathSharp.Unity.Tests
             FixedSerializationScriptableProbe reloaded = AssetDatabase.LoadAssetAtPath<FixedSerializationScriptableProbe>(assetPath);
 
             Assert.That(reloaded, Is.Not.Null);
-            AssertSnapshotEqual(reloaded.GetSnapshot(), ExpectedSnapshot);
+            AssertSnapshotEqual(GetSnapshot(reloaded), ExpectedSnapshot);
         }
 
         [Test]
@@ -75,7 +70,7 @@ namespace FixedMathSharp.Unity.Tests
             AssetDatabase.CreateAsset(asset, assetPath);
             AssetDatabase.SaveAssets();
 
-            asset.SetSnapshot(ExpectedSnapshot);
+            SetSnapshot(asset, ExpectedSnapshot);
             EditorUtility.SetDirty(asset);
             AssetDatabase.SaveAssets();
             Resources.UnloadAsset(asset);
@@ -86,7 +81,7 @@ namespace FixedMathSharp.Unity.Tests
             FixedSerializationScriptableProbe reloaded = AssetDatabase.LoadAssetAtPath<FixedSerializationScriptableProbe>(assetPath);
 
             Assert.That(reloaded, Is.Not.Null);
-            AssertSnapshotEqual(reloaded.GetSnapshot(), ExpectedSnapshot);
+            AssertSnapshotEqual(GetSnapshot(reloaded), ExpectedSnapshot);
         }
 
         [Test]
@@ -94,7 +89,7 @@ namespace FixedMathSharp.Unity.Tests
         {
             string prefabPath = $"{TestAssetFolder}/FixedSerializationProbe.prefab";
             GameObject source = new("Fixed Serialization Probe");
-            source.AddComponent<FixedSerializationPrefabProbe>().SetSnapshot(ExpectedSnapshot);
+            SetSnapshot(source.AddComponent<FixedSerializationPrefabProbe>(), ExpectedSnapshot);
 
             try
             {
@@ -113,7 +108,7 @@ namespace FixedMathSharp.Unity.Tests
             FixedSerializationPrefabProbe reloaded = reloadedPrefab.GetComponent<FixedSerializationPrefabProbe>();
 
             Assert.That(reloaded, Is.Not.Null);
-            AssertSnapshotEqual(reloaded.GetSnapshot(), ExpectedSnapshot);
+            AssertSnapshotEqual(GetSnapshot(reloaded), ExpectedSnapshot);
         }
 
         [Test]
@@ -136,7 +131,7 @@ namespace FixedMathSharp.Unity.Tests
             GameObject contents = PrefabUtility.LoadPrefabContents(prefabPath);
             try
             {
-                contents.GetComponent<FixedSerializationPrefabProbe>().SetSnapshot(ExpectedSnapshot);
+                SetSnapshot(contents.GetComponent<FixedSerializationPrefabProbe>(), ExpectedSnapshot);
                 PrefabUtility.SaveAsPrefabAsset(contents, prefabPath);
             }
             finally
@@ -151,7 +146,72 @@ namespace FixedMathSharp.Unity.Tests
             FixedSerializationPrefabProbe reloaded = reloadedPrefab.GetComponent<FixedSerializationPrefabProbe>();
 
             Assert.That(reloaded, Is.Not.Null);
-            AssertSnapshotEqual(reloaded.GetSnapshot(), ExpectedSnapshot);
+            AssertSnapshotEqual(GetSnapshot(reloaded), ExpectedSnapshot);
+        }
+
+        private struct FixedSerializationProbeSnapshot
+        {
+            public Fixed64 FixedValue;
+            public Vector2d Vector2Value;
+            public Vector3d Vector3Value;
+            public Fixed64 NestedValue;
+            public int ListCount;
+            public Fixed64 ListValue;
+            public Vector3d ListPosition;
+        }
+
+        private static void SetSnapshot(
+            FixedSerializationScriptableProbe probe,
+            FixedSerializationProbeSnapshot snapshot)
+        {
+            probe.SetValues(
+                snapshot.FixedValue,
+                snapshot.Vector2Value,
+                snapshot.Vector3Value,
+                snapshot.NestedValue,
+                snapshot.ListValue,
+                snapshot.ListPosition);
+        }
+
+        private static void SetSnapshot(
+            FixedSerializationPrefabProbe probe,
+            FixedSerializationProbeSnapshot snapshot)
+        {
+            probe.SetValues(
+                snapshot.FixedValue,
+                snapshot.Vector2Value,
+                snapshot.Vector3Value,
+                snapshot.NestedValue,
+                snapshot.ListValue,
+                snapshot.ListPosition);
+        }
+
+        private static FixedSerializationProbeSnapshot GetSnapshot(FixedSerializationScriptableProbe probe)
+        {
+            return new FixedSerializationProbeSnapshot
+            {
+                FixedValue = probe.FixedValue,
+                Vector2Value = probe.Vector2Value,
+                Vector3Value = probe.Vector3Value,
+                NestedValue = probe.NestedValue,
+                ListCount = probe.ListCount,
+                ListValue = probe.ListValue,
+                ListPosition = probe.ListPosition
+            };
+        }
+
+        private static FixedSerializationProbeSnapshot GetSnapshot(FixedSerializationPrefabProbe probe)
+        {
+            return new FixedSerializationProbeSnapshot
+            {
+                FixedValue = probe.FixedValue,
+                Vector2Value = probe.Vector2Value,
+                Vector3Value = probe.Vector3Value,
+                NestedValue = probe.NestedValue,
+                ListCount = probe.ListCount,
+                ListValue = probe.ListValue,
+                ListPosition = probe.ListPosition
+            };
         }
 
         private static void AssertSnapshotEqual(
@@ -163,9 +223,11 @@ namespace FixedMathSharp.Unity.Tests
             CollectFixedFailure(actual.FixedValue, expected.FixedValue, "Fixed64 field", failures);
             CollectVector2Failure(actual.Vector2Value, expected.Vector2Value, "Vector2d field", failures);
             CollectVector3Failure(actual.Vector3Value, expected.Vector3Value, "Vector3d field", failures);
-            CollectFixedFailure(actual.NestedValue.Value, expected.NestedValue.Value, "nested Fixed64 field", failures);
-            CollectFixedFailure(actual.ListValue.Value, expected.ListValue.Value, "list Fixed64 field", failures);
-            CollectVector3Failure(actual.ListValue.Position, expected.ListValue.Position, "list Vector3d field", failures);
+            CollectFixedFailure(actual.NestedValue, expected.NestedValue, "nested Fixed64 field", failures);
+            if (actual.ListCount != expected.ListCount)
+                failures.Add($"list count: expected {expected.ListCount}, got {actual.ListCount}");
+            CollectFixedFailure(actual.ListValue, expected.ListValue, "list Fixed64 field", failures);
+            CollectVector3Failure(actual.ListPosition, expected.ListPosition, "list Vector3d field", failures);
 
             if (failures.Count > 0)
                 Assert.Fail(string.Join(Environment.NewLine, failures));

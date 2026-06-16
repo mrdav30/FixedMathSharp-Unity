@@ -15,12 +15,4 @@ namespace FixedMathSharp.Unity.Tests
         public Vector3d Position;
     }
 
-    public struct FixedSerializationProbeSnapshot
-    {
-        public Fixed64 FixedValue;
-        public Vector2d Vector2Value;
-        public Vector3d Vector3Value;
-        public FixedSerializationNestedProbe NestedValue;
-        public FixedSerializationListProbe ListValue;
-    }
 }
