@@ -55,16 +55,39 @@ jobs:
           project_path=".ci/unity-project"
           rm -rf "$project_path"
           mkdir -p "$project_path/Assets/Tests/EditMode"
+          mkdir -p "$project_path/Assets/Tests/Runtime"
           mkdir -p "$project_path/Packages"
           mkdir -p "$project_path/ProjectSettings"
 
           cp Tests/EditMode/*.cs "$project_path/Assets/Tests/EditMode/"
+          cp Tests/Runtime/*.cs "$project_path/Assets/Tests/Runtime/"
+
+          cat > "$project_path/Assets/Tests/Runtime/FixedMathSharp.Unity.Tests.Runtime.asmdef" <<JSON
+          {
+              "name": "FixedMathSharp.Unity.Tests.Runtime",
+              "references": [
+                  "${{ matrix.runtime_assembly }}"
+              ],
+              "includePlatforms": [],
+              "excludePlatforms": [],
+              "allowUnsafeCode": false,
+              "overrideReferences": false,
+              "precompiledReferences": [],
+              "autoReferenced": false,
+              "defineConstraints": [
+                  "UNITY_INCLUDE_TESTS"
+              ],
+              "versionDefines": [],
+              "noEngineReferences": false
+          }
+          JSON
 
           cat > "$project_path/Assets/Tests/EditMode/FixedMathSharp.Unity.Tests.EditMode.asmdef" <<JSON
           {
               "name": "FixedMathSharp.Unity.Tests.EditMode",
               "references": [
                   "${{ matrix.runtime_assembly }}",
+                  "FixedMathSharp.Unity.Tests.Runtime",
                   "UnityEngine.TestRunner",
                   "UnityEditor.TestRunner"
               ],
@@ -105,7 +128,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: .ci/unity-project/Library
-          key: unity-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-${{ hashFiles('Tests/EditMode/**/*.cs', 'Tests/EditMode/**/*.asmdef', 'com.mrdav30.fixedmathsharp/**/*.cs', 'com.mrdav30.fixedmathsharp/**/*.asmdef', 'com.mrdav30.fixedmathsharp/package.json', 'com.mrdav30.fixedmathsharp.lean/**/*.cs', 'com.mrdav30.fixedmathsharp.lean/**/*.asmdef', 'com.mrdav30.fixedmathsharp.lean/package.json') }}
+          key: unity-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-${{ hashFiles('Tests/EditMode/**/*.cs', 'Tests/EditMode/**/*.asmdef', 'Tests/Runtime/**/*.cs', 'Tests/Runtime/**/*.asmdef', 'com.mrdav30.fixedmathsharp/**/*.cs', 'com.mrdav30.fixedmathsharp/**/*.asmdef', 'com.mrdav30.fixedmathsharp/package.json', 'com.mrdav30.fixedmathsharp.lean/**/*.cs', 'com.mrdav30.fixedmathsharp.lean/**/*.asmdef', 'com.mrdav30.fixedmathsharp.lean/package.json') }}
           restore-keys: |
             unity-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-
 
