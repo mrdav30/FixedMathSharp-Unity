@@ -2,6 +2,7 @@
     "name": "FixedMathSharp.Unity.Tests.EditMode",
     "references": [
         "FixedMathSharp.Runtime",
+        "FixedMathSharp.Unity.Tests.Runtime",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
