@@ -241,6 +241,19 @@
             <param name="weightC">The barycentric weight for the third vertex.</param>
             <returns>The interpolated scalar coordinate.</returns>
         </member>
+        <member name="M:FixedMathSharp.FixedMath.SumSquaredBarycentricProducts(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the second-order scalar product sum for three barycentric vertices.
+            </summary>
+            <remarks>
+            Computes <c>a * a + b * b + c * c + a * b + a * c + b * c</c>.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedMath.SumBarycentricProducts(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Returns the cross scalar product sum for two sets of three barycentric vertices.
+            </summary>
+        </member>
         <member name="M:FixedMathSharp.FixedMath.FastAdd(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
             Adds two fixed-point numbers by adding their raw Q32.32 payloads without saturation.
@@ -1986,6 +1999,14 @@
             <param name="scaleFactor">The uniform scale factor.</param>
             <returns>A 3x3 scaling matrix with uniform scaling.</returns>
         </member>
+        <member name="M:FixedMathSharp.Fixed3x3.CreateBarycentricProductSums(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Creates a symmetric matrix containing second-order barycentric product sums for three vectors.
+            </summary>
+            <remarks>
+            The diagonal contains squared component sums, and the off-diagonal elements contain cross-component sums.
+            </remarks>
+        </member>
         <member name="M:FixedMathSharp.Fixed3x3.GetNormalized(FixedMathSharp.Fixed3x3)">
             <summary>
             Normalizes the basis vectors of a 3x3 matrix to ensure they are orthogonal and unit length.
@@ -2530,9 +2551,8 @@
             <param name="matrix">The transformation matrix representing the object's global state.</param>
             <param name="globalScale">The desired global scale as a vector.</param>
             <remarks>
-            The method extracts the current global scale from the matrix and computes the new local scale 
-            by dividing the desired global scale by the current global scale. 
-            The new local scale is then applied to the matrix.
+            The method extracts translation and rotation, then rebuilds the transform with the requested
+            scale so component mutation does not silently drop position or distort rotation.
             </remarks>
         </member>
         <member name="M:FixedMathSharp.Fixed4x4.SetRotation(FixedMathSharp.Fixed4x4,FixedMathSharp.FixedQuaternion)">
@@ -2915,6 +2935,55 @@
             <param name="f2">The Fixed4x4 to compare against.</param>
             <param name="percentage">The allowed fractional difference (percentage) for each component.</param>
             <returns>True if the components are within the allowed percentage difference, false otherwise.</returns>
+        </member>
+        <member name="T:FixedMathSharp.FixedTransform">
+            <summary>
+            Provides a mutable deterministic transform shell backed by a <see cref="T:FixedMathSharp.Fixed4x4"/> matrix.
+            </summary>
+            <remarks>
+            This type intentionally keeps reference semantics so host-owned objects can publish one
+            transform instance while simulation systems mutate its fixed-point components explicitly.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.FixedTransform.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.FixedQuaternion,FixedMathSharp.Vector3d,FixedMathSharp.FixedTransform)">
+            <summary>
+            Initializes a new transform from fixed-point position, rotation, and scale components.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.FixedTransform.#ctor(FixedMathSharp.Fixed4x4,FixedMathSharp.FixedTransform)">
+            <summary>
+            Initializes a new transform from an existing fixed-point transformation matrix.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.FixedTransform.Position">
+            <summary>
+            Gets or sets the transform translation component.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.FixedTransform.Rotation">
+            <summary>
+            Gets or sets the transform rotation component.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.FixedTransform.Scale">
+            <summary>
+            Gets or sets the transform global scale component.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.FixedTransform.LossyScale">
+            <summary>
+            Gets the current matrix scale used by this transform.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.FixedTransform.EulerAngles">
+            <summary>
+            Gets or sets the transform rotation as Euler angles in degrees.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.FixedTransform.Parent">
+            <summary>
+            Gets or sets an optional parent transform reference.
+            </summary>
         </member>
         <member name="T:FixedMathSharp.FixedQuaternion">
             <summary>
