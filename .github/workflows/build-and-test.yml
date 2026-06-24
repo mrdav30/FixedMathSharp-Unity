@@ -52,83 +52,17 @@ jobs:
         run: |
           set -euo pipefail
 
-          project_path=".ci/unity-project"
-          rm -rf "$project_path"
-          mkdir -p "$project_path/Assets/Tests/EditMode"
-          mkdir -p "$project_path/Assets/Tests/Runtime"
-          mkdir -p "$project_path/Packages"
-          mkdir -p "$project_path/ProjectSettings"
-
-          cp Tests/EditMode/*.cs "$project_path/Assets/Tests/EditMode/"
-          cp Tests/Runtime/*.cs "$project_path/Assets/Tests/Runtime/"
-
-          cat > "$project_path/Assets/Tests/Runtime/FixedMathSharp.Unity.Tests.Runtime.asmdef" <<JSON
-          {
-              "name": "FixedMathSharp.Unity.Tests.Runtime",
-              "references": [
-                  "${{ matrix.runtime_assembly }}"
-              ],
-              "includePlatforms": [],
-              "excludePlatforms": [],
-              "allowUnsafeCode": false,
-              "overrideReferences": false,
-              "precompiledReferences": [],
-              "autoReferenced": false,
-              "defineConstraints": [
-                  "UNITY_INCLUDE_TESTS"
-              ],
-              "versionDefines": [],
-              "noEngineReferences": false
-          }
-          JSON
-
-          cat > "$project_path/Assets/Tests/EditMode/FixedMathSharp.Unity.Tests.EditMode.asmdef" <<JSON
-          {
-              "name": "FixedMathSharp.Unity.Tests.EditMode",
-              "references": [
-                  "${{ matrix.runtime_assembly }}",
-                  "FixedMathSharp.Unity.Tests.Runtime",
-                  "UnityEngine.TestRunner",
-                  "UnityEditor.TestRunner"
-              ],
-              "includePlatforms": [
-                  "Editor"
-              ],
-              "excludePlatforms": [],
-              "allowUnsafeCode": false,
-              "overrideReferences": true,
-              "precompiledReferences": [
-                  "nunit.framework.dll",
-                  "FixedMathSharp.dll"
-              ],
-              "autoReferenced": false,
-              "defineConstraints": [
-                  "UNITY_INCLUDE_TESTS"
-              ],
-              "versionDefines": []
-          }
-          JSON
-
-          cat > "$project_path/Packages/manifest.json" <<JSON
-          {
-            "dependencies": {
-              "${{ matrix.package_name }}": "file:../../../${{ matrix.package_path }}",
-              "com.unity.modules.physics": "1.0.0",
-              "com.unity.test-framework": "1.6.0"
-            }
-          }
-          JSON
-
-          cat > "$project_path/ProjectSettings/ProjectVersion.txt" <<'EOF'
-          m_EditorVersion: 6000.3.9f1
-          m_EditorVersionWithRevision: 6000.3.9f1 (7a9955a4f2fa)
-          EOF
+          bash .assets/ci/scripts/prepare-unity-editmode-test-project.sh \
+            --project-path ".ci/unity-project" \
+            --package-name "${{ matrix.package_name }}" \
+            --package-path "${{ matrix.package_path }}" \
+            --runtime-assembly "${{ matrix.runtime_assembly }}"
 
       - name: Cache Unity Library
         uses: actions/cache@v5
         with:
           path: .ci/unity-project/Library
-          key: unity-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-${{ hashFiles('Tests/EditMode/**/*.cs', 'Tests/EditMode/**/*.asmdef', 'Tests/Runtime/**/*.cs', 'Tests/Runtime/**/*.asmdef', 'com.mrdav30.fixedmathsharp/**/*.cs', 'com.mrdav30.fixedmathsharp/**/*.asmdef', 'com.mrdav30.fixedmathsharp/package.json', 'com.mrdav30.fixedmathsharp.lean/**/*.cs', 'com.mrdav30.fixedmathsharp.lean/**/*.asmdef', 'com.mrdav30.fixedmathsharp.lean/package.json') }}
+          key: unity-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-${{ hashFiles('.assets/ci/scripts/prepare-unity-editmode-test-project.sh', '.assets/ci/unity-editmode-tests/**', 'Tests/EditMode/**/*.cs', 'Tests/Runtime/**/*.cs', 'com.mrdav30.fixedmathsharp/**/*.cs', 'com.mrdav30.fixedmathsharp/**/*.asmdef', 'com.mrdav30.fixedmathsharp/package.json', 'com.mrdav30.fixedmathsharp.lean/**/*.cs', 'com.mrdav30.fixedmathsharp.lean/**/*.asmdef', 'com.mrdav30.fixedmathsharp.lean/package.json') }}
           restore-keys: |
             unity-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-
 
@@ -154,3 +88,83 @@ jobs:
         with:
           name: unity-editmode-${{ matrix.artifact_suffix }}
           path: artifacts/${{ matrix.artifact_suffix }}
+
+  unity-sample-import-smoke:
+    name: Unity Sample Import Smoke (${{ matrix.package_display_name }})
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - package_display_name: FixedMathSharp
+            package_name: com.mrdav30.fixedmathsharp
+            package_path: com.mrdav30.fixedmathsharp
+            expected_sample_asmdef: FixedMathSharp.Samples.asmdef
+            artifact_suffix: standard
+          - package_display_name: FixedMathSharp Lean
+            package_name: com.mrdav30.fixedmathsharp.lean
+            package_path: com.mrdav30.fixedmathsharp.lean
+            expected_sample_asmdef: FixedMathSharp.Lean.Samples.asmdef
+            artifact_suffix: lean
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Prepare Unity sample import smoke project
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          bash .assets/ci/scripts/prepare-unity-sample-import-smoke.sh \
+            --project-path ".ci/unity-sample-import-${{ matrix.artifact_suffix }}" \
+            --package-name "${{ matrix.package_name }}" \
+            --package-path "${{ matrix.package_path }}" \
+            --expected-sample-asmdef "${{ matrix.expected_sample_asmdef }}" \
+            --workspace-path "/github/workspace" \
+            --git-sha "$GITHUB_SHA"
+
+      - name: Cache Unity sample import Library
+        uses: actions/cache@v5
+        with:
+          path: .ci/unity-sample-import-${{ matrix.artifact_suffix }}/Library
+          key: unity-sample-import-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-${{ hashFiles('com.mrdav30.fixedmathsharp/package.json', 'com.mrdav30.fixedmathsharp/Samples~/**', 'com.mrdav30.fixedmathsharp.lean/package.json', 'com.mrdav30.fixedmathsharp.lean/Samples~/**') }}
+          restore-keys: |
+            unity-sample-import-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-
+
+      - name: Run Unity sample import smoke
+        id: sample-import
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: .ci/unity-sample-import-${{ matrix.artifact_suffix }}
+          unityVersion: 6000.5.0f1
+          testMode: EditMode
+          customParameters: -assemblyNames FixedMathSharp.SampleImportSmokeTests -runSynchronously
+          artifactsPath: artifacts/sample-import-${{ matrix.artifact_suffix }}
+          githubToken: ${{ github.token }}
+          checkName: Unity Sample Import ${{ matrix.package_display_name }}
+
+      - name: Scan Unity sample import log
+        if: always() && steps.sample-import.outcome != 'skipped'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          bash .assets/ci/scripts/scan-unity-sample-import-log.sh \
+            "artifacts/sample-import-${{ matrix.artifact_suffix }}/editmode.log"
+
+      - name: Upload Unity sample import artifacts
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: unity-sample-import-${{ matrix.artifact_suffix }}
+          path: artifacts/sample-import-${{ matrix.artifact_suffix }}

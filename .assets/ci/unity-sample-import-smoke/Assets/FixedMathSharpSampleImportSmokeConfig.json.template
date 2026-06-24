@@ -1,0 +1,4 @@
+{
+  "packageName": "__PACKAGE_NAME__",
+  "expectedSampleAsmdef": "__EXPECTED_SAMPLE_ASMDEF__"
+}

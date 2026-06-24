@@ -1,0 +1,17 @@
+{
+    "name": "FixedMathSharp.Unity.Tests.Runtime",
+    "references": [
+        "__RUNTIME_ASSEMBLY__"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
