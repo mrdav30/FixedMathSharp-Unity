@@ -75,7 +75,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           projectPath: .ci/unity-project
-          unityVersion: 6000.3.9f1
+          unityVersion: 6000.5.0f1
+          customImage: unityci/editor:ubuntu-6000.5.0f1-base-3
           testMode: EditMode
           customParameters: -assemblyNames FixedMathSharp.Unity.Tests.EditMode -runSynchronously
           artifactsPath: artifacts/${{ matrix.artifact_suffix }}
@@ -133,9 +134,20 @@ jobs:
         uses: actions/cache@v5
         with:
           path: .ci/unity-sample-import-${{ matrix.artifact_suffix }}/Library
-          key: unity-sample-import-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-${{ hashFiles('com.mrdav30.fixedmathsharp/package.json', 'com.mrdav30.fixedmathsharp/Samples~/**', 'com.mrdav30.fixedmathsharp.lean/package.json', 'com.mrdav30.fixedmathsharp.lean/Samples~/**') }}
+          key: unity-sample-import-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-${{ hashFiles('.assets/ci/scripts/prepare-unity-sample-import-smoke.sh', '.assets/ci/unity-sample-import-smoke/**', 'com.mrdav30.fixedmathsharp/package.json', 'com.mrdav30.fixedmathsharp/Samples~/**', 'com.mrdav30.fixedmathsharp.lean/package.json', 'com.mrdav30.fixedmathsharp.lean/Samples~/**') }}
           restore-keys: |
             unity-sample-import-library-${{ runner.os }}-${{ matrix.artifact_suffix }}-
+
+      - name: Trust local Git checkout inside Unity container
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          container_home="$RUNNER_TEMP/_github_home"
+          mkdir -p "$container_home"
+
+          git config --file "$container_home/.gitconfig" --add safe.directory /github/workspace
+          git config --file "$container_home/.gitconfig" --add safe.directory /github/workspace/.git
 
       - name: Run Unity sample import smoke
         id: sample-import
@@ -147,6 +159,7 @@ jobs:
         with:
           projectPath: .ci/unity-sample-import-${{ matrix.artifact_suffix }}
           unityVersion: 6000.5.0f1
+          customImage: unityci/editor:ubuntu-6000.5.0f1-base-3
           testMode: EditMode
           customParameters: -assemblyNames FixedMathSharp.SampleImportSmokeTests -runSynchronously
           artifactsPath: artifacts/sample-import-${{ matrix.artifact_suffix }}
