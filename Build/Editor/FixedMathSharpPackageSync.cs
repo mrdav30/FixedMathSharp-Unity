@@ -31,7 +31,7 @@ namespace FixedMathSharp.Build.Editor
             ManagedEntry.Directory("Editor/Drawers"),
             ManagedEntry.Directory("Runtime/Attributes"),
             ManagedEntry.Directory("Runtime/Extensions"),
-            ManagedEntry.Directory("Samples/FixedMathSharpDemo/Scripts")
+            ManagedEntry.Directory("Samples~/FixedMathSharpDemo/Scripts")
         };
 
         [MenuItem("Tools/FixedMathSharp/Sync Managed Package Files")]
