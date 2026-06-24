@@ -48,7 +48,17 @@ function New-TestRepo {
   "packageVersion": "4.0.6",
   "dependencyVersions": {
     "FixedMathSharpUnity": "v4.0.0"
-  }
+  },
+  "packages": [
+    {
+      "path": "com.mrdav30.fixedmathsharp",
+      "updatePackageVersion": true
+    },
+    {
+      "path": "com.mrdav30.fixedmathsharp.lean",
+      "updatePackageVersion": true
+    }
+  ]
 }
 '@
 
@@ -57,6 +67,14 @@ function New-TestRepo {
     "name": "com.mrdav30.fixedmathsharp",
     "version": "4.0.5",
     "displayName": "fixedmathsharp"
+}
+'@
+
+    New-TestFile -Path (Join-Path $repoRoot "com.mrdav30.fixedmathsharp.lean/package.json") -Content @'
+{
+    "name": "com.mrdav30.fixedmathsharp.lean",
+    "version": "4.0.5",
+    "displayName": "fixedmathsharp lean"
 }
 '@
 

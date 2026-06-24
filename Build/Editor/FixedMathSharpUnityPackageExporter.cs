@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace FixedMathSharp.Build.Editor
     public static class FixedMathSharpUnityPackageExporter
     {
         private const string OutputPathArgument = "-FixedMathSharpUnityPackageOutputPath";
+        private const string AuthoringSamplesRelativePath = "Samples";
+        private const string DistributableSamplesRelativePath = "Samples~";
 
         private static readonly PackageDefinition[] Packages =
         {
@@ -68,6 +71,8 @@ namespace FixedMathSharp.Build.Editor
             foreach (var package in Packages)
             {
                 ValidatePackage(package);
+                PrepareDistributableSamples(package);
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
                 var manifest = LoadManifest(package.ManifestAssetPath);
                 var outputPath = Path.Combine(
@@ -75,12 +80,54 @@ namespace FixedMathSharp.Build.Editor
                     $"{manifest.name}-{manifest.version}.unitypackage");
 
                 AssetDatabase.ExportPackage(
-                    new[] { package.RootAssetPath },
+                    GetExportAssetPaths(package.RootAssetPath),
                     outputPath,
                     ExportPackageOptions.Recurse);
 
                 Debug.Log($"Exported {manifest.name} to {outputPath}");
             }
+        }
+
+        private static void PrepareDistributableSamples(PackageDefinition package)
+        {
+            var authoringSamplesPath = ToAbsolutePath(CombineAssetPath(package.RootAssetPath, AuthoringSamplesRelativePath));
+            if (!Directory.Exists(authoringSamplesPath))
+                throw new DirectoryNotFoundException($"Authoring samples folder not found: {CombineAssetPath(package.RootAssetPath, AuthoringSamplesRelativePath)}");
+
+            var distributableSamplesPath = ToAbsolutePath(CombineAssetPath(package.RootAssetPath, DistributableSamplesRelativePath));
+            if (Directory.Exists(distributableSamplesPath))
+                Directory.Delete(distributableSamplesPath, true);
+
+            DeleteMetaFileIfPresent(distributableSamplesPath);
+            CopyDirectory(authoringSamplesPath, distributableSamplesPath);
+            DeleteMetaFileIfPresent(distributableSamplesPath);
+
+            Debug.Log($"Prepared distributable samples: {CombineAssetPath(package.RootAssetPath, DistributableSamplesRelativePath)}");
+        }
+
+        private static string[] GetExportAssetPaths(string rootAssetPath)
+        {
+            var rootPath = ToAbsolutePath(rootAssetPath);
+            var assetPaths = new List<string>();
+
+            foreach (var path in Directory.EnumerateFileSystemEntries(rootPath))
+            {
+                var name = Path.GetFileName(path);
+                if (string.Equals(name, AuthoringSamplesRelativePath, StringComparison.Ordinal) ||
+                    string.Equals(name, AuthoringSamplesRelativePath + ".meta", StringComparison.Ordinal) ||
+                    string.Equals(name, ".gitignore", StringComparison.Ordinal) ||
+                    name.EndsWith(".meta", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                assetPaths.Add(ToAssetPath(path));
+            }
+
+            if (assetPaths.Count == 0)
+                throw new InvalidOperationException($"No exportable package assets found under {rootAssetPath}.");
+
+            return assetPaths.ToArray();
         }
 
         private static void ValidatePackage(PackageDefinition package)
@@ -142,6 +189,50 @@ namespace FixedMathSharp.Build.Editor
             }
 
             return Path.GetFullPath(Path.Combine(GetProjectRoot(), assetPath));
+        }
+
+        private static string ToAssetPath(string absolutePath)
+        {
+            var projectRoot = GetProjectRoot().TrimEnd(
+                Path.DirectorySeparatorChar,
+                Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+            var fullPath = Path.GetFullPath(absolutePath);
+
+            if (!fullPath.StartsWith(projectRoot, StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException($"Expected path under Unity project root, got {absolutePath}");
+
+            return fullPath.Substring(projectRoot.Length).Replace('\\', '/');
+        }
+
+        private static string CombineAssetPath(string left, string right)
+        {
+            return $"{left.TrimEnd('/')}/{right.TrimStart('/')}";
+        }
+
+        private static void CopyDirectory(string sourceDirectory, string destinationDirectory)
+        {
+            Directory.CreateDirectory(destinationDirectory);
+
+            foreach (var directoryPath in Directory.EnumerateDirectories(sourceDirectory, "*", SearchOption.AllDirectories))
+            {
+                var relativePath = Path.GetRelativePath(sourceDirectory, directoryPath);
+                Directory.CreateDirectory(Path.Combine(destinationDirectory, relativePath));
+            }
+
+            foreach (var filePath in Directory.EnumerateFiles(sourceDirectory, "*", SearchOption.AllDirectories))
+            {
+                var relativePath = Path.GetRelativePath(sourceDirectory, filePath);
+                var destinationPath = Path.Combine(destinationDirectory, relativePath);
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath) ?? destinationDirectory);
+                File.Copy(filePath, destinationPath, true);
+            }
+        }
+
+        private static void DeleteMetaFileIfPresent(string assetPath)
+        {
+            var metaPath = assetPath + ".meta";
+            if (File.Exists(metaPath))
+                File.Delete(metaPath);
         }
 
         private static string GetProjectRoot()

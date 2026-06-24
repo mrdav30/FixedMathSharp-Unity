@@ -28,7 +28,6 @@ context.
 
 ## Current Package Facts
 
-- Package manifests currently declare version `5.0.0`.
 - Package manifests require Unity `2022.3` or newer.
 - This Unity host project currently uses Unity `6000.3.9f1` according to
   `../../ProjectSettings/ProjectVersion.txt`.
@@ -56,6 +55,33 @@ The sync-managed paths are:
 - `Runtime/Attributes`
 - `Runtime/Extensions`
 - `Samples/FixedMathSharpDemo/Scripts`
+
+## Unity Sample Authoring And Export Layout
+
+Unity package samples use two folder shapes in this repo:
+
+- `Samples/` is the local authoring mirror. It is visible in the Unity editor
+  so sample scenes, scripts, and references can be edited normally.
+- `Samples~/` is the distributable package copy used by Git/package-source
+  installs. Package manifests should point sample entries at `Samples~/...`.
+
+For package variants, `Samples/`, `Samples.meta`, and `Samples~.meta` are
+ignored by package-local `.gitignore` files. Do not commit package-variant
+`Samples/` folders or top-level `Samples~.meta` files.
+
+Keep nested `.meta` files inside samples. They preserve scene, prefab, material,
+asmdef, and script references when Unity imports samples into
+`Assets/Samples/...`.
+
+When shared sample scripts change, edit `Build/Base/Samples` first and run the
+package sync/export flow. The sync step hydrates missing package-variant
+`Samples/` folders from tracked `Samples~/` folders, then copies shared sample
+scripts into the visible authoring mirror. The exporter overwrites `Samples~/`
+from `Samples/` and explicitly excludes `Samples/` from the exported package.
+
+Unity hides tilde folders from the asset database, so the stock
+`.unitypackage` exporter should not be treated as the source of sample-package
+coverage unless a custom archive/export path is added.
 
 Package-specific files live directly in each package and are not copied from
 `Build/Base`, including:

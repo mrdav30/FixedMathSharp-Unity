@@ -13,6 +13,8 @@ namespace FixedMathSharp.Build.Editor
     public static class FixedMathSharpPackageSync
     {
         private const string BaseRootAssetPath = "Assets/Packages/Build/Base";
+        private const string AuthoringSamplesRelativePath = "Samples";
+        private const string DistributableSamplesRelativePath = "Samples~";
 
         private static readonly string[] PackageRootAssetPaths =
         {
@@ -31,7 +33,7 @@ namespace FixedMathSharp.Build.Editor
             ManagedEntry.Directory("Editor/Drawers"),
             ManagedEntry.Directory("Runtime/Attributes"),
             ManagedEntry.Directory("Runtime/Extensions"),
-            ManagedEntry.Directory("Samples~/FixedMathSharpDemo/Scripts")
+            ManagedEntry.Directory("Samples/FixedMathSharpDemo/Scripts")
         };
 
         [MenuItem("Tools/FixedMathSharp/Sync Managed Package Files")]
@@ -98,6 +100,7 @@ namespace FixedMathSharp.Build.Editor
         private static SyncSummary SyncPackage(string packageRootAssetPath)
         {
             var summary = new SyncSummary();
+            summary.Merge(EnsureAuthoringSamples(packageRootAssetPath));
 
             foreach (var managedEntry in ManagedEntries)
             {
@@ -106,6 +109,23 @@ namespace FixedMathSharp.Build.Editor
                     : SyncManagedFile(packageRootAssetPath, managedEntry.RelativePath));
             }
 
+            return summary;
+        }
+
+        private static SyncSummary EnsureAuthoringSamples(string packageRootAssetPath)
+        {
+            var summary = new SyncSummary();
+            var authoringDirectory = ToAbsolutePath(CombineAssetPath(packageRootAssetPath, AuthoringSamplesRelativePath));
+
+            if (Directory.Exists(authoringDirectory))
+                return summary;
+
+            var distributableDirectory = ToAbsolutePath(CombineAssetPath(packageRootAssetPath, DistributableSamplesRelativePath));
+            if (!Directory.Exists(distributableDirectory))
+                return summary;
+
+            CopyDirectory(distributableDirectory, authoringDirectory, ref summary);
+            DeleteMetaFileIfPresent(authoringDirectory);
             return summary;
         }
 
@@ -243,6 +263,26 @@ namespace FixedMathSharp.Build.Editor
             var metaPath = assetPath + ".meta";
             if (File.Exists(metaPath))
                 File.Delete(metaPath);
+        }
+
+        private static void CopyDirectory(string sourceDirectory, string destinationDirectory, ref SyncSummary summary)
+        {
+            Directory.CreateDirectory(destinationDirectory);
+
+            foreach (var directoryPath in Directory.EnumerateDirectories(sourceDirectory, "*", SearchOption.AllDirectories))
+            {
+                var relativePath = Path.GetRelativePath(sourceDirectory, directoryPath);
+                Directory.CreateDirectory(Path.Combine(destinationDirectory, relativePath));
+            }
+
+            foreach (var filePath in Directory.EnumerateFiles(sourceDirectory, "*", SearchOption.AllDirectories))
+            {
+                var relativePath = Path.GetRelativePath(sourceDirectory, filePath);
+                var destinationPath = Path.Combine(destinationDirectory, relativePath);
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath) ?? destinationDirectory);
+                File.Copy(filePath, destinationPath, true);
+                summary.CopiedFiles++;
+            }
         }
 
         private static bool FilesAreEqual(string sourcePath, string destinationPath)
