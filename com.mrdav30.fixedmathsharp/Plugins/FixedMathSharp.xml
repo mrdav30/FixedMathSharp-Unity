@@ -506,210 +506,188 @@
         </member>
         <member name="T:FixedMathSharp.Bounds.FixedBoundArea">
             <summary>
-            Represents a lightweight, axis-aligned bounding area with fixed-point precision, optimized for 2D or simplified 3D use cases.
+            Represents a normalized two-dimensional axis-aligned bounding area.
             </summary>
             <remarks>
-            The FixedBoundArea is designed for performance-critical scenarios where only a minimal bounding volume is required.
-            It offers fast containment and intersection checks with other bounds but lacks the full feature set of FixedBoundBox.
-            
-            Use Cases:
-            - Efficient spatial queries in 2D or constrained 3D spaces (e.g., terrain maps or collision grids).
-            - Simplified bounding volume checks where rotation or complex shape fitting is not needed.
-            - Can be used as a broad-phase bounding volume to cull objects before more precise checks with FixedBoundBox or FixedBoundSphere.
+            FixedMathSharp 2D geometry is plain <see cref="T:FixedMathSharp.Vector2d"/> plane math. Use
+            <see cref="M:FixedMathSharp.Bounds.FixedBoundArea.FromMinMax(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)"/>, <see cref="M:FixedMathSharp.Bounds.FixedBoundArea.FromCenterAndSize(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)"/>, or
+            <see cref="M:FixedMathSharp.Bounds.FixedBoundArea.FromCenterAndScope(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)"/> so construction intent is explicit.
             </remarks>
             <remarks>
             MemoryPack GenerateType: unmanaged<br/>
             <code>
-            <b>FixedMathSharp.Vector3d</b> Corner1<br/>
-            <b>FixedMathSharp.Vector3d</b> Corner2<br/>
+            <b>FixedMathSharp.Bounds.FixedBoundArea.BoundingAreaState</b> State<br/>
+            </code>
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector2d</b> Min<br/>
+            <b>FixedMathSharp.Vector2d</b> Max<br/>
             </code>
             </remarks>
         </member>
-        <member name="F:FixedMathSharp.Bounds.FixedBoundArea.Corner1">
+        <member name="T:FixedMathSharp.Bounds.FixedBoundArea.BoundingAreaState">
             <summary>
-            One of the corner points of the bounding area.
+            Represents the normalized serializable state of a two-dimensional axis-aligned bounding area.
             </summary>
         </member>
-        <member name="F:FixedMathSharp.Bounds.FixedBoundArea.Corner2">
+        <member name="F:FixedMathSharp.Bounds.FixedBoundArea.BoundingAreaState.Min">
+            <inheritdoc cref="P:FixedMathSharp.Bounds.FixedBoundArea.Min"/>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedBoundArea.BoundingAreaState.Max">
+            <inheritdoc cref="P:FixedMathSharp.Bounds.FixedBoundArea.Max"/>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.BoundingAreaState.#ctor(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
             <summary>
-            The opposite corner point of the bounding area.
+            Initializes a normalized state from minimum and maximum corners.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.#ctor(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.#ctor(FixedMathSharp.Bounds.FixedBoundArea.BoundingAreaState)">
             <summary>
-            Initializes a new instance of the FixedBoundArea struct with corner coordinates.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
-            <summary>
-            Initializes a new instance of the FixedBoundArea struct with two corner points.
+            Initializes a new instance from serialized or caller-provided state.
             </summary>
         </member>
         <member name="P:FixedMathSharp.Bounds.FixedBoundArea.Min">
             <summary>
-            The minimum corner of the bounding box.
+            The minimum corner of the area.
             </summary>
         </member>
         <member name="P:FixedMathSharp.Bounds.FixedBoundArea.Max">
             <summary>
-            The maximum corner of the bounding box.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.MinX">
-            <summary>
-            The minimum X coordinate of the bounding area.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.MaxX">
-            <summary>
-            Gets the greater X-coordinate value of the two corners that define the bounding area.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.MinY">
-            <summary>
-            Gets the minimum Y-coordinate value of the bounding area defined by Corner1 and Corner2.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.MaxY">
-            <summary>
-            Gets the maximum Y-coordinate value of the bounding area defined by the two corners.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.MinZ">
-            <summary>
-            Gets the minimum Z coordinate value of the bounding volume.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.MaxZ">
-            <summary>
-            Gets the maximum Z coordinate value between the two corners of the bounding box.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.Width">
-            <summary>
-            Calculates the width (X-axis) of the bounding area.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.Height">
-            <summary>
-            Calculates the height (Y-axis) of the bounding area.
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.Depth">
-            <summary>
-            Calculates the depth (Z-axis) of the bounding area.
+            The maximum corner of the area.
             </summary>
         </member>
         <member name="P:FixedMathSharp.Bounds.FixedBoundArea.Center">
             <summary>
-            The center point of the bounding area.
+            The center of the area.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Contains(FixedMathSharp.Vector3d)">
+        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.Size">
             <summary>
-            Determines if a point is inside the bounding area (including boundaries).
+            The total width and height of the area. Assigned values are normalized by absolute component value.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.Scope">
+            <summary>
+            The half-size of the area in both axes.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundArea.State">
+            <summary>
+            Gets or sets the current normalized state of the area.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.FromMinMax(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Creates a normalized area from minimum and maximum corners.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.FromCenterAndSize(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Creates an area from a center point and total size.
+            </summary>
+            <remarks>
+            Negative size components are normalized by absolute value.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.FromCenterAndScope(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Creates an area from a center point and half-size scope.
+            </summary>
+            <remarks>
+            Negative scope components are normalized by absolute value.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.SetMinMax(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Sets the normalized bounds of the area by specifying minimum and maximum points.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Contains(FixedMathSharp.Vector2d)">
+            <summary>
+            Determines whether the point is inside this area, including the boundary.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Contains(FixedMathSharp.Bounds.FixedBoundArea)">
             <summary>
-            Tests another bounding area against this bounding area.
+            Classifies another area against this area using boundary-inclusive overlap.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Contains(FixedMathSharp.Bounds.FixedBoundBox)">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Contains(FixedMathSharp.Bounds.FixedBoundCircle)">
             <summary>
-            Tests a bounding box against this bounding area.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Contains(FixedMathSharp.Bounds.FixedBoundSphere)">
-            <summary>
-            Tests a bounding sphere against this bounding area.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Contains(FixedMathSharp.Bounds.FixedBoundFrustum)">
-            <summary>
-            Tests a bounding frustum against this bounding area.
+            Classifies a circle against this area using boundary-inclusive overlap.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Intersects(FixedMathSharp.Bounds.FixedBoundArea)">
             <summary>
-            Checks whether another bounding area intersects this bounding area.
+            Determines whether this area overlaps another area, including boundary-only contact.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Intersects(FixedMathSharp.Bounds.FixedBoundBox)">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Intersects(FixedMathSharp.Bounds.FixedBoundCircle)">
             <summary>
-            Checks whether a bounding box intersects this bounding area.
+            Determines whether this area overlaps a circle, including boundary-only contact.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Intersects(FixedMathSharp.Bounds.FixedBoundSphere)">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.IntersectsStrict(FixedMathSharp.Bounds.FixedBoundArea)">
             <summary>
-            Checks whether a bounding sphere intersects this bounding area.
+            Determines whether this area overlaps another area with positive area on both axes.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Intersects(FixedMathSharp.Bounds.FixedBoundFrustum)">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.IntersectsStrict(FixedMathSharp.Bounds.FixedBoundCircle)">
             <summary>
-            Checks whether a bounding frustum intersects this bounding area.
+            Determines whether this area overlaps a circle with positive area.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.ProjectPoint(FixedMathSharp.Vector3d)">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.ClampPoint(FixedMathSharp.Vector2d)">
             <summary>
-            Projects a point into the bounding area by clamping it to the area extents.
+            Clamps a point to the area boundary or interior.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.ClampPoint(FixedMathSharp.Vector3d)">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.ProjectPoint(FixedMathSharp.Vector2d)">
             <summary>
-            Clamps a point to this bounding area, returning the point unchanged when it is already inside.
+            Projects a point onto this area by clamping it to the boundary or interior.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Deconstruct(FixedMathSharp.Vector3d@,FixedMathSharp.Vector3d@)">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Deconstruct(FixedMathSharp.Vector2d@,FixedMathSharp.Vector2d@)">
             <summary>
-            Deconstructs the bounding area into its stored corner points.
+            Deconstructs the area into normalized minimum and maximum corners.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Equals(FixedMathSharp.Bounds.FixedBoundArea)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.op_Equality(FixedMathSharp.Bounds.FixedBoundArea,FixedMathSharp.Bounds.FixedBoundArea)">
+            <summary>
+            Determines whether two areas have the same normalized bounds.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.op_Inequality(FixedMathSharp.Bounds.FixedBoundArea,FixedMathSharp.Bounds.FixedBoundArea)">
+            <summary>
+            Determines whether two areas have different normalized bounds.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Union(FixedMathSharp.Bounds.FixedBoundArea,FixedMathSharp.Bounds.FixedBoundArea)">
             <summary>
-            Creates a new bounding area that encloses both specified bounding areas.
+            Creates a new area that contains both input areas.
             </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.op_Equality(FixedMathSharp.Bounds.FixedBoundArea,FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Determines whether two FixedBoundArea instances are equal.
-            </summary>
-            <param name="left">The first FixedBoundArea to compare.</param>
-            <param name="right">The second FixedBoundArea to compare.</param>
-            <returns>true if the specified FixedBoundArea instances are equal; otherwise, false.</returns>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.op_Inequality(FixedMathSharp.Bounds.FixedBoundArea,FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Determines whether two FixedBoundArea instances are not equal.
-            </summary>
-            <param name="left">The first FixedBoundArea to compare.</param>
-            <param name="right">The second FixedBoundArea to compare.</param>
-            <returns>true if the specified FixedBoundArea instances are not equal; otherwise, false.</returns>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Equals(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.Equals(FixedMathSharp.Bounds.FixedBoundArea)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundArea.GetHashCode">
-            <inheritdoc/>
         </member>
         <member name="T:FixedMathSharp.Bounds.FixedBoundBox">
             <summary>
-            Represents an axis-aligned bounding box with fixed-point precision, capable of encapsulating 3D objects for more complex spatial checks.
+            Represents a normalized three-dimensional axis-aligned bounding box.
             </summary>
             <remarks>
-            The FixedBoundBox provides a more detailed representation of an object's spatial extent compared to FixedBoundArea. 
-            It is useful in 3D scenarios requiring more precise volume fitting and supports a wider range of operations, including more complex intersection checks.
-            
-            Use Cases:
-            - Encapsulating objects in 3D space for collision detection, ray intersection, or visibility testing.
-            - Used in physics engines, rendering pipelines, and 3D simulations to represent object boundaries.
-            - Supports more precise intersection tests than FixedBoundArea, making it ideal for detailed spatial queries.
+            Use <see cref="M:FixedMathSharp.Bounds.FixedBoundBox.FromMinMax(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)"/>, <see cref="M:FixedMathSharp.Bounds.FixedBoundBox.FromCenterAndSize(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)"/>, or
+            <see cref="M:FixedMathSharp.Bounds.FixedBoundBox.FromCenterAndScope(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)"/> so construction intent is explicit at the call site.
             </remarks>
             <remarks>
-            MemoryPack GenerateType: Object<br/>
+            MemoryPack GenerateType: unmanaged<br/>
             <code>
             <b>FixedMathSharp.Bounds.FixedBoundBox.BoundingBoxState</b> State<br/>
             </code>
@@ -721,6 +699,11 @@
             <b>FixedMathSharp.Vector3d</b> Max<br/>
             </code>
             </remarks>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedBoundBox.CornerCount">
+            <summary>
+            The number of stable corners exposed by <see cref="M:FixedMathSharp.Bounds.FixedBoundBox.GetCorner(System.Int32)"/> and <see cref="M:FixedMathSharp.Bounds.FixedBoundBox.CopyCorners(System.Span{FixedMathSharp.Vector3d})"/>.
+            </summary>
         </member>
         <member name="T:FixedMathSharp.Bounds.FixedBoundBox.BoundingBoxState">
             <summary>
@@ -741,16 +724,6 @@
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.BoundingBoxState.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <summary>
             Initializes a new instance of the BoundingBoxState class with the specified minimum and maximum coordinates.
-            </summary>
-        </member>
-        <member name="F:FixedMathSharp.Bounds.FixedBoundBox._vertices">
-            <summary>
-            Vertices of the bounding box.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
-            <summary>
-            Initializes a new instance of the FixedBoundBox struct with the specified center and size.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.#ctor(FixedMathSharp.Bounds.FixedBoundBox.BoundingBoxState)">
@@ -776,21 +749,42 @@
         </member>
         <member name="P:FixedMathSharp.Bounds.FixedBoundBox.Proportions">
             <summary>
-            The total size of the box (Width, Height, Depth). This is always twice the scope.
+            The total size of the box. This is always twice the scope.
             </summary>
+            <remarks>
+            Assigned values are normalized by absolute component value.
+            </remarks>
         </member>
         <member name="P:FixedMathSharp.Bounds.FixedBoundBox.Scope">
             <summary>
             The range (half-size) of the bounding box in all directions. Always half of the total size.
             </summary>
         </member>
-        <member name="P:FixedMathSharp.Bounds.FixedBoundBox.Vertices">
-            <inheritdoc cref="F:FixedMathSharp.Bounds.FixedBoundBox._vertices" />
-        </member>
         <member name="P:FixedMathSharp.Bounds.FixedBoundBox.State">
             <summary>
-            Gets or sets the current bounding box state, including its minimum and maximum coordinates.
+            Gets or sets the current normalized bounding box state, including its minimum and maximum coordinates.
             </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.FromMinMax(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Creates a normalized bounding box from minimum and maximum corners.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.FromCenterAndSize(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Creates a bounding box from a center point and total size.
+            </summary>
+            <remarks>
+            Negative size components are normalized by absolute value.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.FromCenterAndScope(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Creates a bounding box from a center point and half-size scope.
+            </summary>
+            <remarks>
+            Negative scope components are normalized by absolute value.
+            </remarks>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Orient(FixedMathSharp.Vector3d,System.Nullable{FixedMathSharp.Vector3d})">
             <summary>
@@ -804,13 +798,16 @@
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.SetMinMax(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <summary>
-            Sets the bounds of the bounding box by specifying its minimum and maximum points.
+            Sets the normalized bounds of the bounding box by specifying its minimum and maximum points.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.SetBoundingBox(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <summary>
             Configures the bounding box with the specified center and scope (half-size).
             </summary>
+            <remarks>
+            Negative scope components are normalized by absolute value.
+            </remarks>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Contains(FixedMathSharp.Vector3d)">
             <summary>
@@ -820,11 +817,6 @@
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Contains(FixedMathSharp.Bounds.FixedBoundBox)">
             <summary>
             Tests another bounding box against this bounding box.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Contains(FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Tests a bounding area against this bounding box.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Contains(FixedMathSharp.Bounds.FixedBoundSphere)">
@@ -839,17 +831,22 @@
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Intersects(FixedMathSharp.Bounds.FixedBoundBox)">
             <summary>
-            Checks whether another bounding box intersects this bounding box.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Intersects(FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Checks whether a bounding area intersects this bounding box.
+            Checks whether another bounding box intersects this bounding box, including boundary-only contact.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Intersects(FixedMathSharp.Bounds.FixedBoundSphere)">
             <summary>
-            Checks whether a bounding sphere intersects this bounding box.
+            Checks whether a bounding sphere intersects this bounding box, including boundary-only contact.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.IntersectsStrict(FixedMathSharp.Bounds.FixedBoundBox)">
+            <summary>
+            Checks whether another bounding box overlaps this bounding box with positive volume on every axis.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.IntersectsStrict(FixedMathSharp.Bounds.FixedBoundSphere)">
+            <summary>
+            Checks whether a bounding sphere overlaps this bounding box with positive volume.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Intersects(FixedMathSharp.Bounds.FixedBoundFrustum)">
@@ -893,36 +890,19 @@
             Finds the closest point on the surface of the bounding box to the specified point.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.GetOrGenerateVertices">
+        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.GetCorner(System.Int32)">
             <summary>
-            Generates the vertices of the bounding box based on its center and scope.
+            Gets a stable corner without allocating.
             </summary>
             <remarks>
-             Vertices[0]  near Bot left 
-             Vertices[1]  near Bot right 
-             Vertices[2]  near Top left
-             Vertices[3]  near Top right
-             Vertices[4]  far bot left
-             Vertices[5]  far bot right
-             Vertices[6]  far top left
-             Vertices[7]  far top right
-             ----
-             near quad
-             0 - 1 Bot left near to bot right near
-             2 - 3 Top left near to top right near
-             0 - 2 Bot left near to top left near
-             1 - 3 Bot right near to top right near
-             far quad
-             4 - 5 Bot left far to bot right far
-             6 - 7 Top left far to top right far
-             4 - 6 Bot left far to top left far
-             5 - 7 Bot right far to top right far
-             lines connecting near and far quads
-             0 - 4 Bot left near to bot left far
-             1 - 5 Bot right near to bot right far
-             2 - 6 Top left near to top left far
-             3 - 7 Top right near to top right far  
+            Corner order is: min/min/min, max/min/min, min/max/min, max/max/min,
+            min/min/max, max/min/max, min/max/max, max/max/max.
             </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundBox.CopyCorners(System.Span{FixedMathSharp.Vector3d})">
+            <summary>
+            Copies this box's corners into the destination span in <see cref="M:FixedMathSharp.Bounds.FixedBoundBox.GetCorner(System.Int32)"/> order.
+            </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.Union(FixedMathSharp.Bounds.FixedBoundBox,FixedMathSharp.Bounds.FixedBoundBox)">
             <summary>
@@ -952,6 +932,143 @@
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundBox.GetHashCode">
             <inheritdoc/>
+        </member>
+        <member name="T:FixedMathSharp.Bounds.FixedBoundCircle">
+            <summary>
+            Represents a normalized two-dimensional circular bound.
+            </summary>
+            <remarks>
+            Radius inputs are normalized by absolute value so a public circle cannot
+            retain a negative radius through construction, assignment, or state load.
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Bounds.FixedBoundCircle.BoundingCircleState</b> State<br/>
+            </code>
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector2d</b> Center<br/>
+            <b>FixedMathSharp.Fixed64</b> Radius<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:FixedMathSharp.Bounds.FixedBoundCircle.BoundingCircleState">
+            <summary>
+            Represents the normalized serializable state of a two-dimensional circular bound.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedBoundCircle.BoundingCircleState.Center">
+            <inheritdoc cref="P:FixedMathSharp.Bounds.FixedBoundCircle.Center"/>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedBoundCircle.BoundingCircleState.Radius">
+            <inheritdoc cref="P:FixedMathSharp.Bounds.FixedBoundCircle.Radius"/>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.BoundingCircleState.#ctor(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
+            <summary>
+            Initializes a normalized state from center and radius.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.#ctor(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
+            <summary>
+            Initializes a new instance from a center point and radius.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.#ctor(FixedMathSharp.Bounds.FixedBoundCircle.BoundingCircleState)">
+            <summary>
+            Initializes a new instance from serialized or caller-provided state.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundCircle.Center">
+            <summary>
+            The center point of the circle.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundCircle.Radius">
+            <summary>
+            The non-negative radius of the circle. Assigned values are normalized by absolute value.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundCircle.RadiusSquared">
+            <summary>
+            The squared radius of the circle.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundCircle.Bounds">
+            <summary>
+            The normalized axis-aligned area that contains the circle.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundCircle.State">
+            <summary>
+            Gets or sets the current normalized state of the circle.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.Contains(FixedMathSharp.Vector2d)">
+            <summary>
+            Determines whether the point is inside this circle, including the boundary.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.Contains(FixedMathSharp.Bounds.FixedBoundCircle)">
+            <summary>
+            Classifies another circle against this circle using boundary-inclusive overlap.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.Intersects(FixedMathSharp.Bounds.FixedBoundCircle)">
+            <summary>
+            Determines whether another circle intersects this circle, including boundary-only contact.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.Intersects(FixedMathSharp.Bounds.FixedBoundArea)">
+            <summary>
+            Determines whether an area intersects this circle, including boundary-only contact.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.IntersectsStrict(FixedMathSharp.Bounds.FixedBoundCircle)">
+            <summary>
+            Determines whether another circle overlaps this circle with positive area.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.IntersectsStrict(FixedMathSharp.Bounds.FixedBoundArea)">
+            <summary>
+            Determines whether an area overlaps this circle with positive area.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.ClampPoint(FixedMathSharp.Vector2d)">
+            <summary>
+            Clamps a point to this circle, returning the point unchanged when it is already inside.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.ProjectPoint(FixedMathSharp.Vector2d)">
+            <summary>
+            Projects a point onto the circle boundary. The center is returned when the direction is degenerate.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.Deconstruct(FixedMathSharp.Vector2d@,FixedMathSharp.Fixed64@)">
+            <summary>
+            Deconstructs the circle into center and normalized radius.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.Equals(FixedMathSharp.Bounds.FixedBoundCircle)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.op_Equality(FixedMathSharp.Bounds.FixedBoundCircle,FixedMathSharp.Bounds.FixedBoundCircle)">
+            <summary>
+            Determines whether two circles have the same normalized state.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundCircle.op_Inequality(FixedMathSharp.Bounds.FixedBoundCircle,FixedMathSharp.Bounds.FixedBoundCircle)">
+            <summary>
+            Determines whether two circles have different normalized state.
+            </summary>
         </member>
         <member name="T:FixedMathSharp.Bounds.FixedBoundFrustum">
             <summary>
@@ -1046,11 +1163,6 @@
             Tests a bounding box against this frustum.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundFrustum.Contains(FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Tests a bounding area against this frustum.
-            </summary>
-        </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundFrustum.Contains(FixedMathSharp.Bounds.FixedBoundSphere)">
             <summary>
             Tests a bounding sphere against this frustum.
@@ -1064,11 +1176,6 @@
         <member name="M:FixedMathSharp.Bounds.FixedBoundFrustum.Intersects(FixedMathSharp.Bounds.FixedBoundBox)">
             <summary>
             Checks whether a bounding box intersects this frustum.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundFrustum.Intersects(FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Checks whether a bounding area intersects this frustum.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundFrustum.Intersects(FixedMathSharp.Bounds.FixedBoundSphere)">
@@ -1154,24 +1261,56 @@
             <remarks>
             MemoryPack GenerateType: unmanaged<br/>
             <code>
+            <b>FixedMathSharp.Bounds.FixedBoundSphere.BoundingSphereState</b> State<br/>
+            </code>
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
             <b>FixedMathSharp.Vector3d</b> Center<br/>
             <b>FixedMathSharp.Fixed64</b> Radius<br/>
             </code>
             </remarks>
         </member>
-        <member name="F:FixedMathSharp.Bounds.FixedBoundSphere.Center">
+        <member name="T:FixedMathSharp.Bounds.FixedBoundSphere.BoundingSphereState">
             <summary>
-            The center point of the sphere.
+            Represents the normalized serializable state of a three-dimensional spherical bound.
             </summary>
         </member>
-        <member name="F:FixedMathSharp.Bounds.FixedBoundSphere.Radius">
+        <member name="F:FixedMathSharp.Bounds.FixedBoundSphere.BoundingSphereState.Center">
+            <inheritdoc cref="P:FixedMathSharp.Bounds.FixedBoundSphere.Center"/>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedBoundSphere.BoundingSphereState.Radius">
+            <inheritdoc cref="P:FixedMathSharp.Bounds.FixedBoundSphere.Radius"/>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.BoundingSphereState.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
             <summary>
-            The radius of the sphere.
+            Initializes a normalized state from center and radius.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedBoundSphere._radius">
+            <summary>
+            The radius backing field.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
             <summary>
             Initializes a new instance of the FixedBoundSphere struct with the specified center and radius.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.#ctor(FixedMathSharp.Bounds.FixedBoundSphere.BoundingSphereState)">
+            <summary>
+            Initializes a new instance from serialized or caller-provided state.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundSphere.Center">
+            <summary>
+            The center point of the sphere.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundSphere.Radius">
+            <summary>
+            The non-negative radius of the sphere. Assigned values are normalized by absolute value.
             </summary>
         </member>
         <member name="P:FixedMathSharp.Bounds.FixedBoundSphere.Min">
@@ -1195,6 +1334,11 @@
         <member name="P:FixedMathSharp.Bounds.FixedBoundSphere.RadiusSquared">
             <summary>
             The squared radius of the sphere.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedBoundSphere.State">
+            <summary>
+            Gets or sets the current normalized state of the sphere.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.CreateFromBoundingBox(FixedMathSharp.Bounds.FixedBoundBox)">
@@ -1239,11 +1383,6 @@
             Tests a bounding box against this sphere.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.Contains(FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Tests a bounding area against this sphere.
-            </summary>
-        </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.Contains(FixedMathSharp.Bounds.FixedBoundSphere)">
             <summary>
             Tests another sphere against this sphere.
@@ -1256,17 +1395,22 @@
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.Intersects(FixedMathSharp.Bounds.FixedBoundBox)">
             <summary>
-            Checks whether a bounding box intersects this sphere.
-            </summary>
-        </member>
-        <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.Intersects(FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Checks whether a bounding area intersects this sphere.
+            Checks whether a bounding box intersects this sphere, including boundary-only contact.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.Intersects(FixedMathSharp.Bounds.FixedBoundSphere)">
             <summary>
-            Checks whether another sphere intersects this sphere.
+            Checks whether another sphere intersects this sphere, including boundary-only contact.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.IntersectsStrict(FixedMathSharp.Bounds.FixedBoundBox)">
+            <summary>
+            Checks whether a bounding box overlaps this sphere with positive volume.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.IntersectsStrict(FixedMathSharp.Bounds.FixedBoundSphere)">
+            <summary>
+            Checks whether another sphere overlaps this sphere with positive volume.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedBoundSphere.Intersects(FixedMathSharp.Bounds.FixedBoundFrustum)">
@@ -1432,11 +1576,6 @@
             Classifies a bounding box relative to this plane.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedPlane.Intersects(FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Classifies a bounding area relative to this plane.
-            </summary>
-        </member>
         <member name="M:FixedMathSharp.Bounds.FixedPlane.Intersects(FixedMathSharp.Bounds.FixedBoundSphere)">
             <summary>
             Classifies a bounding sphere relative to this plane.
@@ -1527,11 +1666,6 @@
             Finds the first forward intersection with the specified bounding box.
             </summary>
         </member>
-        <member name="M:FixedMathSharp.Bounds.FixedRay.Intersects(FixedMathSharp.Bounds.FixedBoundArea)">
-            <summary>
-            Finds the first forward intersection with the specified bounding area.
-            </summary>
-        </member>
         <member name="M:FixedMathSharp.Bounds.FixedRay.Intersects(FixedMathSharp.Bounds.FixedBoundSphere)">
             <summary>
             Finds the first forward intersection with the specified bounding sphere.
@@ -1565,6 +1699,510 @@
         </member>
         <member name="M:FixedMathSharp.Bounds.FixedRay.GetHashCode">
             <inheritdoc/>
+        </member>
+        <member name="T:FixedMathSharp.Bounds.FixedRay2d">
+            <summary>
+            Represents a ray with an origin and direction in two-dimensional fixed-point space.
+            </summary>
+            <remarks>
+            The direction is not normalized by construction. Intersection methods return
+            the ray parameter for the first forward hit; when <see cref="F:FixedMathSharp.Bounds.FixedRay2d.Direction"/> is
+            normalized, that parameter is also the distance from <see cref="F:FixedMathSharp.Bounds.FixedRay2d.Position"/>.
+            </remarks>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector2d</b> Position<br/>
+            <b>FixedMathSharp.Vector2d</b> Direction<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedRay2d.Position">
+            <summary>
+            The origin of the ray.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedRay2d.Direction">
+            <summary>
+            The direction of the ray.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.#ctor(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Initializes a new ray with the specified origin and direction.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.GetPoint(FixedMathSharp.Fixed64)">
+            <summary>
+            Gets the point at the specified ray parameter.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.Intersects(FixedMathSharp.Bounds.FixedBoundArea)">
+            <summary>
+            Finds the first forward intersection with the specified bounding area, including boundary-only contact.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.Intersects(FixedMathSharp.Bounds.FixedBoundCircle)">
+            <summary>
+            Finds the first forward intersection with the specified bounding circle, including boundary-only contact.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.Deconstruct(FixedMathSharp.Vector2d@,FixedMathSharp.Vector2d@)">
+            <summary>
+            Deconstructs the ray into origin and direction.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.op_Equality(FixedMathSharp.Bounds.FixedRay2d,FixedMathSharp.Bounds.FixedRay2d)">
+            <summary>
+            Determines whether two rays are equal.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.op_Inequality(FixedMathSharp.Bounds.FixedRay2d,FixedMathSharp.Bounds.FixedRay2d)">
+            <summary>
+            Determines whether two rays are not equal.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.Equals(FixedMathSharp.Bounds.FixedRay2d)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedRay2d.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:FixedMathSharp.Bounds.FixedSegment">
+            <summary>
+            Represents a finite line segment in three-dimensional fixed-point space.
+            </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector3d</b> Start<br/>
+            <b>FixedMathSharp.Vector3d</b> End<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedSegment.Start">
+            <summary>
+            The start point of the segment.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedSegment.End">
+            <summary>
+            The end point of the segment.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Initializes a new segment from start and end points.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedSegment.Delta">
+            <summary>
+            The vector from <see cref="F:FixedMathSharp.Bounds.FixedSegment.Start"/> to <see cref="F:FixedMathSharp.Bounds.FixedSegment.End"/>.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedSegment.Length">
+            <summary>
+            The segment length.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedSegment.LengthSquared">
+            <summary>
+            The squared segment length.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedSegment.Bounds">
+            <summary>
+            The normalized axis-aligned box that contains this segment.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.ClosestPoint(FixedMathSharp.Vector3d)">
+            <summary>
+            Finds the closest point on this finite segment to the supplied point.
+            </summary>
+            <remarks>
+            Zero-length segments deterministically return <see cref="F:FixedMathSharp.Bounds.FixedSegment.Start"/>.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.DistanceSquared(FixedMathSharp.Vector3d)">
+            <summary>
+            Computes the squared distance from the supplied point to this finite segment.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.Deconstruct(FixedMathSharp.Vector3d@,FixedMathSharp.Vector3d@)">
+            <summary>
+            Deconstructs the segment into start and end points.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.op_Equality(FixedMathSharp.Bounds.FixedSegment,FixedMathSharp.Bounds.FixedSegment)">
+            <summary>
+            Determines whether two segments have the same ordered endpoints.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.op_Inequality(FixedMathSharp.Bounds.FixedSegment,FixedMathSharp.Bounds.FixedSegment)">
+            <summary>
+            Determines whether two segments have different ordered endpoints.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.Equals(FixedMathSharp.Bounds.FixedSegment)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:FixedMathSharp.Bounds.FixedSegment2d">
+            <summary>
+            Represents a finite line segment in two-dimensional fixed-point space.
+            </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector2d</b> Start<br/>
+            <b>FixedMathSharp.Vector2d</b> End<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedSegment2d.Start">
+            <summary>
+            The start point of the segment.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedSegment2d.End">
+            <summary>
+            The end point of the segment.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.#ctor(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Initializes a new segment from start and end points.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedSegment2d.Delta">
+            <summary>
+            The vector from <see cref="F:FixedMathSharp.Bounds.FixedSegment2d.Start"/> to <see cref="F:FixedMathSharp.Bounds.FixedSegment2d.End"/>.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedSegment2d.Length">
+            <summary>
+            The segment length.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedSegment2d.LengthSquared">
+            <summary>
+            The squared segment length.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedSegment2d.Bounds">
+            <summary>
+            The normalized axis-aligned area that contains this segment.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.ClosestPoint(FixedMathSharp.Vector2d)">
+            <summary>
+            Finds the closest point on this finite segment to the supplied point.
+            </summary>
+            <remarks>
+            Zero-length segments deterministically return <see cref="F:FixedMathSharp.Bounds.FixedSegment2d.Start"/>.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.DistanceSquared(FixedMathSharp.Vector2d)">
+            <summary>
+            Computes the squared distance from the supplied point to this finite segment.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.Deconstruct(FixedMathSharp.Vector2d@,FixedMathSharp.Vector2d@)">
+            <summary>
+            Deconstructs the segment into start and end points.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.op_Equality(FixedMathSharp.Bounds.FixedSegment2d,FixedMathSharp.Bounds.FixedSegment2d)">
+            <summary>
+            Determines whether two segments have the same ordered endpoints.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.op_Inequality(FixedMathSharp.Bounds.FixedSegment2d,FixedMathSharp.Bounds.FixedSegment2d)">
+            <summary>
+            Determines whether two segments have different ordered endpoints.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.Equals(FixedMathSharp.Bounds.FixedSegment2d)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedSegment2d.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:FixedMathSharp.Bounds.FixedTriangle">
+            <summary>
+            Represents a triangle in three-dimensional fixed-point space.
+            </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector3d</b> A<br/>
+            <b>FixedMathSharp.Vector3d</b> B<br/>
+            <b>FixedMathSharp.Vector3d</b> C<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle.VertexCount">
+            <summary>
+            The number of vertices in a triangle.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle.EdgeCount">
+            <summary>
+            The number of edges in a triangle.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle.A">
+            <summary>
+            The first vertex.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle.B">
+            <summary>
+            The second vertex.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle.C">
+            <summary>
+            The third vertex.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.#ctor(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
+            <summary>
+            Initializes a triangle from ordered vertices.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle.UnnormalizedNormal">
+            <summary>
+            The unnormalized triangle normal from <c>cross(B - A, C - A)</c>.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle.Normal">
+            <summary>
+            The normalized triangle normal. Degenerate triangles return <see cref="P:FixedMathSharp.Vector3d.Zero"/>.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle.Area">
+            <summary>
+            The non-negative surface area of the triangle.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle.Bounds">
+            <summary>
+            The normalized axis-aligned box that contains all vertices.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle.Centroid">
+            <summary>
+            The arithmetic center of the three vertices.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle.IsDegenerate">
+            <summary>
+            Returns true when the triangle has no positive surface area.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.GetVertex(System.Int32)">
+            <summary>
+            Gets a vertex by stable index: 0 = A, 1 = B, 2 = C.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.GetEdge(System.Int32)">
+            <summary>
+            Gets an edge by stable index: 0 = AB, 1 = BC, 2 = CA.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.GetPoint(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Gets the point represented by barycentric weights for vertices B and C.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.TryGetProjectedBarycentricWeights(FixedMathSharp.Vector3d,FixedMathSharp.Fixed64@,FixedMathSharp.Fixed64@,FixedMathSharp.Fixed64@)">
+            <summary>
+            Computes barycentric weights for the point projected onto this triangle's plane.
+            </summary>
+            <returns>
+            True when the triangle has non-degenerate area; false when weights cannot be solved.
+            </returns>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.Contains(FixedMathSharp.Vector3d)">
+            <summary>
+            Determines whether the point lies on or inside this triangle.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.ClosestPoint(FixedMathSharp.Vector3d)">
+            <summary>
+            Finds the closest point on or inside this triangle to the supplied point.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.DistanceSquared(FixedMathSharp.Vector3d)">
+            <summary>
+            Computes the squared distance from the supplied point to this triangle.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.Deconstruct(FixedMathSharp.Vector3d@,FixedMathSharp.Vector3d@,FixedMathSharp.Vector3d@)">
+            <summary>
+            Deconstructs the triangle into ordered vertices.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.op_Equality(FixedMathSharp.Bounds.FixedTriangle,FixedMathSharp.Bounds.FixedTriangle)">
+            <summary>
+            Determines whether two triangles have the same ordered vertices.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.op_Inequality(FixedMathSharp.Bounds.FixedTriangle,FixedMathSharp.Bounds.FixedTriangle)">
+            <summary>
+            Determines whether two triangles have different ordered vertices.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.Equals(FixedMathSharp.Bounds.FixedTriangle)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:FixedMathSharp.Bounds.FixedTriangle2d">
+            <summary>
+            Represents a triangle in two-dimensional fixed-point space.
+            </summary>
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>FixedMathSharp.Vector2d</b> A<br/>
+            <b>FixedMathSharp.Vector2d</b> B<br/>
+            <b>FixedMathSharp.Vector2d</b> C<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle2d.VertexCount">
+            <summary>
+            The number of vertices in a triangle.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle2d.EdgeCount">
+            <summary>
+            The number of edges in a triangle.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle2d.A">
+            <summary>
+            The first vertex.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle2d.B">
+            <summary>
+            The second vertex.
+            </summary>
+        </member>
+        <member name="F:FixedMathSharp.Bounds.FixedTriangle2d.C">
+            <summary>
+            The third vertex.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.#ctor(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Initializes a triangle from ordered vertices.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle2d.SignedArea">
+            <summary>
+            The signed area of the triangle. Positive values indicate counter-clockwise winding.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle2d.Area">
+            <summary>
+            The non-negative area of the triangle.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle2d.Bounds">
+            <summary>
+            The normalized axis-aligned area that contains all vertices.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle2d.Centroid">
+            <summary>
+            The arithmetic center of the three vertices.
+            </summary>
+        </member>
+        <member name="P:FixedMathSharp.Bounds.FixedTriangle2d.IsDegenerate">
+            <summary>
+            Returns true when the triangle has no positive area.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.GetVertex(System.Int32)">
+            <summary>
+            Gets a vertex by stable index: 0 = A, 1 = B, 2 = C.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.GetEdge(System.Int32)">
+            <summary>
+            Gets an edge by stable index: 0 = AB, 1 = BC, 2 = CA.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.GetPoint(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Gets the point represented by barycentric weights for vertices B and C.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.TryGetBarycentricWeights(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64@,FixedMathSharp.Fixed64@,FixedMathSharp.Fixed64@)">
+            <summary>
+            Computes barycentric weights for a point relative to this triangle.
+            </summary>
+            <returns>
+            True when the triangle has non-degenerate area; false when weights cannot be solved.
+            </returns>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.Contains(FixedMathSharp.Vector2d)">
+            <summary>
+            Determines whether the point is inside the triangle, including edges and vertices.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.ClosestPoint(FixedMathSharp.Vector2d)">
+            <summary>
+            Finds the closest point on or inside this triangle to the supplied point.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.DistanceSquared(FixedMathSharp.Vector2d)">
+            <summary>
+            Computes the squared distance from the supplied point to this triangle.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.Deconstruct(FixedMathSharp.Vector2d@,FixedMathSharp.Vector2d@,FixedMathSharp.Vector2d@)">
+            <summary>
+            Deconstructs the triangle into ordered vertices.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.op_Equality(FixedMathSharp.Bounds.FixedTriangle2d,FixedMathSharp.Bounds.FixedTriangle2d)">
+            <summary>
+            Determines whether two triangles have the same ordered vertices.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.op_Inequality(FixedMathSharp.Bounds.FixedTriangle2d,FixedMathSharp.Bounds.FixedTriangle2d)">
+            <summary>
+            Determines whether two triangles have different ordered vertices.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.Equals(FixedMathSharp.Bounds.FixedTriangle2d)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FixedMathSharp.Bounds.FixedTriangle2d.GetHashCode">
+            <inheritdoc />
         </member>
         <member name="T:FixedMathSharp.Axis3d">
             <summary>
@@ -4641,11 +5279,6 @@
             <param name="degrees">The vector with components in degrees.</param>
             <returns>A new vector with components converted to radians.</returns>
         </member>
-        <member name="P:FixedMathSharp.Vector2d.DefaultRotation">
-            <summary>
-            (1, 0)
-            </summary>
-        </member>
         <member name="P:FixedMathSharp.Vector2d.Forward">
             <summary>
             The named 2D plane forward direction (0, 1).
@@ -4655,14 +5288,14 @@
             <see cref="P:FixedMathSharp.Vector2d.Right"/> when its angle argument is zero.
             </remarks>
         </member>
+        <member name="P:FixedMathSharp.Vector2d.Backward">
+            <summary>
+            (0, -1)
+            </summary>
+        </member>
         <member name="P:FixedMathSharp.Vector2d.Right">
             <summary>
             The named 2D plane right direction (1, 0).
-            </summary>
-        </member>
-        <member name="P:FixedMathSharp.Vector2d.Down">
-            <summary>
-            (0, -1)
             </summary>
         </member>
         <member name="P:FixedMathSharp.Vector2d.Left">
@@ -5233,6 +5866,17 @@
             Linearly interpolates between two vectors.
             </summary>
         </member>
+        <member name="M:FixedMathSharp.Vector2d.BarycentricCoordinates(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Calculates a position between three points using barycentric weights for the second and third vertices.
+            </summary>
+            <param name="coordA">The first vertex of the triangle.</param>
+            <param name="coordB">The second vertex of the triangle.</param>
+            <param name="coordC">The third vertex of the triangle.</param>
+            <param name="weightB">The barycentric weight for the second vertex.</param>
+            <param name="weightC">The barycentric weight for the third vertex.</param>
+            <returns>The cartesian translation represented by the barycentric coordinates within the triangle.</returns>
+        </member>
         <member name="M:FixedMathSharp.Vector2d.Distance(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
             <summary>
             Computes the distance between two vectors using the Euclidean distance formula.
@@ -5246,6 +5890,18 @@
             Calculates the squared distance between two vectors, avoiding the need for a square root operation.
             </summary>
             <returns>The squared distance between the two vectors.</returns>
+        </member>
+        <member name="M:FixedMathSharp.Vector2d.ClosestPointOnLineSegment(FixedMathSharp.Vector2d,FixedMathSharp.Vector2d,FixedMathSharp.Vector2d)">
+            <summary>
+            Calculates the closest point on a finite line segment to a given point.
+            </summary>
+            <param name="point">The point to project onto the segment.</param>
+            <param name="start">The start of the line segment.</param>
+            <param name="end">The end of the line segment.</param>
+            <returns>The closest point on the segment to the given point.</returns>
+            <remarks>
+            Zero-length segments deterministically return <paramref name="start"/>.
+            </remarks>
         </member>
         <member name="M:FixedMathSharp.Vector2d.ForwardDirection(FixedMathSharp.Fixed64)">
             <summary>
