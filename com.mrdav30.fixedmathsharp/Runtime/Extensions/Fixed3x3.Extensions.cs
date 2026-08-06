@@ -291,7 +291,7 @@ namespace FixedMathSharp
 
         private static void DecomposeRotationScale(Fixed3x3 matrix, out FixedQuaternion rotation, out Vector3d scale)
         {
-            scale = Fixed3x3.ExtractScale(matrix);
+            scale = Fixed3x3.ExtractLossyScale(matrix);
 
             Fixed64 scaleX = scale.X == Fixed64.Zero ? Fixed64.One : scale.X;
             Fixed64 scaleY = scale.Y == Fixed64.Zero ? Fixed64.One : scale.Y;

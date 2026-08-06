@@ -1,4 +1,4 @@
-using FixedMathSharp.Bounds;
+using FixedMathSharp.Geometry;
 using UnityEngine;
 
 using UnityBounds = UnityEngine.Bounds;
