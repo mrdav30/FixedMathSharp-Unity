@@ -2,65 +2,48 @@
 
 [![Build](https://github.com/mrdav30/FixedMathSharp-Unity/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/mrdav30/FixedMathSharp-Unity/actions/workflows/build-and-test.yml)
 
-Unity package host for [FixedMathSharp](https://github.com/mrdav30/FixedMathSharp).
+Unity package host for [FixedMathSharp](https://github.com/mrdav30/FixedMathSharp). Both variants contain the same deterministic math library and Unity math, geometry, bounds, and transform adapters.
 
-This repository contains two installable Unity Package Manager variants:
+## Choose a Package
 
-- `com.mrdav30.fixedmathsharp`
-- `com.mrdav30.fixedmathsharp.lean`
+### Standard
 
-Both packages provide the same core deterministic fixed-point math library and Unity
-interop helpers. The difference is whether the package includes `MemoryPack`.
-
-## Which Package Should I Use?
-
-### `com.mrdav30.fixedmathsharp`
-
-Standard package with `MemoryPack` support enabled.
-
-Install:
+`com.mrdav30.fixedmathsharp` includes the MemoryPack serializer/runtime integration.
 
 `https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp`
 
-Use it when:
+### Lean
 
-- You want the default package.
-- You want the built-in `MemoryPack` serialization path.
-- Burst AOT compatibility is not your main concern.
-
-### `com.mrdav30.fixedmathsharp.lean`
-
-Package without `MemoryPack`.
-
-Install:
+`com.mrdav30.fixedmathsharp.lean` omits the MemoryPack serializer/runtime and is the safer default for Burst AOT. It includes only `Chronicler.MemoryPackShim.dll`, an attribute-shape compatibility assembly required by the Lean core DLL; it does not serialize data.
 
 `https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean`
 
-Use it when:
+## Migrating to v7
 
-- You use Unity Burst AOT.
-- You want the safer choice for Burst-oriented builds.
-- You want to avoid the `MemoryPack` dependency.
-- You plan to use your own serialization stack.
+Read the [FixedMathSharp v6-to-v7 migration guide](https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x) for core changes.
 
-## Why Two Variants?
+The Unity companion also makes projection, allocation, and failure semantics explicit:
 
-If you use Unity Burst AOT, prefer the `Lean` build. `MemoryPack`'s Unity
-support is centered on IL2CPP via its .NET source-generator path, so the
-no-MemoryPack variant is the safer choice for Burst AOT scenarios.
+| v6 Unity API | v7 Unity API |
+| --- | --- |
+| `Vector3.ToVector2d()` | `ToVector2dXY()` or `ToVector2dXZ()` |
+| `Vector2.ToVector3d(y)` | `ToVector3dXY(z)` or `ToVector3dXZ(y)` |
+| `Vector2d.ToVector3(y)` | `ToVector3XY(z)` or `ToVector3XZ(y)` |
+| `Vector3d.ToVector2()` | `ToVector2XY()` or `ToVector2XZ()` |
+| `Bounds.ToBoundingBox()` / `ToBoundingArea()` | `ToFixedBoundBox()` / `ToFixedBoundAreaXZ()` |
+| `FixedBoundArea.ToBounds()` | `ToBoundsXZ(y)` |
+| `Fixed4x4.ToTransformLocal/World()` | `CreateTransformLocal/World()` |
+| `Fixed3x3.ToTransformRotationLocal/World()` | `CreateTransformRotationLocal/World()` |
+| 3x3 rotation-scale transform helpers | `FixedTransform` components or strict `Fixed4x4` application |
 
-## What Both Packages Include
+Fixed-to-Unity rays and matrix application now provide atomic `Try*` APIs. Their throwing wrappers reject non-unit ray directions, shear, perspective, singular matrices, or unrepresentable hierarchy conversions instead of silently normalizing or partially mutating a `Transform`.
 
-- Deterministic fixed-point math via `Fixed64`
-- Core math, trigonometry, vectors, quaternions, and matrices
-- Bounds and geometry helpers
-- Unity transform, matrix, and bounds interop
-- Editor helpers and sample content
+Unity uses column-vector matrices while FixedMathSharp uses row-vector matrices. v7 transposes matrix elements during conversion so one-way point and direction transforms have matching semantics.
 
-## Notes
+## Included
 
-- This repository is currently intended for Git URL installation rather than an
-  official package registry.
-- Each package has its own `README.md` with package-specific installation guidance.
-- The underlying parent library lives here:
-  [FixedMathSharp](https://github.com/mrdav30/FixedMathSharp)
+- Deterministic `Fixed64` math, vectors, quaternions, matrices, bounds, and geometry
+- Unity vector, ray, plane, rectangle, bounds, matrix, and `FixedTransform` interop
+- Fixed-point inspector drawers and a sample scene
+
+These packages are installed by Git URL; they are not currently published to a Unity registry.

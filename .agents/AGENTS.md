@@ -7,8 +7,9 @@ engine-agnostic FixedMathSharp core library. It ships two installable package
 variants:
 
 - `com.mrdav30.fixedmathsharp` - standard package with `MemoryPack` support.
-- `com.mrdav30.fixedmathsharp.lean` - no-MemoryPack package, preferred for
-  Burst AOT-oriented Unity projects.
+- `com.mrdav30.fixedmathsharp.lean` - package without the MemoryPack
+  serializer/runtime, preferred for Burst AOT-oriented Unity projects. It
+  includes the attribute-only `Chronicler.MemoryPackShim` assembly.
 
 The actual Git repository root is `Assets/Packages`, not the outer Unity
 project root. The outer project exists so Unity can compile, sync, export, and
@@ -29,12 +30,13 @@ context.
 ## Current Package Facts
 
 - Package manifests require Unity `2022.3` or newer.
-- This Unity host project currently uses Unity `6000.3.9f1` according to
+- This Unity host project currently uses Unity `6000.5.0f1` according to
   `../../ProjectSettings/ProjectVersion.txt`.
 - Both packages include the precompiled FixedMathSharp plugin assets under
   `Plugins/`.
-- The standard package carries the MemoryPack-related dependencies; the Lean
-  package intentionally omits MemoryPack.
+- The standard package carries the MemoryPack serializer/runtime dependencies.
+  The Lean package carries only `Chronicler.MemoryPackShim` for attribute
+  compatibility and intentionally omits MemoryPack runtime serialization.
 
 ## Source Of Truth
 
@@ -110,7 +112,7 @@ or exported assets change:
 | `Build/Base` | Shared managed Unity code copied into both package variants. |
 | `Build/Editor` | Unity editor tooling for syncing and exporting packages. |
 | `com.mrdav30.fixedmathsharp` | Standard UPM package with MemoryPack support. |
-| `com.mrdav30.fixedmathsharp.lean` | Lean UPM package without MemoryPack. |
+| `com.mrdav30.fixedmathsharp.lean` | Lean UPM package without the MemoryPack serializer/runtime; includes the attribute-only Chronicler shim. |
 | `Build/Base/Runtime/Extensions` | Shared Unity adapter helpers for transforms, matrices, bounds, vectors, and quaternions. |
 | `Build/Base/Runtime/Attributes` | Shared Unity-facing attributes such as fixed-number angle and vector rotation attributes. |
 | `Build/Base/Editor/Drawers` | Shared Unity inspector drawers for FixedMathSharp types and Unity-facing attributes. |
@@ -156,10 +158,11 @@ library's deterministic design.
   path is written back.
 - Keep editor-only code under `Editor/` and runtime package code under
   `Runtime/`. Editor asmdefs must include only the `Editor` platform.
-- Do not make the Lean package depend on MemoryPack or MemoryPack-specific
-  runtime APIs.
+- Do not make the Lean package depend on the MemoryPack serializer/runtime or
+  MemoryPack-specific runtime APIs. Its attribute-only Chronicler shim is the
+  intentional exception.
 - Keep both package variants behaviorally aligned except for the intentional
-  MemoryPack dependency difference.
+  serializer/runtime integration difference.
 
 ## Sync And Verification Commands
 
@@ -224,7 +227,8 @@ When bumping the FixedMathSharp core library:
   appropriate.
 - Keep standard-package dependency DLLs aligned with the MemoryPack-enabled
   build.
-- Keep the Lean package free of MemoryPack dependencies.
+- Keep the Lean package free of the MemoryPack serializer/runtime and keep its
+  `Chronicler.MemoryPackShim` plugin aligned with the Lean core build.
 - Update both `package.json` files, package READMEs, and the root README when
   the public version, install guidance, dependencies, or variant behavior
   changes.
@@ -234,7 +238,7 @@ When bumping the FixedMathSharp core library:
 
 - Keep the root README focused on package selection and Git URL installation.
 - Keep package READMEs package-specific: standard explains MemoryPack support,
-  Lean explains the no-MemoryPack/Burst AOT rationale.
+  Lean explains the no-MemoryPack-runtime/Burst AOT rationale and attribute shim.
 - Do not duplicate long core FixedMathSharp API documentation here. Link to or
   align with the core repo instead.
 - If a Unity package behavior depends on a core FixedMathSharp convention,

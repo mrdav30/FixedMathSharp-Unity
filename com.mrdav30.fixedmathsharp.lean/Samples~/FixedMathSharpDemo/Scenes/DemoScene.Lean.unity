@@ -355,50 +355,17 @@ MonoBehaviour:
   applyToTargets: 1
   localMatrixTarget: {fileID: 1474362739}
   worldMatrixTarget: {fileID: 719156892}
+  localFixedTransformTarget: {fileID: 1556072076}
   localRotationTarget: {fileID: 1681465277}
   worldRotationTarget: {fileID: 1945902255}
-  localRotationScaleTarget: {fileID: 1556072076}
-  worldRotationScaleTarget: {fileID: 368424487}
+  localMatrixApplied: 0
+  worldMatrixApplied: 0
   localFixed4x4: {}
   worldFixed4x4: {}
   localRotationMatrix: {}
   worldRotationMatrix: {}
-  localRotationScaleMatrix: {}
-  worldRotationScaleMatrix: {}
-  localFixedAsUnityMatrix:
-    e00: 0.9174975
-    e01: 0.48986155
-    e02: -0.5985267
-    e03: 0
-    e10: -0.103779584
-    e11: 0.5252557
-    e12: 0.27080676
-    e13: 0
-    e20: 1.1175933
-    e21: -0.4658742
-    e22: 1.3318958
-    e23: 0
-    e30: 2
-    e31: 0.5
-    e32: -1
-    e33: 1
-  worldFixedAsUnityMatrix:
-    e00: 0.55301696
-    e01: 0.94286275
-    e02: -0.87591255
-    e03: 0
-    e10: 0.114504084
-    e11: 0.5044439
-    e12: 0.6152946
-    e13: 0
-    e20: 1.6223253
-    e21: -0.69936126
-    e22: 0.2714562
-    e23: 0
-    e30: -4.264095
-    e31: 2.3585176
-    e32: -1.5862104
-    e33: 1
+  localFixedAsUnityMatrix: {}
+  worldFixedAsUnityMatrix: {}
 --- !u!1 &143838095
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,38 +670,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346238286}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &368424486
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 368424487}
-  m_Layer: 0
-  m_Name: World RotationScale Target
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &368424487
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368424486}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.39223462, y: 0.5198223, z: 0.1799486, w: 0.73726207}
-  m_LocalPosition: {x: 2, y: 1, z: 5}
-  m_LocalScale: {x: 1.4007286, y: 0.8038422, z: 1.7873819}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 739218811}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &431460627
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,96 +799,6 @@ Transform:
   - {fileID: 94172704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 23.034, y: 80.501, z: 0}
---- !u!1 &739218810
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 739218811}
-  - component: {fileID: 739218813}
-  - component: {fileID: 739218812}
-  m_Layer: 0
-  m_Name: Capsule
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &739218811
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739218810}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 368424487}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &739218812
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739218810}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &739218813
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739218810}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &754406129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,7 +1167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1556072076}
   m_Layer: 0
-  m_Name: Local RotationScale Target
+  m_Name: Local FixedTransform Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1509,5 +1354,4 @@ SceneRoots:
   - {fileID: 754406130}
   - {fileID: 719156892}
   - {fileID: 1945902255}
-  - {fileID: 368424487}
   - {fileID: 692448573}

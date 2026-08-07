@@ -18,8 +18,8 @@ namespace FixedMathSharp.Build.Editor
 
         private static readonly string[] PackageRootAssetPaths =
         {
-            "Assets/Packages/com.mrdav30.FixedMathSharp",
-            "Assets/Packages/com.mrdav30.FixedMathSharp.lean"
+            "Assets/Packages/com.mrdav30.fixedmathsharp",
+            "Assets/Packages/com.mrdav30.fixedmathsharp.lean"
         };
 
         // These paths are intentionally explicit so package-specific files can live beside

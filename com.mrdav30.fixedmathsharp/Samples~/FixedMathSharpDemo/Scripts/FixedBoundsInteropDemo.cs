@@ -1,4 +1,4 @@
-using FixedMathSharp.Bounds;
+using FixedMathSharp.Geometry;
 using UnityEngine;
 
 using UnityBounds = UnityEngine.Bounds;
@@ -61,10 +61,10 @@ namespace FixedMathSharp
 
             hasValidBounds = true;
             unityBounds = bounds;
-            fixedBoundingBox = bounds.ToBoundingBox();
-            fixedBoundingArea = bounds.ToBoundingArea();
+            fixedBoundingBox = bounds.ToFixedBoundBox();
+            fixedBoundingArea = bounds.ToFixedBoundAreaXZ();
             roundTripBoundingBoxBounds = fixedBoundingBox.ToBounds();
-            roundTripBoundingAreaBounds = fixedBoundingArea.ToBounds();
+            roundTripBoundingAreaBounds = fixedBoundingArea.ToBoundsXZ(bounds.center.y);
         }
 
         private void OnDrawGizmosSelected()

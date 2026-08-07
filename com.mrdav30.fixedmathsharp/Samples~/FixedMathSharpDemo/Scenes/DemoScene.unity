@@ -355,186 +355,17 @@ MonoBehaviour:
   applyToTargets: 1
   localMatrixTarget: {fileID: 1474362739}
   worldMatrixTarget: {fileID: 719156892}
+  localFixedTransformTarget: {fileID: 1556072076}
   localRotationTarget: {fileID: 1681465277}
   worldRotationTarget: {fileID: 1945902255}
-  localRotationScaleTarget: {fileID: 1556072076}
-  worldRotationScaleTarget: {fileID: 368424487}
-  localFixed4x4:
-    m00:
-      m_rawValue: 3940621731
-    m01:
-      m_rawValue: -891459815
-    m02:
-      m_rawValue: 3200017946
-    m03:
-      m_rawValue: 0
-    m10:
-      m_rawValue: 1051969661
-    m11:
-      m_rawValue: 2255955993
-    m12:
-      m_rawValue: -666971501
-    m13:
-      m_rawValue: 0
-    m20:
-      m_rawValue: -3855978647
-    m21:
-      m_rawValue: 3489318325
-    m22:
-      m_rawValue: 5720449078
-    m23:
-      m_rawValue: 0
-    m30:
-      m_rawValue: 8589934592
-    m31:
-      m_rawValue: 2147483648
-    m32:
-      m_rawValue: -4294967296
-    m33:
-      m_rawValue: 4294967296
-  worldFixed4x4:
-    m00:
-      m_rawValue: 2375189536
-    m01:
-      m_rawValue: 856966781
-    m02:
-      m_rawValue: 5460525303
-    m03:
-      m_rawValue: 0
-    m10:
-      m_rawValue: 2323941065
-    m11:
-      m_rawValue: 2166569919
-    m12:
-      m_rawValue: -1350874091
-    m13:
-      m_rawValue: 0
-    m20:
-      m_rawValue: -4800471272
-    m21:
-      m_rawValue: 5876103166
-    m22:
-      m_rawValue: 1165895421
-    m23:
-      m_rawValue: 0
-    m30:
-      m_rawValue: -18314147840
-    m31:
-      m_rawValue: 10129756160
-    m32:
-      m_rawValue: -6812721664
-    m33:
-      m_rawValue: 4294967296
-  localRotationMatrix:
-    m00:
-      m_rawValue: 3283851312
-    m01:
-      m_rawValue: -742883150
-    m02:
-      m_rawValue: 2666681516
-    m10:
-      m_rawValue: 1753282698
-    m11:
-      m_rawValue: 3759926506
-    m12:
-      m_rawValue: -1111619124
-    m20:
-      m_rawValue: -2142210416
-    m21:
-      m_rawValue: 1938510232
-    m22:
-      m_rawValue: 3178027350
-  worldRotationMatrix:
-    m00:
-      m_rawValue: 1695681832
-    m01:
-      m_rawValue: 611800860
-    m02:
-      m_rawValue: 3898347230
-    m10:
-      m_rawValue: 2891041848
-    m11:
-      m_rawValue: 2695268136
-    m12:
-      m_rawValue: -1680521760
-    m20:
-      m_rawValue: -2685756590
-    m21:
-      m_rawValue: 3287548640
-    m22:
-      m_rawValue: 652292480
-  localRotationScaleMatrix:
-    m00:
-      m_rawValue: 3940621731
-    m01:
-      m_rawValue: -891459815
-    m02:
-      m_rawValue: 3200017946
-    m10:
-      m_rawValue: 1051969661
-    m11:
-      m_rawValue: 2255955993
-    m12:
-      m_rawValue: -666971501
-    m20:
-      m_rawValue: -3855978647
-    m21:
-      m_rawValue: 3489318325
-    m22:
-      m_rawValue: 5720449078
-  worldRotationScaleMatrix:
-    m00:
-      m_rawValue: 2375189808
-    m01:
-      m_rawValue: 856966879
-    m02:
-      m_rawValue: 5460525928
-    m10:
-      m_rawValue: 2323941229
-    m11:
-      m_rawValue: 2166570072
-    m12:
-      m_rawValue: -1350874187
-    m20:
-      m_rawValue: -4800472043
-    m21:
-      m_rawValue: 5876104109
-    m22:
-      m_rawValue: 1165895609
-  localFixedAsUnityMatrix:
-    e00: 0.9174975
-    e01: -0.20755917
-    e02: 0.74506223
-    e03: 2
-    e10: 0.24493077
-    e11: 0.5252557
-    e12: -0.15529141
-    e13: 0.5
-    e20: -0.89779
-    e21: 0.81242025
-    e22: 1.3318958
-    e23: -1
-    e30: 0
-    e31: 0
-    e32: 0
-    e33: 1
-  worldFixedAsUnityMatrix:
-    e00: 0.5530169
-    e01: 0.19952813
-    e02: 1.2713776
-    e03: -4.264095
-    e10: 0.5410847
-    e11: 0.5044439
-    e12: -0.3145249
-    e13: 2.3585176
-    e20: -1.1176968
-    e21: 1.3681369
-    e22: 0.27145618
-    e23: -1.5862104
-    e30: 0
-    e31: 0
-    e32: 0
-    e33: 1
+  localMatrixApplied: 0
+  worldMatrixApplied: 0
+  localFixed4x4: {}
+  worldFixed4x4: {}
+  localRotationMatrix: {}
+  worldRotationMatrix: {}
+  localFixedAsUnityMatrix: {}
+  worldFixedAsUnityMatrix: {}
 --- !u!1 &143838095
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,38 +670,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346238286}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &368424486
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 368424487}
-  m_Layer: 0
-  m_Name: World RotationScale Target
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &368424487
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368424486}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.39223465, y: 0.51982224, z: 0.17994861, w: 0.73726207}
-  m_LocalPosition: {x: 2, y: 1, z: 5}
-  m_LocalScale: {x: 1.4007286, y: 0.8038422, z: 1.7873819}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 739218811}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &431460627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,96 +811,6 @@ Transform:
   - {fileID: 94172704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 23.034, y: 80.501, z: 0}
---- !u!1 &739218810
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 739218811}
-  - component: {fileID: 739218813}
-  - component: {fileID: 739218812}
-  m_Layer: 0
-  m_Name: Capsule
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &739218811
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739218810}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 368424487}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &739218812
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739218810}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &739218813
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739218810}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &754406129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,7 +1179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1556072076}
   m_Layer: 0
-  m_Name: Local RotationScale Target
+  m_Name: Local FixedTransform Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1657,5 +1366,4 @@ SceneRoots:
   - {fileID: 754406130}
   - {fileID: 719156892}
   - {fileID: 1945902255}
-  - {fileID: 368424487}
   - {fileID: 692448573}

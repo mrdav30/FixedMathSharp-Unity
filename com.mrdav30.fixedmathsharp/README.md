@@ -1,51 +1,35 @@
 # FixedMathSharp for Unity
 
-Standard Unity package for FixedMathSharp with `MemoryPack` support enabled.
-
-Use this variant when you want the Unity integration plus the built-in `MemoryPack`
-serialization path. If you are targeting Unity Burst AOT and want the safer option,
-use the `Lean` package instead.
+Standard FixedMathSharp Unity package with the MemoryPack serializer/runtime integration enabled.
 
 ## Install
 
-Add this package from Git URL in Unity Package Manager:
+Add this Git URL in Unity Package Manager:
 
 `https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp`
 
-## When To Use This Package
+Use the [Lean package](https://github.com/mrdav30/FixedMathSharp-Unity/tree/develop/com.mrdav30.fixedmathsharp.lean) instead when Burst AOT is the priority or you provide your own serializer.
 
-- You want the standard FixedMathSharp-Unity package.
-- You want the package's `MemoryPack`-based serialization support.
-- You are not optimizing specifically for Burst AOT compatibility.
+## Migrating to v7
 
-## Choose The Other Variant If
+Start with the [FixedMathSharp v6-to-v7 migration guide](https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x).
 
-- You are using Unity Burst AOT.
-- You want to avoid the `MemoryPack` dependency entirely.
-- You plan to use your own serialization layer.
+Unity companion renames:
+
+| v6 | v7 |
+| --- | --- |
+| unqualified 2D/3D projection methods | `*XY` or `*XZ` methods |
+| `ToBoundingBox()` / `ToBoundingArea()` | `ToFixedBoundBox()` / `ToFixedBoundAreaXZ()` |
+| `FixedBoundArea.ToBounds()` | `ToBoundsXZ(y)` |
+| `Fixed4x4.ToTransformLocal/World()` | `CreateTransformLocal/World()` |
+| `Fixed3x3.ToTransformRotationLocal/World()` | `CreateTransformRotationLocal/World()` |
+| 3x3 rotation-scale transform helpers | `FixedTransform` or strict `Fixed4x4` APIs |
+
+Use atomic `TryToRay*` and `TryApplyToTransform*` methods when rejection is expected. Throwing wrappers reject semantic loss. Matrix conversion transposes between Unity column-vector and FixedMathSharp row-vector conventions.
 
 ## Included
 
 - Deterministic fixed-point math via `Fixed64`
-- Vectors, quaternions, matrices, and bounds
-- Unity transform, matrix, and bounds interop helpers
-- Editor debugging helpers
-- Sample demo scene
-- `MemoryPack` support
-
-## Coordinate Conventions
-
-FixedMathSharp's canonical 3D basis is `+X` right, `+Y` up, and `+Z` forward.
-Unity uses the same semantic basis for `Vector3.right`, `Vector3.up`, and
-`Vector3.forward`, so vector and quaternion adapters use direct component mappings.
-
-Matrix and `Transform` helpers are semantic conversions. Unity's `Matrix4x4` and
-`Transform` APIs use Unity's storage and application rules, while FixedMathSharp
-uses row-vector matrices with translation in `M41`/`M42`/`M43`.
-
-## Related Packages
-
-- Repo overview and variant selection:
-  [FixedMathSharp-Unity](https://github.com/mrdav30/FixedMathSharp-Unity)
-- No-MemoryPack variant:
-  `https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean`
+- Unity math, geometry, bounds, matrix, and transform adapters
+- Fixed-point inspector drawers and a sample scene
+- MemoryPack serializer/runtime support

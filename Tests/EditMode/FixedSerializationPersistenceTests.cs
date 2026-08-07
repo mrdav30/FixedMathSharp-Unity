@@ -20,6 +20,11 @@ namespace FixedMathSharp.Unity.Tests
                 Fixed64.FromRaw(0x33333333),
                 Fixed64.FromRaw(0x44444444),
                 Fixed64.FromRaw(0x55555555)),
+            Vector4Value = new Vector4d(
+                Fixed64.FromRaw(0x11111111),
+                Fixed64.FromRaw(-0x22222222),
+                Fixed64.FromRaw(0x33333333),
+                Fixed64.FromRaw(-0x44444444)),
             NestedValue = Fixed64.FromRaw(0x66666666),
             ListCount = 1,
             ListValue = Fixed64.FromRaw(0x77777777),
@@ -154,6 +159,7 @@ namespace FixedMathSharp.Unity.Tests
             public Fixed64 FixedValue;
             public Vector2d Vector2Value;
             public Vector3d Vector3Value;
+            public Vector4d Vector4Value;
             public Fixed64 NestedValue;
             public int ListCount;
             public Fixed64 ListValue;
@@ -168,6 +174,7 @@ namespace FixedMathSharp.Unity.Tests
                 snapshot.FixedValue,
                 snapshot.Vector2Value,
                 snapshot.Vector3Value,
+                snapshot.Vector4Value,
                 snapshot.NestedValue,
                 snapshot.ListValue,
                 snapshot.ListPosition);
@@ -181,6 +188,7 @@ namespace FixedMathSharp.Unity.Tests
                 snapshot.FixedValue,
                 snapshot.Vector2Value,
                 snapshot.Vector3Value,
+                snapshot.Vector4Value,
                 snapshot.NestedValue,
                 snapshot.ListValue,
                 snapshot.ListPosition);
@@ -193,6 +201,7 @@ namespace FixedMathSharp.Unity.Tests
                 FixedValue = probe.FixedValue,
                 Vector2Value = probe.Vector2Value,
                 Vector3Value = probe.Vector3Value,
+                Vector4Value = probe.Vector4Value,
                 NestedValue = probe.NestedValue,
                 ListCount = probe.ListCount,
                 ListValue = probe.ListValue,
@@ -207,6 +216,7 @@ namespace FixedMathSharp.Unity.Tests
                 FixedValue = probe.FixedValue,
                 Vector2Value = probe.Vector2Value,
                 Vector3Value = probe.Vector3Value,
+                Vector4Value = probe.Vector4Value,
                 NestedValue = probe.NestedValue,
                 ListCount = probe.ListCount,
                 ListValue = probe.ListValue,
@@ -223,6 +233,7 @@ namespace FixedMathSharp.Unity.Tests
             CollectFixedFailure(actual.FixedValue, expected.FixedValue, "Fixed64 field", failures);
             CollectVector2Failure(actual.Vector2Value, expected.Vector2Value, "Vector2d field", failures);
             CollectVector3Failure(actual.Vector3Value, expected.Vector3Value, "Vector3d field", failures);
+            CollectVector4Failure(actual.Vector4Value, expected.Vector4Value, "Vector4d field", failures);
             CollectFixedFailure(actual.NestedValue, expected.NestedValue, "nested Fixed64 field", failures);
             if (actual.ListCount != expected.ListCount)
                 failures.Add($"list count: expected {expected.ListCount}, got {actual.ListCount}");
@@ -252,6 +263,18 @@ namespace FixedMathSharp.Unity.Tests
             CollectFixedFailure(actual.X, expected.X, $"{context}.X", failures);
             CollectFixedFailure(actual.Y, expected.Y, $"{context}.Y", failures);
             CollectFixedFailure(actual.Z, expected.Z, $"{context}.Z", failures);
+        }
+
+        private static void CollectVector4Failure(
+            Vector4d actual,
+            Vector4d expected,
+            string context,
+            List<string> failures)
+        {
+            CollectFixedFailure(actual.X, expected.X, $"{context}.X", failures);
+            CollectFixedFailure(actual.Y, expected.Y, $"{context}.Y", failures);
+            CollectFixedFailure(actual.Z, expected.Z, $"{context}.Z", failures);
+            CollectFixedFailure(actual.W, expected.W, $"{context}.W", failures);
         }
 
         private static void CollectFixedFailure(Fixed64 actual, Fixed64 expected, string context, List<string> failures)

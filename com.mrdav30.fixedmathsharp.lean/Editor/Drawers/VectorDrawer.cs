@@ -18,11 +18,13 @@ namespace FixedMathSharp.Editor
     /// <see cref="PropertyDrawer" />
     [CustomPropertyDrawer(typeof(Vector2d))]
     [CustomPropertyDrawer(typeof(Vector3d))]
+    [CustomPropertyDrawer(typeof(Vector4d))]
     public class VectorDrawer : PropertyDrawer
     {
         private static readonly GUIContent XLabel = new("X");
         private static readonly GUIContent YLabel = new("Y");
         private static readonly GUIContent ZLabel = new("Z");
+        private static readonly GUIContent WLabel = new("W");
 
         /// <summary>
         /// Called when the GUI is drawn.
@@ -66,8 +68,13 @@ namespace FixedMathSharp.Editor
             Type type = fieldInfo?.FieldType;
             if (type == typeof(Vector2d))
                 return 2;
+            if (type == typeof(Vector4d))
+                return 4;
 
-            return property.type == nameof(Vector2d) ? 2 : 3;
+            if (property.type == nameof(Vector2d))
+                return 2;
+
+            return property.type == nameof(Vector4d) ? 4 : 3;
         }
 
         private static void DrawFixedVector(Rect contentPosition, SerializedProperty property, int fieldCount, float fieldWidth, bool hideLabels)
@@ -94,6 +101,20 @@ namespace FixedMathSharp.Editor
 
                 if (EditorGUI.EndChangeCheck())
                     property.SetFixedPropertyValue(new Vector3d(x, y, z));
+            }
+            else if (fieldCount == 4 && propertyValue is Vector4d vector4d)
+            {
+                EditorGUI.BeginChangeCheck();
+                Fixed64 x = DrawFixedComponent(contentPosition, XLabel, vector4d.X, hideLabels);
+                contentPosition.x += fieldWidth;
+                Fixed64 y = DrawFixedComponent(contentPosition, YLabel, vector4d.Y, hideLabels);
+                contentPosition.x += fieldWidth;
+                Fixed64 z = DrawFixedComponent(contentPosition, ZLabel, vector4d.Z, hideLabels);
+                contentPosition.x += fieldWidth;
+                Fixed64 w = DrawFixedComponent(contentPosition, WLabel, vector4d.W, hideLabels);
+
+                if (EditorGUI.EndChangeCheck())
+                    property.SetFixedPropertyValue(new Vector4d(x, y, z, w));
             }
         }
 

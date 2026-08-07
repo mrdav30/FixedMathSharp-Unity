@@ -28,7 +28,7 @@
             </summary>
             <remarks>
             This constant is typically used as a bitmask to extract or limit values to the range
-            defined by SHIFT_AMOUNT_I. 
+            defined by SHIFT_AMOUNT_I.
             The value is always non-negative and fits within a 32-bit unsigned
             integer.
             </remarks>
@@ -39,7 +39,7 @@
             </summary>
             <remarks>
             This constant is typically used to isolate or clear the lower SHIFT_AMOUNT_I bits of
-            an unsigned 64-bit value. 
+            an unsigned 64-bit value.
             The value of SHIFT_AMOUNT_I determines how many least significant bits are masked out.
             </remarks>
         </member>
@@ -307,7 +307,7 @@
         </member>
         <member name="M:FixedMathSharp.FixedMath.MoveTowards(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
-            Moves a value from 'from' to 'to' by a maximum step of 'maxAmount'. 
+            Moves a value from 'from' to 'to' by a maximum step of 'maxAmount'.
             Ensures the value does not exceed 'to'.
             </summary>
         </member>
@@ -384,7 +384,7 @@
             </summary>
             <remarks>
             This array can be used to efficiently retrieve the value of 10 raised to an integer
-            exponent within the supported range, avoiding repeated calculations. 
+            exponent within the supported range, avoiding repeated calculations.
             The index corresponds to the exponent.
             </remarks>
         </member>
@@ -411,12 +411,12 @@
              coefficient quantization, fixed-point Horner rounding, and the tuned
              sine approximation error. Raw-neighborhood and principal-range tests
              validate range-reduction seams independently of exact anchors.
-            
+
              This bound does not include phase error accumulated while reducing a
              large multi-turn input by the fixed-point approximation of 2π. A
              consumer propagating a strict error budget must canonicalize its
              angle before turns accumulate or account for that phase error too.
-            
+
              Consumers that propagate sine/cosine error through rotations must
              also account for their own multiply, add, and normalization error.
              </remarks>
@@ -459,7 +459,7 @@
             Provides at least 9 decimals of accuracy.
             </summary>
             <remarks>
-            This implementation is based on Clay. S. Turner's fast binary logarithm algorithm 
+            This implementation is based on Clay. S. Turner's fast binary logarithm algorithm
             (C. S. Turner,  "A Fast Binary Logarithm Algorithm", IEEE Signal Processing Mag., pp. 124,140, Sep. 2010.)
             </remarks>
         </member>
@@ -504,7 +504,7 @@
             <param name="x">The angle in radians.</param>
             <returns>The cosine of the given angle, in fixed-point format.</returns>
             <remarks>
-            - Instead of directly approximating cosine, this function derives <c>cos(x)</c> using 
+            - Instead of directly approximating cosine, this function derives <c>cos(x)</c> using
               the identity <c>cos(x) = sin(x + π/2)</c>.
             - The underlying sine function uses complementary reduced-range
               sine and cosine polynomials so quadrant anchors remain continuous.
@@ -525,7 +525,7 @@
             second quadrant.
             </summary>
             <remarks>
-            This method returns the principal (non-negative) value of the cosine. 
+            This method returns the principal (non-negative) value of the cosine.
             If the input is outside the valid range for sine values, the result may not be meaningful.
             </remarks>
             <param name="sin">The sine of the angle. Must be in the range [-1, 1].</param>
@@ -546,9 +546,9 @@
         </member>
         <member name="M:FixedMathSharp.FixedMath.Asin(FixedMathSharp.Fixed64)">
             <summary>
-            Returns the arc-sine of a fixed-point number x, which is the angle in radians 
+            Returns the arc-sine of a fixed-point number x, which is the angle in radians
             whose sine is x, using a combination of a Taylor series expansion and trigonometric identities.
-            
+
             For values of x near ±1, the identity asin(x) = π/2 - acos(x) is used for stability.
             For values of x near 0, a Taylor series expansion is used.
             </summary>
@@ -575,12 +575,12 @@
             Computes the angle whose tangent is the quotient of two specified numbers.
             </summary>
             <remarks>
-            Uses a fixed-point arithmetic approximation for the arc tangent function, which is more efficient than using floating-point arithmetic, 
+            Uses a fixed-point arithmetic approximation for the arc tangent function, which is more efficient than using floating-point arithmetic,
             especially on systems where floating-point operations are expensive.
             </remarks>
             <param name="y">The y-coordinate of the point to which the angle is measured.</param>
             <param name="x">The x-coordinate of the point to which the angle is measured.</param>
-            <returns>An angle, θ, measured in radians, such that -π ≤ θ ≤ π, and tan(θ) = y / x, 
+            <returns>An angle, θ, measured in radians, such that -π ≤ θ ≤ π, and tan(θ) = y / x,
             taking into account the quadrants of the inputs to determine the sign of the result.</returns>
         </member>
         <member name="T:FixedMathSharp.Geometry.FixedContactAnchors">
@@ -1514,8 +1514,8 @@
             If the point is inside the box, the method returns zero.
             </returns>
             <remarks>
-            The method finds the closest point on the box's surface by clamping the given point 
-            to the box's bounds and returns the Euclidean distance between them. 
+            The method finds the closest point on the box's surface by clamping the given point
+            to the box's bounds and returns the Euclidean distance between them.
             This ensures accurate distance calculations, even near corners or edges.
             </remarks>
         </member>
@@ -1959,15 +1959,15 @@
         </member>
         <member name="T:FixedMathSharp.Geometry.FixedBoundSphere">
             <summary>
-            Represents a spherical bounding volume with fixed-point precision, optimized for fast, 
+            Represents a spherical bounding volume with fixed-point precision, optimized for fast,
             rotationally invariant spatial checks in 3D space.
             </summary>
             <remarks>
-            The FixedBoundSphere provides a simple yet effective way to represent the spatial extent of objects, 
-            especially when rotational invariance is required. 
-            Compared to FixedBoundBox, it offers faster intersection checks but is less precise in 
+            The FixedBoundSphere provides a simple yet effective way to represent the spatial extent of objects,
+            especially when rotational invariance is required.
+            Compared to FixedBoundBox, it offers faster intersection checks but is less precise in
             tightly fitting non-spherical objects.
-            
+
             Use Cases:
             - Ideal for broad-phase collision detection, proximity checks, and culling in physics engines and rendering pipelines.
             - Useful when fast, rotationally invariant checks are needed, such as detecting overlaps or distances between moving objects.
@@ -2020,7 +2020,7 @@
             Gets the coordinates of the minimum corner of the bounding box that contains the sphere.
             </summary>
             <remarks>
-            The minimum corner is calculated by subtracting the radius from each component of the sphere's center. 
+            The minimum corner is calculated by subtracting the radius from each component of the sphere's center.
             This property is useful for spatial queries and bounding box calculations.
             </remarks>
         </member>
@@ -2029,7 +2029,7 @@
             Gets the coordinates of the maximum corner of the bounding box that contains the sphere.
             </summary>
             <remarks>
-            The maximum corner is calculated as the center of the sphere plus the radius in each dimension. 
+            The maximum corner is calculated as the center of the sphere plus the radius in each dimension.
             This property is useful for spatial queries and bounding volume calculations.
             </remarks>
         </member>
@@ -3237,11 +3237,11 @@
         </member>
         <member name="T:FixedMathSharp.Geometry.FixedSegment">
             <content>
-            Contains methods for computing the distance, support, and point containment 
+            Contains methods for computing the distance, support, and point containment
             of centered 3D capsules, finite cylinders, and finite cones without narrowing their conceptual axes.
             </content>
             <content>
-            Contains methods for computing the nearest surface feature of a 
+            Contains methods for computing the nearest surface feature of a
             centered 3D capsule, finite cylinder, or finite cone in its authoritative rigid frame.
             </content>
             <summary>
@@ -3252,7 +3252,7 @@
             including sphere, capsule, and finite-axis intersection tests.
             </content>
             <content>
-            Contains methods for computing the oriented penetration of a centered 3D capsule, finite cylinder, 
+            Contains methods for computing the oriented penetration of a centered 3D capsule, finite cylinder,
             or finite cone and a centered planar capsule extruded through a world-Y slab.
             </content>
             <content>
@@ -5853,7 +5853,7 @@
             <content>
             Implements a wide-precision root solver for rounded-cylinder (capsule-like) torus
             intersection tests, using a Sturm sequence built over arbitrary-precision integer
-            coefficients to isolate and count roots within a bounded segment length.                                                                                                                                                                                                                                
+            coefficients to isolate and count roots within a bounded segment length.
             </content>
             <content>
             Provides witness/support point computation for finite axis and capsule
@@ -5984,7 +5984,7 @@
             including capsule distance interval and axial bounds computations.
             </content>
             <content>
-            Provides high-precision (wide arithmetic) contact generation and 
+            Provides high-precision (wide arithmetic) contact generation and
             swept-sphere intersection tests between an oriented box and a sphere.
             </content>
             <content>
@@ -6380,7 +6380,7 @@
             A 3x3 matrix handles only linear transformations and is typically used when translation is not needed.
             It operates on directions, orientations, and vectors within a given space without affecting position.
             This matrix is more lightweight compared to a 4x4 matrix, making it ideal when translation and perspective are unnecessary.
-            
+
             Use Cases:
             - Rotating or scaling objects around the origin in 2D and 3D space.
             - Transforming vectors and normals (e.g., in lighting calculations).
@@ -6458,7 +6458,7 @@
             Gets or sets the matrix element at the specified index.
             </summary>
             <remarks>
-            The mapping between indices and matrix elements is non-sequential. 
+            The mapping between indices and matrix elements is non-sequential.
             Ensure that the index corresponds to a valid matrix element.
             </remarks>
             <param name="index">The zero-based index of the matrix element to get or set. Valid values are 0, 1, 2, 4, 5, 6, 8, 9, and 10.</param>
@@ -6481,10 +6481,10 @@
              protects against the case where you would have an infinite value on the diagonal, which would cause problems in subsequent computations.
              If m00 or m22 are zero, handle that as a special case and manually set the inverse to zero,
              since for a theoretical object with no inertia along those axes, it would be impossible to impart a rotation in those directions
-            
+
               bear in mind that having a zero on the inertia tensor's diagonal isn't generally valid for real,
               3-dimensional objects (unless they are "infinitely thin" along one axis),
-              so if you end up with such a tensor, it's a sign that something else might be wrong in your setup.        
+              so if you end up with such a tensor, it's a sign that something else might be wrong in your setup.
              </remarks>
         </member>
         <member name="M:FixedMathSharp.Fixed3x3.CreateRotationX(FixedMathSharp.Fixed64)">
@@ -6544,10 +6544,10 @@
             Normalizes the basis vectors of a 3x3 matrix to ensure they are orthogonal and unit length.
             </summary>
             <remarks>
-            This method recalculates and normalizes the X, Y, and Z basis vectors of the matrix to avoid numerical drift 
-            that can occur after multiple transformations. It also ensures that the Z-axis is recomputed to maintain 
+            This method recalculates and normalizes the X, Y, and Z basis vectors of the matrix to avoid numerical drift
+            that can occur after multiple transformations. It also ensures that the Z-axis is recomputed to maintain
             orthogonality by taking the cross-product of the normalized X and Y axes.
-            
+
             Use Cases:
             - Ensuring stability and correctness after repeated transformations involving rotation and scaling.
             - Useful in physics calculations where orthogonal matrices are required (e.g., inertia tensors or rotations).
@@ -6657,7 +6657,7 @@
             Divides each element of the specified matrix by the given scalar value.
             </summary>
             <remarks>
-            Division is performed element-wise. 
+            Division is performed element-wise.
             The result may lose precision if the divisor does not evenly divide the matrix elements.
             </remarks>
             <param name="a">The matrix whose elements are to be divided.</param>
@@ -6696,7 +6696,7 @@
             Returns a string that represents the current matrix in a readable format.
             </summary>
             <remarks>
-            This method is useful for debugging or logging the contents of the matrix. 
+            This method is useful for debugging or logging the contents of the matrix.
             The returned string lists the matrix elements in row-major order.
             </remarks>
             <returns>A string containing the matrix elements formatted as "[m00, m01, m02; m10, m11, m12; m20, m21, m22]".</returns>
@@ -6757,14 +6757,14 @@
              Represents a 4x4 matrix used for transformations in 3D space, including translation, rotation, scaling, and perspective projection.
              </summary>
              <remarks>
-             A 4x4 matrix is the standard structure for 3D transformations because it can handle both linear transformations (rotation, scaling) 
-             and affine transformations (translation, shearing, and perspective projections). 
+             A 4x4 matrix is the standard structure for 3D transformations because it can handle both linear transformations (rotation, scaling)
+             and affine transformations (translation, shearing, and perspective projections).
              It is commonly used in graphics pipelines, game engines, and 3D rendering systems.
-            
+
              FixedMathSharp applies transform matrices with a row-vector convention: <c>point * matrix</c>.
              Translation is stored in <c>M41</c>, <c>M42</c>, and <c>M43</c>. Direction properties use the
              canonical 3D basis: <c>+X</c> right, <c>+Y</c> up, and <c>+Z</c> forward.
-             
+
              Use Cases:
              - Transforming objects in 3D space (position, orientation, and size).
              - Combining multiple transformations (e.g., model-view-projection matrices).
@@ -6904,7 +6904,7 @@
             Gets a value indicating whether the matrix represents an affine transformation.
             </summary>
             <remarks>
-            An affine transformation is one where the bottom row is (0, 0, 0, 1), 
+            An affine transformation is one where the bottom row is (0, 0, 0, 1),
             allowing for efficient operations such as translation, scaling, rotation, and shearing without perspective distortion.
             </remarks>
         </member>
@@ -7081,9 +7081,9 @@
             Normalizes the rotation component of a 4x4 matrix by ensuring the basis vectors are orthogonal and unit length.
             </summary>
             <remarks>
-            This method recalculates the X, Y, and Z basis vectors from the upper-left 3x3 portion of the matrix, ensuring they are orthogonal and normalized. 
+            This method recalculates the X, Y, and Z basis vectors from the upper-left 3x3 portion of the matrix, ensuring they are orthogonal and normalized.
             The remaining components of the matrix are reset to maintain a valid transformation structure.
-            
+
             Use Cases:
             - Ensuring the rotation component remains stable and accurate after multiple transformations.
             - Used in 3D transformations to prevent numerical drift from affecting the orientation over time.
@@ -7358,10 +7358,10 @@
             Inverts the matrix if it is invertible (i.e., if the determinant is not zero).
             </summary>
             <remarks>
-            To Invert a FixedMatrix4x4, we need to calculate the inverse for each element. 
-            This involves computing the cofactor for each element, 
-            which is the determinant of the submatrix when the row and column of that element are removed, 
-            multiplied by a sign based on the element's position. 
+            To Invert a FixedMatrix4x4, we need to calculate the inverse for each element.
+            This involves computing the cofactor for each element,
+            which is the determinant of the submatrix when the row and column of that element are removed,
+            multiplied by a sign based on the element's position.
             After computing all cofactors, the result is transposed to get the inverse matrix.
             </remarks>
         </member>
@@ -7403,7 +7403,7 @@
         </member>
         <member name="T:FixedMathSharp.Fixed4x4Extensions">
             <summary>
-            Provides extension methods for the Fixed4x4 structure to simplify common matrix operations 
+            Provides extension methods for the Fixed4x4 structure to simplify common matrix operations
             such as extracting scale, setting transformation components, and transforming points.
             </summary>
         </member>
@@ -7714,7 +7714,7 @@
             pitch = rotation around X
             yaw   = rotation around Y
             roll  = rotation around Z
-            
+
             The extraction matches FromEulerAngles(), which composes rotations in YXZ order:
             q = qy * qx * qz
             </summary>
@@ -7937,7 +7937,7 @@
             Multiplies two quaternions, combining their rotations into a single quaternion.
             </summary>
             <remarks>
-            Quaternion multiplication is not commutative; the order of operands affects the result. 
+            Quaternion multiplication is not commutative; the order of operands affects the result.
             This operation is commonly used to concatenate rotations.
             </remarks>
             <param name="a">The first quaternion to multiply.</param>
@@ -8128,7 +8128,7 @@
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.FromEulerAnglesInDegrees(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
-            Assume the input angles are in degrees and converts them to radians before calling <see cref="M:FixedMathSharp.FixedQuaternion.FromEulerAngles(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)"/> 
+            Assume the input angles are in degrees and converts them to radians before calling <see cref="M:FixedMathSharp.FixedQuaternion.FromEulerAngles(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)"/>
             </summary>
             <param name="pitch"></param>
             <param name="yaw"></param>
@@ -8137,7 +8137,7 @@
         </member>
         <member name="M:FixedMathSharp.FixedQuaternion.FromEulerAngles(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
             <summary>
-            Converts Euler angles (pitch, yaw, roll) to a quaternion and normalizes the result afterwards. 
+            Converts Euler angles (pitch, yaw, roll) to a quaternion and normalizes the result afterwards.
             Assumes the input angles are in radians.
             </summary>
             <remarks>
@@ -8260,7 +8260,7 @@
             </content>
             <summary>
             Represents a Q(64-SHIFT_AMOUNT).SHIFT_AMOUNT fixed-point number.
-            Provides high precision for fixed-point arithmetic where SHIFT_AMOUNT bits 
+            Provides high precision for fixed-point arithmetic where SHIFT_AMOUNT bits
             are used for the fractional part and (64 - SHIFT_AMOUNT) bits for the integer part.
             The precision is determined by SHIFT_AMOUNT, which defines the resolution of fractional values.
             </summary>
@@ -8421,7 +8421,7 @@
             Converts a Fixed64 value to a 64-bit signed integer by discarding the fractional part.
             </summary>
             <remarks>
-            The conversion truncates any fractional component. 
+            The conversion truncates any fractional component.
             The result represents the integer portion of the Fixed64 value.</remarks>
             <param name="value">The Fixed64 value to convert to a long integer.</param>
         </member>
@@ -8436,7 +8436,7 @@
             Converts a Fixed64 value to a 32-bit signed integer by discarding the fractional part.
             </summary>
             <remarks>
-            The conversion truncates any fractional component. 
+            The conversion truncates any fractional component.
             The result is equivalent to rounding toward zero.
             </remarks>
             <param name="value">The Fixed64 value to convert to an integer.</param>
@@ -8485,7 +8485,7 @@
             Converts a Fixed64 value to its decimal representation.
             </summary>
             <remarks>
-            This operator provides an explicit conversion from Fixed64 to decimal, preserving the numeric value as closely as possible. 
+            This operator provides an explicit conversion from Fixed64 to decimal, preserving the numeric value as closely as possible.
             Use this conversion when precise decimal arithmetic is required.
             </remarks>
             <param name="value">The Fixed64 value to convert to decimal.</param>
@@ -8503,7 +8503,7 @@
             Converts the numeric value of the current Fixed64 object to its equivalent string representation.
             </summary>
             <param name="format">A format specification that governs how the current Fixed64 object is converted.</param>
-            <returns>The string representation of the value of the current Fixed64 object.</returns>  
+            <returns>The string representation of the value of the current Fixed64 object.</returns>
         </member>
         <member name="M:FixedMathSharp.Fixed64.ToString(System.String,System.IFormatProvider)">
             <summary>
@@ -8742,7 +8742,7 @@
             Represents the maximum value for the base-2 logarithm that can be represented by a Fixed64 instance.
             </summary>
             <remarks>
-            This constant is useful when performing logarithmic calculations to ensure results 
+            This constant is useful when performing logarithmic calculations to ensure results
             do not exceed the representable range of the Fixed64 type.
             </remarks>
         </member>
@@ -8784,7 +8784,7 @@
             </summary>
             <param name="x">The integer value to add.</param>
             <remarks>
-            Unlike the <see cref="M:FixedMathSharp.Fixed64.op_Addition(FixedMathSharp.Fixed64,System.Int32)"/>, this method performs a simple addition of the integer value 
+            Unlike the <see cref="M:FixedMathSharp.Fixed64.op_Addition(FixedMathSharp.Fixed64,System.Int32)"/>, this method performs a simple addition of the integer value
             to the raw fixed-point representation without any overflow checks or saturation behavior.
             </remarks>
         </member>
@@ -8812,7 +8812,7 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.CompareTo(FixedMathSharp.Fixed64)">
             <summary>
-            Compares this instance to another 
+            Compares this instance to another
             </summary>
             <param name="other">The Fixed64 to compare with.</param>
             <returns>-1 if less than, 0 if equal, 1 if greater than other.</returns>
@@ -8964,7 +8964,7 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Addition(FixedMathSharp.Fixed64,System.Int32)">
             <summary>
-            Adds an int to a Fixed64, with saturating behavior in case of overflow. 
+            Adds an int to a Fixed64, with saturating behavior in case of overflow.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Addition(System.Int32,FixedMathSharp.Fixed64)">
@@ -8977,7 +8977,7 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(FixedMathSharp.Fixed64,System.Int32)">
             <summary>
-            Subtracts an int from a Fixed64, with saturating behavior in case of overflow. 
+            Subtracts an int from a Fixed64, with saturating behavior in case of overflow.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.op_Subtraction(System.Int32,FixedMathSharp.Fixed64)">
@@ -9175,7 +9175,7 @@
         </member>
         <member name="M:FixedMathSharp.Fixed64.IsInteger(FixedMathSharp.Fixed64)">
             <summary>
-            Returns true if the number has no decimal part (i.e., if the number is equivalent to an integer) and False otherwise. 
+            Returns true if the number has no decimal part (i.e., if the number is equivalent to an integer) and False otherwise.
             </summary>
         </member>
         <member name="M:FixedMathSharp.Fixed64.CompareProducts(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
@@ -9641,14 +9641,14 @@
              and transformations such as rotation, scaling, reflection, and interpolation.
              </summary>
              <remarks>
-             The Vector2d struct is designed for applications that require precise numerical operations, 
+             The Vector2d struct is designed for applications that require precise numerical operations,
              such as games, simulations, or physics engines. It provides methods for common vector operations
              like addition, subtraction, dot product, cross product, distance calculations, and rotation.
-            
+
              FixedMathSharp treats <see cref="T:FixedMathSharp.Vector2d"/> as plane math: <c>+X</c> is right and
              <c>+Y</c> is the named <see cref="P:FixedMathSharp.Vector2d.Forward"/> direction. Polar angle helpers are separate:
              <see cref="M:FixedMathSharp.Vector2d.ForwardDirection(FixedMathSharp.Fixed64)"/> returns <c>+X</c> at angle zero.
-             
+
              Use Cases:
              - Modeling 2D positions, directions, and velocities in fixed-point math environments.
              - Performing vector transformations, including rotations and reflections.
@@ -9683,12 +9683,12 @@
         </member>
         <member name="M:FixedMathSharp.Vector2d.ToVector3d(FixedMathSharp.Fixed64)">
             <summary>
-            Converts this <see cref="T:FixedMathSharp.Vector2d"/> to a <see cref="T:FixedMathSharp.Vector3d"/>, 
+            Converts this <see cref="T:FixedMathSharp.Vector2d"/> to a <see cref="T:FixedMathSharp.Vector3d"/>,
             mapping the Y component of this vector to the Z axis in the resulting vector.
             </summary>
             <param name="z">The value to assign to the Y axis of the resulting <see cref="T:FixedMathSharp.Vector3d"/>.</param>
             <returns>
-            A new <see cref="T:FixedMathSharp.Vector3d"/> where (X, Y) from this <see cref="T:FixedMathSharp.Vector2d"/> 
+            A new <see cref="T:FixedMathSharp.Vector3d"/> where (X, Y) from this <see cref="T:FixedMathSharp.Vector2d"/>
             become (X, Z) in the resulting vector, with the provided Z parameter assigned to Y.
             </returns>
         </member>
@@ -9852,7 +9852,7 @@
             Gets or sets the vector component at the specified index.
             </summary>
             <remarks>
-            This indexer provides array-like access to the vector's components. 
+            This indexer provides array-like access to the vector's components.
             Index 0 corresponds to the X component, and index 1 corresponds to the Y component.
             </remarks>
             <param name="index">The zero-based index of the component to access. Use 0 for the X component and 1 for the Y component.</param>
@@ -9941,7 +9941,7 @@
             Normalizes this vector in place, making its magnitude (length) equal to 1, and returns the modified vector.
             </summary>
             <remarks>
-            If the vector is zero-length or already normalized, no operation is performed. 
+            If the vector is zero-length or already normalized, no operation is performed.
             This method modifies the current vector in place and supports method chaining.
             </remarks>
             <returns>The normalized vector.</returns>
@@ -10132,7 +10132,7 @@
             </summary>
             <remarks>
             This comparison uses the squared magnitude of each vector, which avoids the computational
-            cost of calculating the actual magnitude. 
+            cost of calculating the actual magnitude.
             Use this method when only relative vector lengths are
             important.
             </remarks>
@@ -10665,7 +10665,7 @@
             <param name="me">The current vector.</param>
             <param name="other">The vector to compare distance to.</param>
             <param name="factor">The maximum allowable distance.</param>
-            <returns>True if the distance between the vectors is less than or equal to the factor, false otherwise.</returns>  
+            <returns>True if the distance between the vectors is less than or equal to the factor, false otherwise.</returns>
         </member>
         <member name="M:FixedMathSharp.Vector2dExtensions.Rotate(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)">
             <inheritdoc cref="M:FixedMathSharp.Vector2d.Rotate(FixedMathSharp.Vector2d,FixedMathSharp.Fixed64)" />
@@ -10712,13 +10712,13 @@
              Represents a 3D vector with fixed-point precision, supporting a wide range of vector operations such as rotation, scaling, interpolation, and projection.
              </summary>
              <remarks>
-             The Vector3d struct is designed for high-precision applications in 3D space, including games, simulations, and physics engines. 
+             The Vector3d struct is designed for high-precision applications in 3D space, including games, simulations, and physics engines.
              It offers essential operations like addition, subtraction, dot product, cross product, distance calculation, and normalization.
-            
+
              FixedMathSharp's canonical 3D basis is <c>+X</c> right, <c>+Y</c> up, and <c>+Z</c>
              forward. Direction-named core APIs use that convention; engine-specific naming, basis,
              handedness, and matrix semantics should be converted at adapter boundaries.
-             
+
              Use Cases:
              - Modeling 3D positions, directions, and velocities with fixed-point precision.
              - Performing vector transformations, including rotations using quaternions.
@@ -10753,11 +10753,11 @@
         </member>
         <member name="M:FixedMathSharp.Vector3d.ToVector2d">
             <summary>
-            Converts this <see cref="T:FixedMathSharp.Vector3d"/> to a <see cref="T:FixedMathSharp.Vector2d"/>, 
+            Converts this <see cref="T:FixedMathSharp.Vector3d"/> to a <see cref="T:FixedMathSharp.Vector2d"/>,
             dropping the Y component (height) of this vector in the resulting vector.
             </summary>
             <returns>
-            A new <see cref="T:FixedMathSharp.Vector2d"/> where (X, Z) from this <see cref="T:FixedMathSharp.Vector3d"/> 
+            A new <see cref="T:FixedMathSharp.Vector2d"/> where (X, Z) from this <see cref="T:FixedMathSharp.Vector3d"/>
             become (X, Y) in the resulting vector.
             </returns>
         </member>
@@ -10958,7 +10958,7 @@
             Gets or sets the component value at the specified index.
             </summary>
             <remarks>
-            Use this indexer to access or modify the x, y, or z components of the vector by index. 
+            Use this indexer to access or modify the x, y, or z components of the vector by index.
             Index 0 corresponds to x, 1 to y, and 2 to z.
             </remarks>
             <param name="index">The zero-based index of the component to access. Valid values are 0 (x), 1 (y), or 2 (z).</param>
@@ -11050,7 +11050,7 @@
             Normalizes this vector in place, making its magnitude (length) equal to 1, and returns the modified vector.
             </summary>
             <remarks>
-            If the vector is zero-length or already normalized, no operation is performed. 
+            If the vector is zero-length or already normalized, no operation is performed.
             This method modifies the current vector in place and supports method chaining.
             </remarks>
             <returns>The normalized vector.</returns>
@@ -11089,11 +11089,11 @@
             Returns a new vector with components whose absolute values are less than the specified threshold set to zero.
             </summary>
             <remarks>
-            This method is useful for eliminating insignificant floating-point errors by zeroing out very small vector components. 
+            This method is useful for eliminating insignificant floating-point errors by zeroing out very small vector components.
             The default threshold is suitable for most cases where near-zero values are considered noise.
             </remarks>
             <param name="threshold">
-            The minimum absolute value a component must have to be retained. 
+            The minimum absolute value a component must have to be retained.
             If null, a default epsilon value is used.
             </param>
             <returns>A new Vector3d instance with small components snapped to zero based on the specified threshold.</returns>
@@ -11158,7 +11158,7 @@
             </summary>
             <remarks>
             This comparison uses the squared magnitude of each vector, which avoids the computational
-            cost of calculating the actual magnitude. 
+            cost of calculating the actual magnitude.
             Use this method when only relative vector lengths are
             important.
             </remarks>
@@ -11276,7 +11276,7 @@
             Multiplies a 3x3 matrix by a 3-dimensional vector and returns the resulting vector.
             </summary>
             <remarks>
-            This operation applies the linear transformation represented by the matrix to the vector. 
+            This operation applies the linear transformation represented by the matrix to the vector.
             The multiplication is performed using standard matrix-vector multiplication rules.
             </remarks>
             <param name="matrix">The 3x3 matrix to multiply.</param>
@@ -11291,9 +11291,9 @@
             Transforms the specified 3D vector by the given 4x4 matrix using homogeneous coordinates.
             </summary>
             <remarks>
-            If the matrix is affine, the transformation is performed without perspective division. 
+            If the matrix is affine, the transformation is performed without perspective division.
             For non-affine matrices, the result is divided by the computed w component to account for perspective
-            transformations. 
+            transformations.
             If the computed w component is zero, it is treated as one to avoid division by zero.
             </remarks>
             <param name="matrix">The 4x4 matrix to apply to the vector. Must represent a valid transformation.</param>
@@ -11308,7 +11308,7 @@
             Multiplies the corresponding components of two vectors and returns the resulting vector.
             </summary>
             <remarks>
-            This operation performs component-wise multiplication, not a dot or cross product. 
+            This operation performs component-wise multiplication, not a dot or cross product.
             Each component of the result is calculated as the product of the corresponding components of the input
             vectors.
             </remarks>
@@ -11325,7 +11325,7 @@
             <param name="div">The scalar value by which to divide each component of the vector.</param>
             <returns>
             A new vector whose components are the result of dividing the corresponding components of the input vector by the
-            specified scalar. 
+            specified scalar.
             Returns a zero vector if the scalar is zero.
             </returns>
         </member>
@@ -11338,7 +11338,7 @@
             <param name="v1">The vector whose components are to be divided (the dividend).</param>
             <param name="v2">The vector whose components are used as divisors.</param>
             <returns>
-            A new Vector3d whose components are the result of dividing the corresponding components of v1 by v2. 
+            A new Vector3d whose components are the result of dividing the corresponding components of v1 by v2.
             If a component of v2 is zero, the corresponding result component is set to zero.
             </returns>
         </member>
@@ -11350,7 +11350,7 @@
             <param name="div">The integer divisor. If zero, the result is a zero vector.</param>
             <returns>
             A new vector whose components are the result of dividing each component of the input vector by the specified
-            divisor. 
+            divisor.
             Returns a zero vector if the divisor is zero.
             </returns>
         </member>
@@ -11392,7 +11392,7 @@
             Vector3d.
             </summary>
             <remarks>
-            This operator performs a component-wise comparison. 
+            This operator performs a component-wise comparison.
             All components of left must be less than the corresponding components of right for the result to be true.</remarks>
             <param name="left">The first Vector3d to compare.</param>
             <param name="right">The second Vector3d to compare.</param>
@@ -11581,7 +11581,7 @@
             <param name="t">The interpolation factor. Values outside the range [0, 1] will cause the interpolation to go beyond the start or end points.</param>
             <returns>The interpolated vector.</returns>
             <remarks>
-            Unlike traditional Lerp, this function allows interpolation factors greater than 1 or less than 0, 
+            Unlike traditional Lerp, this function allows interpolation factors greater than 1 or less than 0,
             which means the resulting vector can extend beyond the endpoints.
             </remarks>
         </member>
@@ -11621,7 +11621,7 @@
         </member>
         <member name="M:FixedMathSharp.Vector3d.HermiteSpline(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
             <summary>
-            Calculates a position between two points using Hermite spline interpolation, 
+            Calculates a position between two points using Hermite spline interpolation,
             which takes into account the tangents at the endpoints for smoother transitions.
             </summary>
             <param name="value1">The first point.</param>
@@ -11633,7 +11633,7 @@
         </member>
         <member name="M:FixedMathSharp.Vector3d.SmoothStep(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d,FixedMathSharp.Fixed64)">
             <summary>
-            Calculates a position between two points using a cubic Hermite interpolation, 
+            Calculates a position between two points using a cubic Hermite interpolation,
             which is similar to HermiteSpline but assumes zero tangents at the endpoints for a smoother curve.
             </summary>
             <param name="value1">The first point.</param>
@@ -11925,8 +11925,8 @@
         </member>
         <member name="M:FixedMathSharp.Vector3d.Reflect(FixedMathSharp.Vector3d,FixedMathSharp.Vector3d)">
             <summary>
-            Reflects a vector off the plane defined by a normal. 
-            The result is a vector that points in the direction a perfectly reflected ray would go, 
+            Reflects a vector off the plane defined by a normal.
+            The result is a vector that points in the direction a perfectly reflected ray would go,
             based on the incoming vector and the normal of the plane it reflects off.
             </summary>
             <param name="vector">The vector to reflect.</param>
@@ -13067,7 +13067,7 @@
         </member>
         <member name="T:FixedMathSharp.WideVector2dTransform">
             <summary>
-            Provides methods for transforming two-dimensional points and 
+            Provides methods for transforming two-dimensional points and
             vectors using wide arithmetic to avoid overflow and maintain precision.
             </summary>
         </member>
@@ -13078,7 +13078,7 @@
         </member>
         <member name="T:FixedMathSharp.WideWeightedAverage">
             <summary>
-            Provides methods for computing the weighted average of two-dimensional and 
+            Provides methods for computing the weighted average of two-dimensional and
             three-dimensional vectors using wide arithmetic to avoid overflow and maintain precision.
             </summary>
         </member>
@@ -13093,17 +13093,17 @@
             Initializes a new instance of the DeterministicRandom class using the specified seed value.
             </summary>
             <remarks>
-            This constructor expands the provided seed into the internal state required for deterministic random number generation. 
+            This constructor expands the provided seed into the internal state required for deterministic random number generation.
             The generated sequence is fully determined by the seed value.
             </remarks>
             <param name="seed">
-            The initial seed value used to generate the internal state. 
+            The initial seed value used to generate the internal state.
             Using the same seed will produce the same sequence of random numbers.
             </param>
         </member>
         <member name="M:FixedMathSharp.Random.DeterministicRandom.FromWorldFeature(System.UInt64,System.UInt64,System.UInt64)">
             <summary>
-            Create a stream deterministically 
+            Create a stream deterministically
             Derived from (worldSeed, featureKey[,index]).
             </summary>
         </member>
