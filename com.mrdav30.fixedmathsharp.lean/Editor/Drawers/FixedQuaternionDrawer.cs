@@ -14,6 +14,9 @@ namespace FixedMathSharp.Editor
     [CustomPropertyDrawer(typeof(FixedQuaternion)), CanEditMultipleObjects]
     public class FixedQuaternionDrawer : PropertyDrawer
     {
+        /// <summary>
+        /// Draws a FixedQuaternion as Euler angles in degrees, applying edits only outside play mode.
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);

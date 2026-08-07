@@ -14,14 +14,16 @@ namespace FixedMathSharp
     /// </summary>
     public static partial class Vector4dExtensions
     {
-        public static Vector4d ToVector4d(this Vector4 vec)
-        {
-            return Vector4d.FromDouble(vec.x, vec.y, vec.z, vec.w);
-        }
+        /// <summary>
+        /// Converts a Unity Vector4 to a FixedMathSharp Vector4d.
+        /// </summary>
+        public static Vector4d ToVector4d(this Vector4 vec) =>
+            Vector4d.FromDouble(vec.x, vec.y, vec.z, vec.w);
 
-        public static Vector4 ToVector4(this Vector4d vec)
-        {
-            return new Vector4((float)vec.X, (float)vec.Y, (float)vec.Z, (float)vec.W);
-        }
+        /// <summary>
+        /// Converts a FixedMathSharp Vector4d to a Unity Vector4.
+        /// </summary>
+        public static Vector4 ToVector4(this Vector4d vec) =>
+            new Vector4((float)vec.X, (float)vec.Y, (float)vec.Z, (float)vec.W);
     }
 }

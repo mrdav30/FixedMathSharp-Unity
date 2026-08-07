@@ -17,44 +17,57 @@ namespace FixedMathSharp
     /// </summary>
     public static class Fixed4x4UnityExtensions
     {
+        /// <summary>
+        /// Converts a FixedMathSharp row-vector matrix to a Unity column-vector matrix.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix4x4 ToMatrix4x4(this Fixed4x4 matrix)
         {
-            Matrix4x4 unityMatrix = new();
+            Matrix4x4 unityMatrix = new()
+            {
+                m00 = (float)matrix.M11,
+                m01 = (float)matrix.M21,
+                m02 = (float)matrix.M31,
+                m03 = (float)matrix.M41,
 
-            unityMatrix.m00 = (float)matrix.M11;
-            unityMatrix.m01 = (float)matrix.M21;
-            unityMatrix.m02 = (float)matrix.M31;
-            unityMatrix.m03 = (float)matrix.M41;
+                m10 = (float)matrix.M12,
+                m11 = (float)matrix.M22,
+                m12 = (float)matrix.M32,
+                m13 = (float)matrix.M42,
 
-            unityMatrix.m10 = (float)matrix.M12;
-            unityMatrix.m11 = (float)matrix.M22;
-            unityMatrix.m12 = (float)matrix.M32;
-            unityMatrix.m13 = (float)matrix.M42;
+                m20 = (float)matrix.M13,
+                m21 = (float)matrix.M23,
+                m22 = (float)matrix.M33,
+                m23 = (float)matrix.M43,
 
-            unityMatrix.m20 = (float)matrix.M13;
-            unityMatrix.m21 = (float)matrix.M23;
-            unityMatrix.m22 = (float)matrix.M33;
-            unityMatrix.m23 = (float)matrix.M43;
-
-            unityMatrix.m30 = (float)matrix.M14;
-            unityMatrix.m31 = (float)matrix.M24;
-            unityMatrix.m32 = (float)matrix.M34;
-            unityMatrix.m33 = (float)matrix.M44;
+                m30 = (float)matrix.M14,
+                m31 = (float)matrix.M24,
+                m32 = (float)matrix.M34,
+                m33 = (float)matrix.M44
+            };
 
             return unityMatrix;
         }
 
+        /// <summary>
+        /// Converts a Unity column-vector matrix to a FixedMathSharp row-vector matrix.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Fixed4x4 ToFixed4x4(this Matrix4x4 matrix)
-        {
-            return new Fixed4x4(
+        public static Fixed4x4 ToFixed4x4(this Matrix4x4 matrix) =>
+            new Fixed4x4(
                 (Fixed64)matrix.m00, (Fixed64)matrix.m10, (Fixed64)matrix.m20, (Fixed64)matrix.m30,
                 (Fixed64)matrix.m01, (Fixed64)matrix.m11, (Fixed64)matrix.m21, (Fixed64)matrix.m31,
                 (Fixed64)matrix.m02, (Fixed64)matrix.m12, (Fixed64)matrix.m22, (Fixed64)matrix.m32,
                 (Fixed64)matrix.m03, (Fixed64)matrix.m13, (Fixed64)matrix.m23, (Fixed64)matrix.m33);
-        }
 
+        /// <summary>
+        /// Creates a Unity transform from a strict local TRS matrix.
+        /// </summary>
+        /// <param name="matrix">The local TRS matrix to decompose.</param>
+        /// <param name="name">The new GameObject's name.</param>
+        /// <param name="parent">The optional parent transform.</param>
+        /// <returns>The created transform.</returns>
+        /// <exception cref="InvalidOperationException">The matrix is not a strict local TRS matrix.</exception>
         public static Transform CreateTransformLocal(
             this Fixed4x4 matrix,
             string name = "Fixed4x4 Transform",
@@ -68,6 +81,14 @@ namespace FixedMathSharp
             return transform;
         }
 
+        /// <summary>
+        /// Creates a Unity transform from a world matrix relative to an optional parent.
+        /// </summary>
+        /// <param name="matrix">The desired world matrix.</param>
+        /// <param name="name">The new GameObject's name.</param>
+        /// <param name="parent">The optional parent transform.</param>
+        /// <returns>The created transform.</returns>
+        /// <exception cref="InvalidOperationException">The matrix cannot be represented in the requested hierarchy.</exception>
         public static Transform CreateTransformWorld(
             this Fixed4x4 matrix,
             string name = "Fixed4x4 Transform",
@@ -81,6 +102,10 @@ namespace FixedMathSharp
             return transform;
         }
 
+        /// <summary>
+        /// Tries to apply a strict local TRS matrix to a Unity transform.
+        /// </summary>
+        /// <returns><see langword="true" /> when the matrix can be decomposed as strict TRS; otherwise, <see langword="false" />.</returns>
         public static bool TryApplyToTransformLocal(this Fixed4x4 matrix, Transform transform)
         {
             if (transform == null)
@@ -93,12 +118,20 @@ namespace FixedMathSharp
             return true;
         }
 
+        /// <summary>
+        /// Applies a strict local TRS matrix to a Unity transform.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">The matrix is not a strict local TRS matrix.</exception>
         public static void ApplyToTransformLocal(this Fixed4x4 matrix, Transform transform)
         {
             if (!matrix.TryApplyToTransformLocal(transform))
                 throw new InvalidOperationException("The Fixed4x4 is not a strict local TRS matrix.");
         }
 
+        /// <summary>
+        /// Tries to apply a world matrix within the Unity transform's current hierarchy.
+        /// </summary>
+        /// <returns><see langword="true" /> when the world matrix is representable by the target transform; otherwise, <see langword="false" />.</returns>
         public static bool TryApplyToTransformWorld(this Fixed4x4 matrix, Transform transform)
         {
             if (transform == null)
@@ -119,6 +152,10 @@ namespace FixedMathSharp
             return true;
         }
 
+        /// <summary>
+        /// Applies a world matrix within the Unity transform's current hierarchy.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">The matrix cannot be represented by the target transform.</exception>
         public static void ApplyToTransformWorld(this Fixed4x4 matrix, Transform transform)
         {
             if (!matrix.TryApplyToTransformWorld(transform))
@@ -128,6 +165,9 @@ namespace FixedMathSharp
             }
         }
 
+        /// <summary>
+        /// Converts a Unity transform's local-to-world matrix to FixedMathSharp convention.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed4x4 ToFixed4x4WorldMatrix(this Transform transform)
         {
@@ -137,6 +177,9 @@ namespace FixedMathSharp
             return transform.localToWorldMatrix.ToFixed4x4();
         }
 
+        /// <summary>
+        /// Creates a FixedMathSharp matrix from a Unity transform's local TRS components.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed4x4 ToFixed4x4LocalMatrix(this Transform transform)
         {

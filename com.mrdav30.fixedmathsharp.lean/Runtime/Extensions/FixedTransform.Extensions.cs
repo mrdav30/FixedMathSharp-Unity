@@ -16,6 +16,12 @@ namespace FixedMathSharp
     /// </summary>
     public static class FixedTransformUnityExtensions
     {
+        /// <summary>
+        /// Creates a FixedTransform from a Unity transform's local TRS components and an optional fixed parent.
+        /// </summary>
+        /// <param name="transform">The Unity transform to convert.</param>
+        /// <param name="parent">The optional parent in the FixedTransform hierarchy.</param>
+        /// <returns>The converted local transform.</returns>
         public static FixedTransform ToFixedTransformLocal(
             this Transform transform,
             FixedTransform parent = null!)
@@ -30,12 +36,19 @@ namespace FixedMathSharp
                 parent);
         }
 
+        /// <summary>
+        /// Applies a FixedTransform's local TRS components to a Unity transform.
+        /// </summary>
         public static void ApplyToTransformLocal(this FixedTransform fixedTransform, Transform target)
         {
             Validate(fixedTransform, target);
             ApplyLocalComponents(fixedTransform, target);
         }
 
+        /// <summary>
+        /// Tries to compose and apply a FixedTransform in the target Unity hierarchy.
+        /// </summary>
+        /// <returns><see langword="true" /> when the world transform is representable by the target; otherwise, <see langword="false" />.</returns>
         public static bool TryApplyToTransformWorld(this FixedTransform fixedTransform, Transform target)
         {
             Validate(fixedTransform, target);
@@ -50,6 +63,10 @@ namespace FixedMathSharp
                 && world.TryApplyToTransformWorld(target);
         }
 
+        /// <summary>
+        /// Composes and applies a FixedTransform in the target Unity hierarchy.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">The world transform is not representable by the target.</exception>
         public static void ApplyToTransformWorld(this FixedTransform fixedTransform, Transform target)
         {
             if (!fixedTransform.TryApplyToTransformWorld(target))

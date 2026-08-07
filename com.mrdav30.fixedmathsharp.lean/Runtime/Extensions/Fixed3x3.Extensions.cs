@@ -16,6 +16,9 @@ namespace FixedMathSharp
     /// </summary>
     public static class Fixed3x3UnityExtensions
     {
+        /// <summary>
+        /// Converts a FixedMathSharp row-vector basis matrix to a Unity column-vector matrix.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix4x4 ToMatrix4x4(this Fixed3x3 matrix)
         {
@@ -32,6 +35,9 @@ namespace FixedMathSharp
             return unityMatrix;
         }
 
+        /// <summary>
+        /// Copies the upper-left Unity basis into a FixedMathSharp row-vector matrix without removing scale or shear.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed3x3 ToFixed3x3Basis(this Matrix4x4 matrix)
         {
@@ -41,12 +47,16 @@ namespace FixedMathSharp
                 (Fixed64)matrix.m02, (Fixed64)matrix.m12, (Fixed64)matrix.m22);
         }
 
+        /// <summary>
+        /// Extracts the normalized rotation represented by a Unity matrix.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Fixed3x3 ToFixed3x3Rotation(this Matrix4x4 matrix)
-        {
-            return matrix.rotation.ToFixedQuaternion().ToMatrix3x3();
-        }
+        public static Fixed3x3 ToFixed3x3Rotation(this Matrix4x4 matrix) =>
+            matrix.rotation.ToFixedQuaternion().ToMatrix3x3();
 
+        /// <summary>
+        /// Gets a Unity transform's world rotation as a FixedMathSharp rotation matrix.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed3x3 ToFixed3x3WorldRotation(this Transform transform)
         {
@@ -56,6 +66,9 @@ namespace FixedMathSharp
             return transform.rotation.ToFixedQuaternion().ToMatrix3x3();
         }
 
+        /// <summary>
+        /// Gets a Unity transform's local rotation as a FixedMathSharp rotation matrix.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Fixed3x3 ToFixed3x3LocalRotation(this Transform transform)
         {
@@ -65,6 +78,13 @@ namespace FixedMathSharp
             return transform.localRotation.ToFixedQuaternion().ToMatrix3x3();
         }
 
+        /// <summary>
+        /// Creates a Unity transform whose local rotation is extracted from the matrix.
+        /// </summary>
+        /// <param name="matrix">The rotation matrix to apply.</param>
+        /// <param name="name">The new GameObject's name.</param>
+        /// <param name="parent">The optional parent transform.</param>
+        /// <returns>The created transform.</returns>
         public static Transform CreateTransformRotationLocal(
             this Fixed3x3 matrix,
             string name = "Fixed3x3 Rotation Transform",
@@ -76,6 +96,13 @@ namespace FixedMathSharp
             return transform;
         }
 
+        /// <summary>
+        /// Creates a Unity transform whose world rotation is extracted from the matrix.
+        /// </summary>
+        /// <param name="matrix">The rotation matrix to apply.</param>
+        /// <param name="name">The new GameObject's name.</param>
+        /// <param name="parent">The optional parent transform.</param>
+        /// <returns>The created transform.</returns>
         public static Transform CreateTransformRotationWorld(
             this Fixed3x3 matrix,
             string name = "Fixed3x3 Rotation Transform",
@@ -87,6 +114,9 @@ namespace FixedMathSharp
             return transform;
         }
 
+        /// <summary>
+        /// Applies the matrix's normalized rotation to a Unity transform in local space.
+        /// </summary>
         public static void ApplyRotationToTransformLocal(this Fixed3x3 matrix, Transform transform)
         {
             if (transform == null)
@@ -95,6 +125,9 @@ namespace FixedMathSharp
             transform.localRotation = ExtractUnityRotation(matrix);
         }
 
+        /// <summary>
+        /// Applies the matrix's normalized rotation to a Unity transform in world space.
+        /// </summary>
         public static void ApplyRotationToTransformWorld(this Fixed3x3 matrix, Transform transform)
         {
             if (transform == null)

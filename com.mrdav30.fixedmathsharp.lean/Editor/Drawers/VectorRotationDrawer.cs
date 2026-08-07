@@ -17,11 +17,17 @@ namespace FixedMathSharp.Editor
         private static readonly GUIContent AngleLabel = new("Angle");
         private static readonly GUIContent UnsupportedLabel = new("Use with Vector2d");
 
+        /// <summary>
+        /// Gets the single-line height used by the vector rotation field.
+        /// </summary>
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return EditorGUIUtility.singleLineHeight;
         }
 
+        /// <summary>
+        /// Draws a Vector2d direction as an editable angle in degrees.
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);

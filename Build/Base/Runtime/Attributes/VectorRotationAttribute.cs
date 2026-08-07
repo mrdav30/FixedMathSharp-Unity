@@ -10,13 +10,16 @@ using UnityEngine;
 namespace FixedMathSharp
 {
     /// <summary>
-    /// Attribute to represent a fixed number angle in degrees. 
-    /// Can be used to annotate properties or fields, supporting optional time-scaling and a maximum angle.
+    /// Displays a Vector2d direction as an angle in degrees with optional display scaling.
     /// </summary>
     public class VectorRotationAttribute : PropertyAttribute
     {
         public double Timescale { get; private set; }
 
+        /// <summary>
+        /// Initializes a vector rotation attribute with an optional display scale.
+        /// </summary>
+        /// <param name="timescale">The scale applied while displaying and editing the angle.</param>
         public VectorRotationAttribute(double timescale = 1d)
         {
             Timescale = timescale;

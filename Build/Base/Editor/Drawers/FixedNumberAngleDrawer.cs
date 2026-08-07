@@ -14,6 +14,9 @@ namespace FixedMathSharp.Editor
     [CustomPropertyDrawer(typeof(FixedNumberAngleAttribute))]
     public class FixedNumberAngleDrawer : PropertyDrawer
     {
+        /// <summary>
+        /// Draws the stored Fixed64 sine value as an editable angle in degrees.
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);

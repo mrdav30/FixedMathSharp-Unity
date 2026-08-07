@@ -33,6 +33,9 @@ namespace FixedMathSharp.Editor
             new[] { "M41", "M42", "M43", "M44" }
         };
 
+        /// <summary>
+        /// Gets the inspector height required for the collapsed or expanded matrix.
+        /// </summary>
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             if (!property.isExpanded)
@@ -43,6 +46,9 @@ namespace FixedMathSharp.Editor
                    rowCount * (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing);
         }
 
+        /// <summary>
+        /// Draws the matrix as an expandable, read-only grid.
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);

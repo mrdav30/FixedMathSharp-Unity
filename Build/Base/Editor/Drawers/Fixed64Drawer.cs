@@ -18,6 +18,9 @@ namespace FixedMathSharp.Editor
     [CustomPropertyDrawer(typeof(Fixed64))]
     public class Fixed64Drawer : PropertyDrawer
     {
+        /// <summary>
+        /// Draws the Fixed64 property field in the Unity inspector.
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             if (!FMSEditorUtility.TryGetFixed64Value(property, out Fixed64 currentValue, out SerializedProperty rawValue))

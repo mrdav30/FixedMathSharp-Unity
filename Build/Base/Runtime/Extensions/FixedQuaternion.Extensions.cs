@@ -30,15 +30,13 @@ namespace FixedMathSharp
         /// </remarks>
         /// <param name="quat">The Unity Quaternion to convert.</param>
         /// <returns>A FixedQuaternion with components corresponding to the input Unity Quaternion.</returns>
-        public static FixedQuaternion ToFixedQuaternion(this Quaternion quat)
-        {
-            return new FixedQuaternion(
+        public static FixedQuaternion ToFixedQuaternion(this Quaternion quat) =>
+            new FixedQuaternion(
                 (Fixed64)quat.x,
                 (Fixed64)quat.y,
                 (Fixed64)quat.z,
                 (Fixed64)quat.w
             );
-        }
 
         /// <summary>
         /// Converts a FixedMathSharp FixedQuaternion to a Unity Quaternion.
@@ -49,14 +47,12 @@ namespace FixedMathSharp
         /// </remarks>
         /// <param name="quat">The FixedQuaternion to convert.</param>
         /// <returns>A Unity Quaternion with components corresponding to the input FixedQuaternion.</returns>
-        public static Quaternion ToQuaternion(this FixedQuaternion quat)
-        {
-            return new Quaternion(
+        public static Quaternion ToQuaternion(this FixedQuaternion quat) =>
+            new Quaternion(
                 (float)quat.X,
                 (float)quat.Y,
                 (float)quat.Z,
                 (float)quat.W
             );
-        }
     }
 }

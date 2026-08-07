@@ -13,6 +13,9 @@ using UnityEngine;
 
 namespace FixedMathSharp.Editor
 {
+    /// <summary>
+    /// Provides Unity editor controls for FixedMathSharp values.
+    /// </summary>
     public static class FMSEditorUtility
     {
         private const float MatrixRowLabelWidth = 24f;
@@ -20,38 +23,59 @@ namespace FixedMathSharp.Editor
 
         #region EditorGUI
 
-        public static void DoubleField(Rect position, GUIContent label, ref Fixed64 value, double scale = 1d)
-        {
+        /// <summary>
+        /// Draws a positioned double field backed by a Fixed64 value.
+        /// </summary>
+        /// <param name="scale">The display scale applied while editing the value.</param>
+        public static void DoubleField(Rect position, GUIContent label, ref Fixed64 value, double scale = 1d) =>
             value = (Fixed64)(EditorGUI.DoubleField(position, label, (double)value * scale) / scale);
-        }
 
-        public static void DoubleField(Rect position, string label, ref Fixed64 value, double scale = 1d)
-        {
+        /// <summary>
+        /// Draws a positioned, string-labeled double field backed by a Fixed64 value.
+        /// </summary>
+        /// <param name="scale">The display scale applied while editing the value.</param>
+        public static void DoubleField(Rect position, string label, ref Fixed64 value, double scale = 1d) =>
             value = (Fixed64)(EditorGUI.DoubleField(position, label, (double)value * scale) / scale);
-        }
 
+        /// <summary>
+        /// Draws a Fixed64 field rounded to two decimals and capped by a nonzero maximum.
+        /// </summary>
+        /// <param name="max">The maximum value, or zero for no maximum.</param>
+        /// <returns>The edited and capped value.</returns>
         public static Fixed64 FixedNumberField(Rect position, Fixed64 value, Fixed64 max)
         {
             Fixed64 result = (Fixed64)EditorGUI.DoubleField(position, Math.Round((double)value, 2, MidpointRounding.AwayFromZero));
             return max == Fixed64.Zero || result <= max ? result : max;
         }
 
+        /// <summary>
+        /// Draws a positioned Fixed64 field rounded to two decimals.
+        /// </summary>
         public static Fixed64 FixedNumberField(Rect position, Fixed64 value)
         {
             Fixed64 result = (Fixed64)EditorGUI.DoubleField(position, Math.Round((double)value, 2, MidpointRounding.AwayFromZero));
             return result;
         }
 
-        public static Fixed64 FixedNumberField(Rect position, long value)
-        {
-            return FixedNumberField(position, GUIContent.none, value);
-        }
+        /// <summary>
+        /// Draws a positioned Fixed64 field from its raw stored value.
+        /// </summary>
+        /// <param name="value">The Fixed64 raw value.</param>
+        /// <returns>The edited Fixed64 value.</returns>
+        public static Fixed64 FixedNumberField(Rect position, long value) =>
+            FixedNumberField(position, GUIContent.none, value);
 
-        public static Fixed64 FixedNumberField(Rect position, GUIContent label, long value)
-        {
-            return (Fixed64)EditorGUI.DoubleField(position, label, Math.Round(Fixed64.ToDouble(value), 4, MidpointRounding.AwayFromZero));
-        }
+        /// <summary>
+        /// Draws a positioned, labeled Fixed64 field from its raw stored value.
+        /// </summary>
+        /// <param name="value">The Fixed64 raw value.</param>
+        /// <returns>The edited Fixed64 value.</returns>
+        public static Fixed64 FixedNumberField(Rect position, GUIContent label, long value) =>
+            (Fixed64)EditorGUI.DoubleField(position, label, Math.Round(Fixed64.ToDouble(value), 4, MidpointRounding.AwayFromZero));
 
+        /// <summary>
+        /// Draws positioned X, Y, and Z fields for a Vector3d value.
+        /// </summary>
         public static void Vector3dField(Rect position, GUIContent label, ref Vector3d vector)
         {
             float labelWidth = EditorGUIUtility.labelWidth;
@@ -75,12 +99,13 @@ namespace FixedMathSharp.Editor
             EditorGUIUtility.labelWidth = labelWidth;
         }
 
-        public static Fixed64 GetFixed64Value(SerializedProperty property)
-        {
-            return TryGetFixed64Value(property, out Fixed64 value, out _)
+        /// <summary>
+        /// Reads a Fixed64 from a serialized property, returning zero when it cannot be read.
+        /// </summary>
+        public static Fixed64 GetFixed64Value(SerializedProperty property) =>
+            TryGetFixed64Value(property, out Fixed64 value, out _)
                 ? value
                 : Fixed64.Zero;
-        }
 
         internal static bool TryGetFixed64Value(SerializedProperty property, out Fixed64 value, out SerializedProperty rawValue)
         {
@@ -114,6 +139,9 @@ namespace FixedMathSharp.Editor
             }
         }
 
+        /// <summary>
+        /// Draws a labeled, read-only row of Fixed64 matrix values.
+        /// </summary>
         public static void DrawReadOnlyMatrixRow(Rect position, string rowLabel, params Fixed64[] values)
         {
             Rect rowLabelRect = new Rect(position.x, position.y, MatrixRowLabelWidth, position.height);
@@ -135,11 +163,15 @@ namespace FixedMathSharp.Editor
 
         #region EditorGUILayout
 
-        public static void FixedNumberField(string Label, ref Fixed64 fixedNumber)
-        {
+        /// <summary>
+        /// Draws an automatically laid-out Fixed64 field.
+        /// </summary>
+        public static void FixedNumberField(string Label, ref Fixed64 fixedNumber) =>
             fixedNumber = (Fixed64)EditorGUILayout.DoubleField(Label, (double)fixedNumber);
-        }
 
+        /// <summary>
+        /// Draws an automatically laid-out Fixed64 serialized-property field.
+        /// </summary>
         public static void FixedNumberField(string label, ref SerializedProperty property)
         {
             if (!TryGetFixed64Value(property, out Fixed64 currentValue, out SerializedProperty rawValue))
@@ -154,6 +186,9 @@ namespace FixedMathSharp.Editor
             SetFixed64Value(property, rawValue, newFixedValue);
         }
 
+        /// <summary>
+        /// Draws an automatically laid-out slider for a Fixed64 serialized property.
+        /// </summary>
         public static void FixedNumberField(string label, ref SerializedProperty property, float min, float max)
         {
             if (!TryGetFixed64Value(property, out Fixed64 currentValue, out SerializedProperty rawValue))
@@ -169,15 +204,17 @@ namespace FixedMathSharp.Editor
             SetFixed64Value(property, rawValue, newFixedValue);
         }
 
-        public static void Vector2dField(string Label, ref Vector2d vector)
-        {
+        /// <summary>
+        /// Draws an automatically laid-out Vector2d field.
+        /// </summary>
+        public static void Vector2dField(string Label, ref Vector2d vector) =>
             vector = EditorGUILayout.Vector2Field(Label, vector.ToVector2()).ToVector2d();
-        }
 
-        public static void Vector3dField(string Label, ref Vector3d vector)
-        {
+        /// <summary>
+        /// Draws an automatically laid-out Vector3d field.
+        /// </summary>
+        public static void Vector3dField(string Label, ref Vector3d vector) =>
             vector = EditorGUILayout.Vector3Field(Label, vector.ToVector3()).ToVector3d();
-        }
 
         #endregion
     }
