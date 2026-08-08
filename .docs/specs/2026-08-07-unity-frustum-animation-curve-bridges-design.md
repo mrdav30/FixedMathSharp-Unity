@@ -206,7 +206,9 @@ hold:
   Looping, ping-pong, one-shot, and ambient/default wrap behavior are rejected.
 - Every key uses `WeightedMode.None`.
 - Key times and values are finite and representable as `Fixed64`.
-- Key times are strictly increasing.
+- Key times are strictly increasing both as authored Unity floats and after
+  Q32.32 conversion. Distinct float times that collapse to the same fixed time
+  are rejected.
 - A stepped segment has both the left key's outgoing tangent and the right
   key's incoming tangent set to positive infinity. Every segment must either
   meet that rule, or every segment must have finite Hermite tangents. Mixed
@@ -336,8 +338,9 @@ surfaces change.
 - Linear and smooth Unity curves convert exactly through cubic Hermite data.
 - A wholly stepped curve converts to `FixedCurveMode.Step`.
 - Weighted, mixed step/Hermite, non-clamped, non-finite, and unrepresentable
-  curves fail atomically through `TryToFixedCurve`; the throwing wrapper points
-  callers to baking.
+  curves, including times that collapse after Q32.32 conversion, fail
+  atomically through `TryToFixedCurve`; the throwing wrapper points callers to
+  baking.
 - Empty and one-key curves preserve constant evaluation semantics.
 - Baking emits the requested number of uniformly spaced linear keys, includes
   both endpoints, and matches Unity at every sampled time.
