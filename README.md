@@ -42,8 +42,18 @@ Unity uses column-vector matrices while FixedMathSharp uses row-vector matrices.
 
 ## Included
 
-- Deterministic `Fixed64` math, vectors, quaternions, matrices, bounds, and geometry
-- Unity vector, ray, plane, rectangle, bounds, matrix, and `FixedTransform` interop
+- Deterministic `Fixed64` math, vectors, quaternions, matrices, bounds, frustums, curves, and geometry
+- Unity vector, ray, plane, rectangle, bounds, matrix, `AnimationCurve`, and `FixedTransform` interop
 - Fixed-point inspector drawers and a sample scene
+
+```csharp
+Plane[] planeBuffer = new Plane[FixedBoundFrustum.PlaneCount];
+FixedBoundFrustum frustum = camera.ToFixedBoundFrustum(planeBuffer);
+
+if (!animationCurve.TryToFixedCurve(out FixedCurve curve))
+    curve = animationCurve.BakeToFixedCurve(65);
+```
+
+`BakeToFixedCurve` is an explicit floating-point approximation. Bake once at an authoring/loading boundary and distribute or persist the fixed keys; lockstep peers should not bake independently.
 
 These packages are installed by Git URL; they are not currently published to a Unity registry.

@@ -30,6 +30,16 @@ Use atomic `TryToRay*` and `TryApplyToTransform*` methods when rejection is expe
 ## Included
 
 - Deterministic fixed-point math via `Fixed64`
-- Unity math, geometry, bounds, matrix, and transform adapters
+- Unity math, geometry, bounds, frustum, curve, matrix, and transform adapters
 - Fixed-point inspector drawers and a sample scene
 - MemoryPack serializer/runtime support
+
+```csharp
+Plane[] planeBuffer = new Plane[FixedBoundFrustum.PlaneCount];
+FixedBoundFrustum frustum = camera.ToFixedBoundFrustum(planeBuffer);
+
+if (!animationCurve.TryToFixedCurve(out FixedCurve curve))
+    curve = animationCurve.BakeToFixedCurve(65);
+```
+
+`BakeToFixedCurve` is an explicit floating-point approximation. Bake once at an authoring/loading boundary and distribute or persist the fixed keys; lockstep peers should not bake independently.
