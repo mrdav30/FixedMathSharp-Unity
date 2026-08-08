@@ -71,6 +71,23 @@ namespace FixedMathSharp.Unity.Tests
         }
 
         [Test]
+        public void MatrixConversion_ReversesBoundaryDistanceBeforeFixedConversion()
+        {
+            const float Boundary = 2_147_483_648f;
+            Matrix4x4 matrix = Matrix4x4.identity;
+            matrix.m03 = Boundary / 2f;
+            matrix.m33 = Boundary / 2f;
+            Plane[] unityPlanes = GeometryUtility.CalculateFrustumPlanes(matrix);
+
+            Assert.That(unityPlanes[0].distance, Is.EqualTo(Boundary));
+
+            FixedBoundFrustum fixedFrustum = matrix.ToFixedBoundFrustum();
+
+            Assert.That(fixedFrustum.Left.D, Is.EqualTo(Fixed64.MinValue));
+            Assert.That(fixedFrustum.ToUnityFrustumPlanes()[0].distance, Is.EqualTo(Boundary));
+        }
+
+        [Test]
         public void FixedToUnityPlanes_MatchUnityBoundsContainment()
         {
             GameObject owner = new("FixedMathSharp Reverse Frustum Test");

@@ -105,24 +105,22 @@ namespace FixedMathSharp.Geometry
         public static void CopyToUnityFrustumPlanes(this FixedBoundFrustum frustum, UnityPlane[] planeBuffer)
         {
             ValidateBuffer(planeBuffer);
-            planeBuffer[LeftIndex] = Reverse(frustum.Left).ToPlane();
-            planeBuffer[RightIndex] = Reverse(frustum.Right).ToPlane();
-            planeBuffer[BottomIndex] = Reverse(frustum.Bottom).ToPlane();
-            planeBuffer[TopIndex] = Reverse(frustum.Top).ToPlane();
-            planeBuffer[NearIndex] = Reverse(frustum.Near).ToPlane();
-            planeBuffer[FarIndex] = Reverse(frustum.Far).ToPlane();
+            planeBuffer[LeftIndex] = frustum.Left.ToPlane().flipped;
+            planeBuffer[RightIndex] = frustum.Right.ToPlane().flipped;
+            planeBuffer[BottomIndex] = frustum.Bottom.ToPlane().flipped;
+            planeBuffer[TopIndex] = frustum.Top.ToPlane().flipped;
+            planeBuffer[NearIndex] = frustum.Near.ToPlane().flipped;
+            planeBuffer[FarIndex] = frustum.Far.ToPlane().flipped;
         }
 
         private static FixedBoundFrustum CreateFixedFrustum(UnityPlane[] planes) =>
             new(
-                Reverse(planes[NearIndex].ToFixedPlane()),
-                Reverse(planes[FarIndex].ToFixedPlane()),
-                Reverse(planes[LeftIndex].ToFixedPlane()),
-                Reverse(planes[RightIndex].ToFixedPlane()),
-                Reverse(planes[TopIndex].ToFixedPlane()),
-                Reverse(planes[BottomIndex].ToFixedPlane()));
-
-        private static FixedPlane Reverse(FixedPlane plane) => new(-plane.Normal, -plane.D);
+                planes[NearIndex].flipped.ToFixedPlane(),
+                planes[FarIndex].flipped.ToFixedPlane(),
+                planes[LeftIndex].flipped.ToFixedPlane(),
+                planes[RightIndex].flipped.ToFixedPlane(),
+                planes[TopIndex].flipped.ToFixedPlane(),
+                planes[BottomIndex].flipped.ToFixedPlane());
 
         private static void ValidateBuffer(UnityPlane[] planeBuffer)
         {

@@ -22,12 +22,14 @@ namespace FixedMathSharp
         /// <param name="fixedCurve">The exactly equivalent fixed curve on success; otherwise a zero-valued constant curve.</param>
         /// <returns>
         /// <see langword="true" /> when <paramref name="curve" /> is unweighted, uses one global step or Hermite interpolation mode,
-        /// and has finite, strictly increasing times representable as <see cref="Fixed64" />; otherwise, <see langword="false" />.
+        /// and has finite values, strictly increasing times, and duration-scaled tangents representable as <see cref="Fixed64" />;
+        /// otherwise, <see langword="false" />.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="curve" /> is <see langword="null" />.</exception>
         /// <remarks>
-        /// A successful conversion preserves clamped wrapping exactly. Curves with weighted keys, mixed step and Hermite segments,
-        /// non-finite values, or times that collapse or overflow in fixed-point representation fail safely without returning partial data.
+        /// A successful conversion preserves clamped wrapping exactly and scales Hermite tangents by the adjacent segment duration.
+        /// Curves with weighted keys, mixed step and Hermite segments, non-finite values, unrepresentable scaled tangents, or times that
+        /// collapse or overflow in fixed-point representation fail safely without returning partial data.
         /// </remarks>
         public static bool TryToFixedCurve(this AnimationCurve curve, out FixedCurve fixedCurve)
         {
@@ -119,7 +121,9 @@ namespace FixedMathSharp
         /// <param name="sampleCount">The number of samples, including both authored endpoints. Must be at least two.</param>
         /// <returns>A linear fixed curve approximating <paramref name="curve" /> at the requested samples.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="curve" /> is <see langword="null" />.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="sampleCount" /> is less than two.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="sampleCount" /> is less than two, or a sampled time or value is not finite.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
         /// The authored time span is not finite and positive, or the requested sample times are not distinct in the fixed-point domain.
         /// </exception>
