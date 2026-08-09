@@ -2,18 +2,17 @@
 
 ## Purpose
 
-FixedMathSharp-Unity is the Unity Package Manager host for the
-engine-agnostic FixedMathSharp core library. It ships two installable package
-variants:
+FixedMathSharp-Unity is the Unity Package Manager host for the engine-agnostic
+FixedMathSharp core library. It ships two installable package variants:
 
 - `com.mrdav30.fixedmathsharp` - standard package with `MemoryPack` support.
 - `com.mrdav30.fixedmathsharp.lean` - package without the MemoryPack
   serializer/runtime, preferred for Burst AOT-oriented Unity projects. It
   includes the attribute-only `Chronicler.MemoryPackShim` assembly.
 
-The actual Git repository root is `Assets/Packages`, not the outer Unity
-project root. The outer project exists so Unity can compile, sync, export, and
-validate the packages.
+The actual Git repository root is `Assets/Packages`, not the outer Unity project
+root. The outer project exists so Unity can compile, sync, export, and validate
+the packages.
 
 The core deterministic math library is maintained in the separate
 `FixedMathSharp` repository:
@@ -22,10 +21,9 @@ The core deterministic math library is maintained in the separate
 
 If the current workspace also contains a local checkout of that core repo, use
 its `AGENTS.md` and source files as the source of truth for `Fixed64`, Q32.32
-math, coordinate conventions, serialization semantics, performance
-expectations, and deterministic behavior. Do not assume a fixed host-specific
-path; discover the checkout from the current workspace, git remotes, or user
-context.
+math, coordinate conventions, serialization semantics, performance expectations,
+and deterministic behavior. Do not assume a fixed host-specific path; discover
+the checkout from the current workspace, git remotes, or user context.
 
 ## Current Package Facts
 
@@ -44,12 +42,13 @@ When shared Unity-managed code changes, edit `Build/Base` first.
 
 `Build/Base` is synchronized into both package variants by
 `Build/Editor/FixedMathSharpPackageSync.cs`. Do not hand-edit synced copies in
-`com.mrdav30.fixedmathsharp` or `com.mrdav30.fixedmathsharp.lean` unless you
-are intentionally changing package-specific files outside the sync set.
+`com.mrdav30.fixedmathsharp` or `com.mrdav30.fixedmathsharp.lean` unless you are
+intentionally changing package-specific files outside the sync set.
 
 The sync-managed paths are:
 
 - `COPYRIGHT`
+- `CHANGELOG.md`
 - `LICENSE`
 - `NOTICE`
 - `Editor/Utility`
@@ -62,8 +61,8 @@ The sync-managed paths are:
 
 Unity package samples use two folder shapes in this repo:
 
-- `Samples/` is the local authoring mirror. It is visible in the Unity editor
-  so sample scenes, scripts, and references can be edited normally.
+- `Samples/` is the local authoring mirror. It is visible in the Unity editor so
+  sample scenes, scripts, and references can be edited normally.
 - `Samples~/` is the distributable package copy used by Git/package-source
   installs. Package manifests should point sample entries at `Samples~/...`.
 
@@ -81,9 +80,9 @@ package sync/export flow. The sync step hydrates missing package-variant
 scripts into the visible authoring mirror. The exporter overwrites `Samples~/`
 from `Samples/` and explicitly excludes `Samples/` from the exported package.
 
-Unity hides tilde folders from the asset database, so the stock
-`.unitypackage` exporter should not be treated as the source of sample-package
-coverage unless a custom archive/export path is added.
+Unity hides tilde folders from the asset database, so the stock `.unitypackage`
+exporter should not be treated as the source of sample-package coverage unless a
+custom archive/export path is added.
 
 Package-specific files live directly in each package and are not copied from
 `Build/Base`, including:
@@ -107,17 +106,17 @@ or exported assets change:
 
 ## Repository Map
 
-| Path | Purpose |
-| --- | --- |
-| `Build/Base` | Shared managed Unity code copied into both package variants. |
-| `Build/Editor` | Unity editor tooling for syncing and exporting packages. |
-| `com.mrdav30.fixedmathsharp` | Standard UPM package with MemoryPack support. |
-| `com.mrdav30.fixedmathsharp.lean` | Lean UPM package without the MemoryPack serializer/runtime; includes the attribute-only Chronicler shim. |
-| `Build/Base/Runtime/Extensions` | Shared Unity adapter helpers for transforms, matrices, bounds, vectors, and quaternions. |
-| `Build/Base/Runtime/Attributes` | Shared Unity-facing attributes such as fixed-number angle and vector rotation attributes. |
-| `Build/Base/Editor/Drawers` | Shared Unity inspector drawers for FixedMathSharp types and Unity-facing attributes. |
-| `Build/Base/Editor/Utility` | Shared editor helpers, including serialized-property reflection utilities. |
-| `Build/Base/Samples/FixedMathSharpDemo` | Shared demo scripts copied into both package variants. |
+| Path                                    | Purpose                                                                                                  |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `Build/Base`                            | Shared managed Unity code copied into both package variants.                                             |
+| `Build/Editor`                          | Unity editor tooling for syncing and exporting packages.                                                 |
+| `com.mrdav30.fixedmathsharp`            | Standard UPM package with MemoryPack support.                                                            |
+| `com.mrdav30.fixedmathsharp.lean`       | Lean UPM package without the MemoryPack serializer/runtime; includes the attribute-only Chronicler shim. |
+| `Build/Base/Runtime/Extensions`         | Shared Unity adapter helpers for transforms, matrices, bounds, vectors, and quaternions.                 |
+| `Build/Base/Runtime/Attributes`         | Shared Unity-facing attributes such as fixed-number angle and vector rotation attributes.                |
+| `Build/Base/Editor/Drawers`             | Shared Unity inspector drawers for FixedMathSharp types and Unity-facing attributes.                     |
+| `Build/Base/Editor/Utility`             | Shared editor helpers, including serialized-property reflection utilities.                               |
+| `Build/Base/Samples/FixedMathSharpDemo` | Shared demo scripts copied into both package variants.                                                   |
 
 Ignore generated Unity output when reasoning about package source:
 
@@ -149,8 +148,8 @@ library's deterministic design.
 
 - Runtime extension methods should remain thin conversion/adaptation layers
   between Unity types and FixedMathSharp types.
-- Editor drawers must be robust against FixedMathSharp value-type changes.
-  Avoid relying on Unity exposing nested `Fixed64.m_rawValue` as an editable
+- Editor drawers must be robust against FixedMathSharp value-type changes. Avoid
+  relying on Unity exposing nested `Fixed64.m_rawValue` as an editable
   `SerializedProperty`; use the shared reflection helpers when whole-value
   writes are required.
 - Be careful with readonly or immutable structs. Setting a nested field on a
@@ -179,9 +178,9 @@ UNITY_EDITOR="${UNITY_EDITOR:-Unity}"
   -logFile -
 ```
 
-Run the same command again when the first pass copied package files and you
-need evidence that the generated package assemblies compile with the final
-synced contents. A clean final sync should report `Copied 0 files`.
+Run the same command again when the first pass copied package files and you need
+evidence that the generated package assemblies compile with the final synced
+contents. A clean final sync should report `Copied 0 files`.
 
 To export `.unitypackage` archives:
 
@@ -223,8 +222,7 @@ When bumping the FixedMathSharp core library:
 - Start from the sibling core repo and verify the intended version or commit
   there.
 - Update both package variants' `Plugins/FixedMathSharp.dll`,
-  `Plugins/FixedMathSharp.pdb`, and `Plugins/FixedMathSharp.xml` as
-  appropriate.
+  `Plugins/FixedMathSharp.pdb`, and `Plugins/FixedMathSharp.xml` as appropriate.
 - Keep standard-package dependency DLLs aligned with the MemoryPack-enabled
   build.
 - Keep the Lean package free of the MemoryPack serializer/runtime and keep its
@@ -238,12 +236,18 @@ When bumping the FixedMathSharp core library:
 
 - Keep the root README focused on package selection and Git URL installation.
 - Keep package READMEs package-specific: standard explains MemoryPack support,
-  Lean explains the no-MemoryPack-runtime/Burst AOT rationale and attribute shim.
+  Lean explains the no-MemoryPack-runtime/Burst AOT rationale and attribute
+  shim.
+- Generate the hosted API reference from canonical `Build/Base/Runtime` source
+  through `.docs/api/docfx.json`; do not document synchronized package copies.
+- Restore the pinned DocFX tool with `dotnet tool restore`. Local and CI builds
+  stage `FixedMathSharp.dll` and the current Unity editor's
+  `UnityEngine.CoreModule.dll` under ignored `.docs/api/obj/references` before
+  running `dotnet tool run docfx .docs/api/docfx.json`.
 - Do not duplicate long core FixedMathSharp API documentation here. Link to or
   align with the core repo instead.
 - If a Unity package behavior depends on a core FixedMathSharp convention,
-  mention the adapter boundary clearly rather than reframing it as a Unity
-  rule.
+  mention the adapter boundary clearly rather than reframing it as a Unity rule.
 
 ## Agent Editing Guidance
 
@@ -252,5 +256,5 @@ When bumping the FixedMathSharp core library:
 - For package-specific metadata/assets, edit each package intentionally.
 - Read the corresponding generated package copy after sync if a Unity import or
   compiler error points there.
-- Prefer explicit validation evidence over assumptions, especially around
-  editor drawers, serialization, Burst/Lean differences, and plugin updates.
+- Prefer explicit validation evidence over assumptions, especially around editor
+  drawers, serialization, Burst/Lean differences, and plugin updates.

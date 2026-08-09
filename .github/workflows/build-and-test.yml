@@ -3,14 +3,14 @@ name: build-and-test
 on:
   push:
     branches-ignore:
-      - 'dependabot/**'
-      - 'gh-pages'
+      - "dependabot/**"
+      - "gh-pages"
     tags-ignore:
-      - 'v*'
+      - "v*"
   pull_request:
     branches:
-      - 'main'
-      - 'develop'
+      - "main"
+      - "develop"
 
 permissions:
   contents: read
@@ -89,6 +89,48 @@ jobs:
         with:
           name: unity-editmode-${{ matrix.artifact_suffix }}
           path: artifacts/${{ matrix.artifact_suffix }}
+
+      - name: Setup .NET for API documentation
+        if: matrix.artifact_suffix == 'standard'
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Prepare API documentation references
+        if: matrix.artifact_suffix == 'standard'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          image="unityci/editor:ubuntu-6000.5.0f1-base-3"
+          container="$(docker create "$image")"
+          trap 'docker rm -f "$container" >/dev/null 2>&1 || true' EXIT
+
+          mkdir -p .docs/api/obj/references
+          docker cp \
+            "$container:/opt/unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll" \
+            .docs/api/obj/references/UnityEngine.CoreModule.dll
+          cp com.mrdav30.fixedmathsharp/Plugins/FixedMathSharp.dll \
+            .docs/api/obj/references/FixedMathSharp.dll
+
+      - name: Build API documentation
+        if: matrix.artifact_suffix == 'standard'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          dotnet tool restore
+          dotnet tool run docfx .docs/api/docfx.json
+
+          test -f .docs/api/obj/_site/index.html
+          test -f .docs/api/obj/_site/api/FixedMathSharp.FixedCurveUnityExtensions.html
+          test -f .docs/api/obj/_site/api/FixedMathSharp.Geometry.FixedFrustumUnityExtensions.html
+
+      - name: Upload API documentation site
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.artifact_suffix == 'standard'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .docs/api/obj/_site
 
   unity-sample-import-smoke:
     name: Unity Sample Import Smoke (${{ matrix.package_display_name }})
@@ -181,3 +223,24 @@ jobs:
         with:
           name: unity-sample-import-${{ matrix.artifact_suffix }}
           path: artifacts/sample-import-${{ matrix.artifact_suffix }}
+
+  deploy-docs:
+    name: Deploy API documentation
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: unity-editmode
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Deploy API documentation
+        id: deployment
+        uses: actions/deploy-pages@v5

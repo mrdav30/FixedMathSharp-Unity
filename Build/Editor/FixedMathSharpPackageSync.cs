@@ -27,6 +27,7 @@ namespace FixedMathSharp.Build.Editor
         private static readonly ManagedEntry[] ManagedEntries =
         {
             ManagedEntry.File("COPYRIGHT"),
+            ManagedEntry.File("CHANGELOG.md"),
             ManagedEntry.File("LICENSE"),
             ManagedEntry.File("NOTICE"),
             ManagedEntry.Directory("Editor/Utility"),

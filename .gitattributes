@@ -1,4 +1,30 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Declare files that will always have LF line endings on checkout.
 *.sh text eol=lf
-*.yml text eol=lf
-*.yaml text eol=lf
-*.txt text eol=lf
+
+# Don't check these into the repo as LF normalization will mess with them.
+*.xml     -text
+*.targets -text
+
+# Custom for Visual Studio
+*.cs     diff=csharp
+*.sln
+*.slnx
+*.csproj
+*.vbproj
+*.fsproj
+*.dbproj
+
+# Denote all files that are truly binary and should not be modified.
+*.dll binary
+*.exe binary
+*.png binary
+*.ico binary
+*.snk binary
+*.pdb binary
+*.svg binary
+
+# Don't check for trailing whitespace at end of lines in the doc pages
+*.md -whitespace=blank-at-eol

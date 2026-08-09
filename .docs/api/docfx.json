@@ -1,0 +1,32 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": ["Build/Base/Runtime/**/*.cs"],
+          "src": "../.."
+        }
+      ],
+      "dest": "obj/api",
+      "references": [
+        {
+          "files": ["*.dll"],
+          "src": "obj/references"
+        }
+      ]
+    }
+  ],
+  "build": {
+    "content": [
+      { "files": ["index.md", "toc.yml"] },
+      { "files": ["**/*.yml"], "src": "obj/api", "dest": "api" }
+    ],
+    "output": "obj/_site",
+    "template": ["default", "modern"],
+    "xref": ["https://mrdav30.github.io/FixedMathSharp/xrefmap.yml"],
+    "globalMetadata": {
+      "_appName": "FixedMathSharp Unity API",
+      "_enableSearch": true
+    }
+  }
+}

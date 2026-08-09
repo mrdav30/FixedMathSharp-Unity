@@ -14,6 +14,9 @@ namespace FixedMathSharp
     /// </summary>
     public class VectorRotationAttribute : PropertyAttribute
     {
+        /// <summary>
+        /// Gets the scale applied while displaying and editing the angle.
+        /// </summary>
         public double Timescale { get; private set; }
 
         /// <summary>

@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace FixedMathSharp
 {
+    /// <summary>
+    /// Provides conversions between Unity vectors and FixedMathSharp 2D vectors.
+    /// </summary>
     public static partial class Vector2dExtensions
     {
         /// <summary>
