@@ -123,8 +123,16 @@ jobs:
           dotnet tool run docfx .docs/api/docfx.json
 
           test -f .docs/api/obj/_site/index.html
+          test -f .docs/api/obj/_site/guides/getting-started.html
+          test -f .docs/api/obj/_site/guides/serialization.html
           test -f .docs/api/obj/_site/api/FixedMathSharp.FixedCurveUnityExtensions.html
           test -f .docs/api/obj/_site/api/FixedMathSharp.Geometry.FixedFrustumUnityExtensions.html
+          test -f .docs/api/obj/_site/assets/icon_128x128.png
+
+          grep -Fq 'fms-hero' .docs/api/obj/_site/index.html
+          grep -Fq 'github.com/mrdav30/FixedMathSharp-Unity' .docs/api/obj/_site/public/main.js
+          grep -Fq 'mrdav30.github.io/FixedMathSharp/' .docs/api/obj/_site/api/FixedMathSharp.html
+          grep -Fq 'com.mrdav30.fixedmathsharp.lean' .docs/api/obj/_site/index.html
 
       - name: Upload API documentation site
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.artifact_suffix == 'standard'

@@ -1,6 +1,7 @@
 # Changelog
 
-All notable changes to the FixedMathSharp Unity packages are documented here.
+Notable changes to the FixedMathSharp Unity packages are documented here from
+version 7 onward.
 
 ## [7.0.0] - 2026-08-09
 

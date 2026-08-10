@@ -1,10 +1,22 @@
 items:
   - name: Home
     href: index.md
+  - name: Guides
+    items:
+      - name: Getting started
+        href: guides/getting-started.md
+      - name: Serialization
+        href: guides/serialization.md
   - name: Unity Adapter API
     href: obj/api/
     homepage: obj/api/FixedMathSharp.yml
-  - name: FixedMathSharp Core API
-    href: https://mrdav30.github.io/FixedMathSharp/
-  - name: v7 Migration Guide
-    href: https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x
+  - name: Resources
+    items:
+      - name: FixedMathSharp Core API
+        href: https://mrdav30.github.io/FixedMathSharp/
+      - name: FixedMathSharp Wiki
+        href: https://github.com/mrdav30/FixedMathSharp/wiki
+      - name: Unity Package Source
+        href: https://github.com/mrdav30/FixedMathSharp-Unity
+      - name: v7 Migration Guide
+        href: https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x

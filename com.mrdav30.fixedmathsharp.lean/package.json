@@ -2,7 +2,7 @@
   "name": "com.mrdav30.fixedmathsharp.lean",
   "version": "7.0.0",
   "displayName": "FixedMathSharp.Lean",
-  "description": "Deterministic fixed-point math for Unity without the MemoryPack serializer/runtime. Includes an attribute-only compatibility shim and supports custom serialization stacks.",
+  "description": "Deterministic Q32.32 math for Unity with engine adapters and editor tooling, without the MemoryPack serializer/runtime.",
   "unity": "2022.3",
   "author": {
     "name": "David Oravsky",
@@ -22,10 +22,12 @@
     "url": "https://github.com/mrdav30/FixedMathSharp-Unity.git"
   },
   "documentationUrl": "https://mrdav30.github.io/FixedMathSharp-Unity/",
+  "changelogUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v7.0.0/com.mrdav30.fixedmathsharp.lean/CHANGELOG.md",
+  "licensesUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v7.0.0/com.mrdav30.fixedmathsharp.lean/LICENSE",
   "samples": [
     {
       "displayName": "Demo Scene",
-      "description": "A sample scene demonstrating package usage",
+      "description": "Bounds and transform interop using deterministic FixedMathSharp state.",
       "path": "Samples~/FixedMathSharpDemo"
     }
   ]

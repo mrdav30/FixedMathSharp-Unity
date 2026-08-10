@@ -2,7 +2,7 @@
   "name": "com.mrdav30.fixedmathsharp",
   "version": "7.0.0",
   "displayName": "FixedMathSharp",
-  "description": "A high-precision, deterministic fixed-point math library for Unity and .NET.",
+  "description": "Deterministic Q32.32 math for Unity with engine adapters, editor tooling, samples, and MemoryPack serialization support.",
   "unity": "2022.3",
   "author": {
     "name": "David Oravsky",
@@ -22,10 +22,12 @@
     "url": "https://github.com/mrdav30/FixedMathSharp-Unity.git"
   },
   "documentationUrl": "https://mrdav30.github.io/FixedMathSharp-Unity/",
+  "changelogUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v7.0.0/com.mrdav30.fixedmathsharp/CHANGELOG.md",
+  "licensesUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v7.0.0/com.mrdav30.fixedmathsharp/LICENSE",
   "samples": [
     {
       "displayName": "Demo Scene",
-      "description": "A sample scene demonstrating package usage",
+      "description": "Bounds and transform interop using deterministic FixedMathSharp state.",
       "path": "Samples~/FixedMathSharpDemo"
     }
   ]

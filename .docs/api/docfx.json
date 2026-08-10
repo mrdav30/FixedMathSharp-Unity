@@ -19,14 +19,27 @@
   "build": {
     "content": [
       { "files": ["index.md", "toc.yml"] },
+      { "files": ["guides/**.md"] },
       { "files": ["**/*.yml"], "src": "obj/api", "dest": "api" }
     ],
+    "resource": [
+      {
+        "files": ["icon_128x128.png"],
+        "src": "../../.assets",
+        "dest": "assets"
+      }
+    ],
+    "overwrite": [{ "files": ["overrides/*.md"] }],
     "output": "obj/_site",
-    "template": ["default", "modern"],
+    "template": ["default", "modern", "templates/fixedmathsharp"],
     "xref": ["https://mrdav30.github.io/FixedMathSharp/xrefmap.yml"],
     "globalMetadata": {
       "_appName": "FixedMathSharp Unity API",
-      "_enableSearch": true
+      "_appTitle": "FixedMathSharp Unity API",
+      "_enableSearch": true,
+      "_enableNewTab": true,
+      "_appLogoPath": "assets/icon_128x128.png",
+      "_appFaviconPath": "assets/icon_128x128.png"
     }
   }
 }
