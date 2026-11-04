@@ -32,8 +32,10 @@ the checkout from the current workspace, git remotes, or user context.
   `../../ProjectSettings/ProjectVersion.txt`.
 - Both packages include the precompiled FixedMathSharp plugin assets under
   `Plugins/`.
+- Both packages bundle FixedMathSharp v8.0.0 for .NET Standard 2.1 and
+  `Chronicler.Diagnostics` v1.0.0 for shared diagnostics.
 - The standard package carries the MemoryPack serializer/runtime dependencies.
-  The Lean package carries only `Chronicler.MemoryPackShim` for attribute
+  The Lean package carries `Chronicler.MemoryPackShim` v1.0.0 for attribute
   compatibility and intentionally omits MemoryPack runtime serialization.
 
 ## Source Of Truth
@@ -225,6 +227,8 @@ When bumping the FixedMathSharp core library:
   `Plugins/FixedMathSharp.pdb`, and `Plugins/FixedMathSharp.xml` as appropriate.
 - Keep standard-package dependency DLLs aligned with the MemoryPack-enabled
   build.
+- Keep `Chronicler.Diagnostics` and the System.Text.Json dependency set aligned
+  with the corresponding .NET Standard build in both variants.
 - Keep the Lean package free of the MemoryPack serializer/runtime and keep its
   `Chronicler.MemoryPackShim` plugin aligned with the Lean core build.
 - Update both `package.json` files, package READMEs, and the root README when

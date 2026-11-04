@@ -20,6 +20,7 @@
     "content": [
       { "files": ["index.md", "toc.yml"] },
       { "files": ["guides/**.md"] },
+      { "files": ["MIGRATION.md"], "src": "../..", "dest": "guides" },
       { "files": ["**/*.yml"], "src": "obj/api", "dest": "api" }
     ],
     "resource": [

@@ -17,12 +17,12 @@ serializer/runtime in one Unity 2022.3+ package.
 In **Window → Package Manager**, choose **Install package from git URL…**:
 
 ```text
-https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp#v7.0.0
+https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp#v8.0.0
 ```
 
 Code in a custom asmdef should reference `FixedMathSharp.Runtime`.
 
-Choose [Lean](https://github.com/mrdav30/FixedMathSharp-Unity/tree/v7.0.0/com.mrdav30.fixedmathsharp.lean)
+Choose [Lean](https://github.com/mrdav30/FixedMathSharp-Unity/tree/main/com.mrdav30.fixedmathsharp.lean)
 instead when you do not want the MemoryPack runtime dependency. To switch,
 remove Standard, let Unity finish compiling, install Lean, and change custom
 asmdef references to `FixedMathSharp.Lean.Runtime`.
@@ -51,7 +51,8 @@ FixedMathSharp types, and convert back for rendering.
 
 ## Included
 
-- FixedMathSharp v7 core library with MemoryPack serializer/runtime support
+- FixedMathSharp core library with MemoryPack serializer/runtime support
+- `Chronicler.Diagnostics`, bundled for the core's shared diagnostics
 - Vector, quaternion, matrix, ray, plane, bounds, frustum, curve, and transform
   adapters
 - Fixed-point inspector drawers and authoring attributes
@@ -67,5 +68,6 @@ copies it into the project's `Assets/Samples` folder.
 loading, then persist the fixed keys. Matrix adapters transpose between Unity's
 column-vector convention and FixedMathSharp's row-vector convention.
 
-Upgrading from v6? Start with the
-[core v6 → v7 migration guide](https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x).
+Upgrading an existing project? See the
+[Unity package migration guide](https://github.com/mrdav30/FixedMathSharp-Unity/blob/main/MIGRATION.md) and the
+[FixedMathSharp core migration guide](https://github.com/mrdav30/FixedMathSharp/blob/main/docs/MIGRATION.md).

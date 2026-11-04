@@ -21,6 +21,10 @@ package variants. Their FixedMathSharp and Unity adapter APIs otherwise match.
 Install exactly one variant. The packages contain the same core assembly and
 cannot coexist in a Unity project.
 
+Both variants also bundle `Chronicler.Diagnostics` for the core's shared
+diagnostics. Neither variant requires a separate Chronicler installation;
+recording and replay integration remain in the optional core companion package.
+
 ## Unity field serialization
 
 Unity persistence does not depend on the MemoryPack choice. The package's

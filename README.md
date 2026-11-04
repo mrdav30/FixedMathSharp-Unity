@@ -46,16 +46,16 @@ Requires Unity **2022.3 or newer** and Git available to the Unity Editor. In
 one pinned URL:
 
 ```text
-https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp#v7.0.0
+https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp#v8.0.0
 ```
 
 ```text
-https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean#v7.0.0
+https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean#v8.0.0
 ```
 
-Pinning the tag keeps installs reproducible. Remove `#v7.0.0` only when you
+Pinning the tag keeps installs reproducible. Remove `#v8.0.0` only when you
 intentionally want the repository's current default branch. The Git URLs are
-the canonical way to obtain matching Standard and Lean v7 packages; check the
+the canonical way to obtain matching Standard and Lean packages; check the
 [OpenUPM listing](https://openupm.com/packages/com.mrdav30.fixedmathsharp/)
 before relying on a registry version.
 
@@ -112,7 +112,8 @@ is copied into your project's `Assets/Samples` folder.
 - [Serialization choices](https://mrdav30.github.io/FixedMathSharp-Unity/guides/serialization.html)
 - [FixedMathSharp core guides](https://github.com/mrdav30/FixedMathSharp/wiki)
 - [FixedMathSharp core API](https://mrdav30.github.io/FixedMathSharp/)
-- [v6 → v7 migration guide](https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x)
+- [Unity package migration guide](MIGRATION.md)
+- [FixedMathSharp core migration guide](https://github.com/mrdav30/FixedMathSharp/blob/main/docs/MIGRATION.md)
 - [Contributing](CONTRIBUTING.md)
 
 FixedMathSharp is MIT licensed. Questions and ideas are welcome on

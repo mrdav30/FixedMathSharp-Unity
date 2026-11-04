@@ -38,16 +38,16 @@ URL…**, and paste one URL:
 ### Standard
 
 ```text
-https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp#v7.0.0
+https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp#v8.0.0
 ```
 
 ### Lean
 
 ```text
-https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean#v7.0.0
+https://github.com/mrdav30/FixedMathSharp-Unity.git?path=/com.mrdav30.fixedmathsharp.lean#v8.0.0
 ```
 
-The `#v7.0.0` revision makes the install reproducible. Update it deliberately
+The `#v8.0.0` revision makes the install reproducible. Update it deliberately
 when you adopt a newer release.
 
 If your scripts live in a custom assembly definition, add the matching
@@ -174,5 +174,6 @@ and validate those jobs with your project's Burst version and settings.
 - Read the [FixedMathSharp wiki](https://github.com/mrdav30/FixedMathSharp/wiki)
   for Q32.32 behavior, rounding, overflow, coordinate conventions, and core
   algorithms.
-- Review the [v6 → v7 migration guide](https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x)
+- Review the [Unity package migration guide](../../../MIGRATION.md) and
+  [FixedMathSharp core migration guide](https://github.com/mrdav30/FixedMathSharp/blob/main/docs/MIGRATION.md)
   when upgrading an existing project.

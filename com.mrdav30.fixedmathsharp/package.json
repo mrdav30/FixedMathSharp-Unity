@@ -1,6 +1,6 @@
 {
   "name": "com.mrdav30.fixedmathsharp",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "displayName": "FixedMathSharp",
   "description": "Deterministic Q32.32 math for Unity with engine adapters, editor tooling, samples, and MemoryPack serialization support.",
   "unity": "2022.3",
@@ -22,8 +22,8 @@
     "url": "https://github.com/mrdav30/FixedMathSharp-Unity.git"
   },
   "documentationUrl": "https://mrdav30.github.io/FixedMathSharp-Unity/",
-  "changelogUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v7.0.0/com.mrdav30.fixedmathsharp/CHANGELOG.md",
-  "licensesUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v7.0.0/com.mrdav30.fixedmathsharp/LICENSE",
+  "changelogUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v8.0.0/com.mrdav30.fixedmathsharp/CHANGELOG.md",
+  "licensesUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v8.0.0/com.mrdav30.fixedmathsharp/LICENSE",
   "samples": [
     {
       "displayName": "Demo Scene",

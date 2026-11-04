@@ -3,6 +3,19 @@
 Notable changes to the FixedMathSharp Unity packages are documented here from
 version 7 onward.
 
+## [8.0.0] - 2026-11-04
+
+### Changed
+
+- Upgraded both bundled .NET Standard 2.1 core builds to FixedMathSharp v8.0.0,
+  including its finite-contact, overlap, sweep, and transform corrections.
+- Bundled `Chronicler.Diagnostics` v1.0.0 in both variants and updated Lean's
+  attribute-only `Chronicler.MemoryPackShim` to v1.0.0.
+- Kept the Unity adapter API and Standard/Lean serialization choices unchanged.
+
+See the [Unity package migration guide](https://github.com/mrdav30/FixedMathSharp-Unity/blob/main/MIGRATION.md)
+for upgrade guidance.
+
 ## [7.0.0] - 2026-08-09
 
 ### Added
@@ -28,5 +41,5 @@ version 7 onward.
   omit the MemoryPack serializer/runtime.
 
 See the
-[FixedMathSharp v6-to-v7 migration guide](https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x)
+[FixedMathSharp core migration guide](https://github.com/mrdav30/FixedMathSharp/blob/main/docs/MIGRATION.md)
 and this package's README for detailed migration guidance.

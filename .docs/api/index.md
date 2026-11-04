@@ -22,12 +22,12 @@ assembly.
 
 <div class="fms-card-grid">
   <div class="fms-card">
-    <h3><a href="https://github.com/mrdav30/FixedMathSharp-Unity/tree/v7.0.0/com.mrdav30.fixedmathsharp">Standard</a></h3>
+    <h3><a href="https://github.com/mrdav30/FixedMathSharp-Unity/tree/main/com.mrdav30.fixedmathsharp">Standard</a></h3>
     <p>Unity adapters, editor tooling, samples, and the bundled MemoryPack
     serializer/runtime.</p>
   </div>
   <div class="fms-card">
-    <h3><a href="https://github.com/mrdav30/FixedMathSharp-Unity/tree/v7.0.0/com.mrdav30.fixedmathsharp.lean">Lean</a></h3>
+    <h3><a href="https://github.com/mrdav30/FixedMathSharp-Unity/tree/main/com.mrdav30.fixedmathsharp.lean">Lean</a></h3>
     <p>The same adapter surface without MemoryPack runtime, for projects that
     bring their own serialization stack.</p>
   </div>
@@ -68,7 +68,8 @@ needs a presentation value.
 - [Serialization choices](guides/serialization.md)
 - [Unity adapter source and issues](https://github.com/mrdav30/FixedMathSharp-Unity)
 - [FixedMathSharp wiki](https://github.com/mrdav30/FixedMathSharp/wiki)
-- [v6 → v7 migration guide](https://github.com/mrdav30/FixedMathSharp/blob/v7.0.0/docs/MIGRATION.md#migrating-from-v6x-to-v7x)
+- [Unity package migration guide](../../MIGRATION.md)
+- [FixedMathSharp core migration guide](https://github.com/mrdav30/FixedMathSharp/blob/main/docs/MIGRATION.md)
 
 The API reference is generated from the canonical adapter source under
 `Build/Base/Runtime`. The core API is linked through the FixedMathSharp site.
