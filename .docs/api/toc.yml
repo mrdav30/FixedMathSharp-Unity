@@ -16,8 +16,8 @@ items:
     items:
       - name: FixedMathSharp Core API
         href: https://mrdav30.github.io/FixedMathSharp/
-      - name: FixedMathSharp Wiki
-        href: https://github.com/mrdav30/FixedMathSharp/wiki
+      - name: FixedMathSharp Guides
+        href: https://mrdav30.github.io/FixedMathSharp/guides/index.html
       - name: Unity Package Source
         href: https://github.com/mrdav30/FixedMathSharp-Unity
       - name: FixedMathSharp Migration Guide

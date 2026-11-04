@@ -171,7 +171,7 @@ and validate those jobs with your project's Burst version and settings.
 
 - Browse the [Unity adapter API](xref:FixedMathSharp).
 - Choose a [serialization strategy](serialization.md).
-- Read the [FixedMathSharp wiki](https://github.com/mrdav30/FixedMathSharp/wiki)
+- Read the [FixedMathSharp guides](https://mrdav30.github.io/FixedMathSharp/guides/index.html)
   for Q32.32 behavior, rounding, overflow, coordinate conventions, and core
   algorithms.
 - Review the [Unity package migration guide](../../../MIGRATION.md) and

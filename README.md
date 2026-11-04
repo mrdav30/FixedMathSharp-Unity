@@ -110,7 +110,7 @@ is copied into your project's `Assets/Samples` folder.
 - [Getting started](https://mrdav30.github.io/FixedMathSharp-Unity/guides/getting-started.html)
 - [Unity adapter API](https://mrdav30.github.io/FixedMathSharp-Unity/api/FixedMathSharp.html)
 - [Serialization choices](https://mrdav30.github.io/FixedMathSharp-Unity/guides/serialization.html)
-- [FixedMathSharp core guides](https://github.com/mrdav30/FixedMathSharp/wiki)
+- [FixedMathSharp core guides](https://mrdav30.github.io/FixedMathSharp/guides/index.html)
 - [FixedMathSharp core API](https://mrdav30.github.io/FixedMathSharp/)
 - [Unity package migration guide](MIGRATION.md)
 - [FixedMathSharp core migration guide](https://github.com/mrdav30/FixedMathSharp/blob/main/docs/MIGRATION.md)

@@ -21,9 +21,13 @@ package variants. Their FixedMathSharp and Unity adapter APIs otherwise match.
 Install exactly one variant. The packages contain the same core assembly and
 cannot coexist in a Unity project.
 
-Both variants also bundle `Chronicler.Diagnostics` for the core's shared
-diagnostics. Neither variant requires a separate Chronicler installation;
-recording and replay integration remain in the optional core companion package.
+Both math variants bundle `Chronicler.Diagnostics` for shared diagnostics.
+This does not install Chronicler's recording or restore APIs.
+
+The optional
+[`FixedMathSharp.Chronicler` integration](https://github.com/mrdav30/FixedMathSharp/blob/main/src/FixedMathSharp.Chronicler/README.md)
+provides deterministic hash-writing extensions and exact time conversions for
+FixedMathSharp values. Recording and restore remain owned by Chronicler.
 
 ## Unity field serialization
 
@@ -124,4 +128,4 @@ runtime data.
 - Validate old payloads before changing a released layout.
 
 For core representation and overflow behavior, see the
-[FixedMathSharp wiki](https://github.com/mrdav30/FixedMathSharp/wiki).
+[FixedMathSharp guides](https://mrdav30.github.io/FixedMathSharp/guides/index.html).

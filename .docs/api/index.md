@@ -67,7 +67,7 @@ needs a presentation value.
 - [Getting started](guides/getting-started.md)
 - [Serialization choices](guides/serialization.md)
 - [Unity adapter source and issues](https://github.com/mrdav30/FixedMathSharp-Unity)
-- [FixedMathSharp wiki](https://github.com/mrdav30/FixedMathSharp/wiki)
+- [FixedMathSharp guides](https://mrdav30.github.io/FixedMathSharp/guides/index.html)
 - [Unity package migration guide](../../MIGRATION.md)
 - [FixedMathSharp core migration guide](https://github.com/mrdav30/FixedMathSharp/blob/main/docs/MIGRATION.md)
 
