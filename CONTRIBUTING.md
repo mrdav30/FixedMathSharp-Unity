@@ -55,6 +55,12 @@ smoke checks cover the two math bases; companions have no samples. It also
 builds the hosted API site from the Standard job; deployment occurs only after
 successful pushes to `main`.
 
+The `build-and-test` workflow pins the host runner to Ubuntu 24.04. Unity
+activation uses the `UNITY_EMAIL` and `UNITY_PASSWORD` secrets directly; a machine-bound
+`UNITY_LICENSE` file is not used. Sample-import jobs trust the exact local Git
+checkout paths through the runner's global Git config, which GameCI mounts
+into the Unity container's home directory.
+
 ## Code of Conduct
 
 ### Our Pledge
