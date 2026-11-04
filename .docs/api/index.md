@@ -17,7 +17,7 @@ description: Unity adapters, editor tooling, package guidance, and API reference
 
 ## Choose your package
 
-Install exactly one variant; both contain the same `FixedMathSharp` core
+Install exactly one math base; both variants contain the same `FixedMathSharp` core
 assembly.
 
 <div class="fms-card-grid">
@@ -39,6 +39,11 @@ assembly.
 </div>
 
 ## Work at explicit boundaries
+
+For hashing, exact simulation-time conversions, and Chronicler recording/restore
+APIs, add the [matching Chronicler companion](guides/chronicler.md) after
+installing your math base. Standard and Lean each have their own companion;
+neither add-on duplicates the base's math or shared runtime dependencies.
 
 <div class="fms-card-grid">
   <div class="fms-card">
@@ -66,6 +71,7 @@ needs a presentation value.
 
 - [Getting started](guides/getting-started.md)
 - [Serialization choices](guides/serialization.md)
+- [Chronicler integration](guides/chronicler.md)
 - [Unity adapter source and issues](https://github.com/mrdav30/FixedMathSharp-Unity)
 - [FixedMathSharp guides](https://mrdav30.github.io/FixedMathSharp/guides/index.html)
 - [Unity package migration guide](../../MIGRATION.md)

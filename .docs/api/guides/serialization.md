@@ -24,10 +24,10 @@ cannot coexist in a Unity project.
 Both math variants bundle `Chronicler.Diagnostics` for shared diagnostics.
 This does not install Chronicler's recording or restore APIs.
 
-The optional
-[`FixedMathSharp.Chronicler` integration](https://github.com/mrdav30/FixedMathSharp/blob/main/src/FixedMathSharp.Chronicler/README.md)
-provides deterministic hash-writing extensions and exact time conversions for
-FixedMathSharp values. Recording and restore remain owned by Chronicler.
+The optional [Chronicler companions](chronicler.md) supply `Chronicler.dll` and
+`FixedMathSharp.Chronicler.dll`. The bridge provides deterministic hash-writing
+extensions and exact time conversions for FixedMathSharp values; Chronicler
+provides recording and restore. Install the companion matching your math base.
 
 ## Unity field serialization
 

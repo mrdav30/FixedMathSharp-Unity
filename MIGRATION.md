@@ -8,6 +8,13 @@ Update the installed Standard or Lean variant and rebuild dependent
 assemblies. Install exactly one variant; both contain the `FixedMathSharp`
 core assembly.
 
+Chronicler integration is optional. Pair
+`com.mrdav30.fixedmathsharp.chronicler` with the Standard math base, or
+`com.mrdav30.fixedmathsharp.chronicler.lean` with Lean, at the same package
+version. Install the base first. When switching variants, remove the companion
+and base before installing the other pair. See the
+[Chronicler integration guide](https://mrdav30.github.io/FixedMathSharp-Unity/guides/chronicler.html).
+
 ## Migrating from v7.x to v8.x
 
 Both variants bundle the .NET Standard 2.1 build of FixedMathSharp v8.0.0 and

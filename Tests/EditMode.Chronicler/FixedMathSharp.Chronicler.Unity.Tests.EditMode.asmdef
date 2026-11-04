@@ -1,0 +1,14 @@
+{
+    "name": "FixedMathSharp.Chronicler.Unity.Tests.EditMode",
+    "references": ["UnityEngine.TestRunner", "UnityEditor.TestRunner"],
+    "includePlatforms": ["Editor"],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "FixedMathSharp.dll",
+        "Chronicler.dll",
+        "FixedMathSharp.Chronicler.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

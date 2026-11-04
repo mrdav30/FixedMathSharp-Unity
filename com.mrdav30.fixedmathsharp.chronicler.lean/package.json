@@ -1,0 +1,27 @@
+{
+  "name": "com.mrdav30.fixedmathsharp.chronicler.lean",
+  "version": "8.0.0",
+  "displayName": "FixedMathSharp.Chronicler.Lean",
+  "description": "Optional lean companion for deterministic hashing, exact time conversions, and Chronicler integration. Requires the matching FixedMathSharp math package.",
+  "unity": "2022.3",
+  "author": {
+    "name": "David Oravsky",
+    "email": "david.oravsky@gmail.com",
+    "url": "https://github.com/mrdav30"
+  },
+  "keywords": [
+    "fixed-point",
+    "deterministic",
+    "chronicler",
+    "hash",
+    "replay",
+    "timing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrdav30/FixedMathSharp-Unity.git"
+  },
+  "documentationUrl": "https://mrdav30.github.io/FixedMathSharp-Unity/guides/chronicler.html",
+  "changelogUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v8.0.0/com.mrdav30.fixedmathsharp.chronicler.lean/CHANGELOG.md",
+  "licensesUrl": "https://github.com/mrdav30/FixedMathSharp-Unity/blob/v8.0.0/com.mrdav30.fixedmathsharp.chronicler.lean/LICENSE"
+}

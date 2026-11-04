@@ -66,6 +66,10 @@ FixedMathSharp types, and convert back for rendering.
 Import the sample from this package's **Samples** tab in Package Manager. Unity
 copies it into the project's `Assets/Samples` folder.
 
+For hashes, exact time conversions, and Chronicler recording/restore APIs, add
+`com.mrdav30.fixedmathsharp.chronicler.lean` after this math base. See the
+[Chronicler integration guide](https://mrdav30.github.io/FixedMathSharp-Unity/guides/chronicler.html).
+
 ### About Burst
 
 Lean's smaller dependency surface is useful in Burst-oriented projects, but the

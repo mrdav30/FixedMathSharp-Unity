@@ -3,12 +3,16 @@
 ## Purpose
 
 FixedMathSharp-Unity is the Unity Package Manager host for the engine-agnostic
-FixedMathSharp core library. It ships two installable package variants:
+FixedMathSharp core library. It ships two math bases and optional companions:
 
 - `com.mrdav30.fixedmathsharp` - standard package with `MemoryPack` support.
 - `com.mrdav30.fixedmathsharp.lean` - package without the MemoryPack
   serializer/runtime, preferred for Burst AOT-oriented Unity projects. It
   includes the attribute-only `Chronicler.MemoryPackShim` assembly.
+- `com.mrdav30.fixedmathsharp.chronicler` - Chronicler companion for Standard.
+- `com.mrdav30.fixedmathsharp.chronicler.lean` - Chronicler companion for Lean.
+  Install the matching math base first at the same package version. Companion
+  manifests intentionally do not resolve Git dependencies automatically.
 
 The actual Git repository root is `Assets/Packages`, not the outer Unity project
 root. The outer project exists so Unity can compile, sync, export, and validate
@@ -30,13 +34,18 @@ the checkout from the current workspace, git remotes, or user context.
 - Package manifests require Unity `2022.3` or newer.
 - This Unity host project currently uses Unity `6000.5.0f1` according to
   `../../ProjectSettings/ProjectVersion.txt`.
-- Both packages include the precompiled FixedMathSharp plugin assets under
+- Both math bases include the precompiled FixedMathSharp plugin assets under
   `Plugins/`.
-- Both packages bundle FixedMathSharp v8.0.0 for .NET Standard 2.1 and
+- Both math bases bundle FixedMathSharp v8.0.0 for .NET Standard 2.1 and
   `Chronicler.Diagnostics` v1.0.0 for shared diagnostics.
 - The standard package carries the MemoryPack serializer/runtime dependencies.
   The Lean package carries `Chronicler.MemoryPackShim` v1.0.0 for attribute
   compatibility and intentionally omits MemoryPack runtime serialization.
+- Companions contain only `Chronicler.dll` v1.0.0 and
+  `FixedMathSharp.Chronicler.dll` v8.0.0, with docs and bridge symbols. Reuse
+  the matching math base's dependency DLLs; do not duplicate them in add-ons.
+- Companions expose precompiled APIs directly, with no empty runtime asmdef,
+  editor installer, or Unity sample. Do not mix Standard and Lean pairs.
 
 ## Source Of Truth
 
@@ -58,6 +67,10 @@ The sync-managed paths are:
 - `Runtime/Attributes`
 - `Runtime/Extensions`
 - `Samples/FixedMathSharpDemo/Scripts`
+
+The sync also copies shared legal files and `CHANGELOG.md` into both Chronicler
+companions. It does not copy Unity adapters, drawers, or samples into them.
+The exporter includes all four packages and prepares samples only for math bases.
 
 ## Unity Sample Authoring And Export Layout
 
@@ -105,6 +118,8 @@ or exported assets change:
 - `Build/Editor/FixedMathSharpUnityPackageExporter.cs`
 - `com.mrdav30.fixedmathsharp/**`
 - `com.mrdav30.fixedmathsharp.lean/**`
+- `com.mrdav30.fixedmathsharp.chronicler/**`
+- `com.mrdav30.fixedmathsharp.chronicler.lean/**`
 
 ## Repository Map
 
@@ -114,6 +129,8 @@ or exported assets change:
 | `Build/Editor`                          | Unity editor tooling for syncing and exporting packages.                                                 |
 | `com.mrdav30.fixedmathsharp`            | Standard UPM package with MemoryPack support.                                                            |
 | `com.mrdav30.fixedmathsharp.lean`       | Lean UPM package without the MemoryPack serializer/runtime; includes the attribute-only Chronicler shim. |
+| `com.mrdav30.fixedmathsharp.chronicler` | Optional Chronicler and bridge plugins paired with the Standard math base. |
+| `com.mrdav30.fixedmathsharp.chronicler.lean` | Optional Chronicler and bridge plugins paired with the Lean math base. |
 | `Build/Base/Runtime/Extensions`         | Shared Unity adapter helpers for transforms, matrices, bounds, vectors, and quaternions.                 |
 | `Build/Base/Runtime/Attributes`         | Shared Unity-facing attributes such as fixed-number angle and vector rotation attributes.                |
 | `Build/Base/Editor/Drawers`             | Shared Unity inspector drawers for FixedMathSharp types and Unity-facing attributes.                     |
@@ -237,6 +254,12 @@ When bumping the FixedMathSharp core library:
 - Re-run Unity batch sync/compile after plugin or package metadata changes.
 
 ## Documentation Guidance
+
+- Keep optional companion installation and dependency ownership in
+  `.docs/api/guides/chronicler.md`; link to the upstream APIs for bridge details.
+- CI runs the math tests alone and with each matching Chronicler companion.
+  Companion tests live under `Tests/EditMode.Chronicler`; test-project
+  preparation adds the companion plugins to explicit precompiled references.
 
 - Keep the root README focused on package selection and Git URL installation.
 - Keep package READMEs package-specific: standard explains MemoryPack support,

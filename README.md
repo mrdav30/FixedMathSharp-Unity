@@ -23,10 +23,10 @@ convert back for rendering.
 - Inspector drawers and a ready-to-import sample for authoring fixed-point data
 - Standard and Lean packages with the same public math and Unity adapter surface
 
-## Choose one package
+## Choose one math base
 
 > [!IMPORTANT]
-> Install **exactly one** variant. Both packages contain the `FixedMathSharp`
+> Install **exactly one math base**. Both variants contain the `FixedMathSharp`
 > core assembly and cannot coexist in the same Unity project.
 
 | Package | Choose it when | Serialization dependency |
@@ -61,6 +61,22 @@ before relying on a registry version.
 
 If your code is in a custom asmdef, reference `FixedMathSharp.Runtime` for
 Standard or `FixedMathSharp.Lean.Runtime` for Lean.
+
+## Optional Chronicler integration
+
+For deterministic state hashes, exact simulation-time conversions, and
+Chronicler recording/restore APIs, add the companion matching your math base:
+
+| Math base | Optional companion |
+| --- | --- |
+| Standard | `com.mrdav30.fixedmathsharp.chronicler` |
+| Lean | `com.mrdav30.fixedmathsharp.chronicler.lean` |
+
+Install the math base first, then its companion at the same package version.
+Keep Standard and Lean packages paired. The companions supply `Chronicler` and
+`FixedMathSharp.Chronicler`; the math base owns their shared dependencies.
+See the [Chronicler integration guide](https://mrdav30.github.io/FixedMathSharp-Unity/guides/chronicler.html)
+for install URLs and examples.
 
 ## Your first deterministic boundary
 
@@ -110,6 +126,7 @@ is copied into your project's `Assets/Samples` folder.
 - [Getting started](https://mrdav30.github.io/FixedMathSharp-Unity/guides/getting-started.html)
 - [Unity adapter API](https://mrdav30.github.io/FixedMathSharp-Unity/api/FixedMathSharp.html)
 - [Serialization choices](https://mrdav30.github.io/FixedMathSharp-Unity/guides/serialization.html)
+- [Chronicler integration](https://mrdav30.github.io/FixedMathSharp-Unity/guides/chronicler.html)
 - [FixedMathSharp core guides](https://mrdav30.github.io/FixedMathSharp/guides/index.html)
 - [FixedMathSharp core API](https://mrdav30.github.io/FixedMathSharp/)
 - [Unity package migration guide](MIGRATION.md)

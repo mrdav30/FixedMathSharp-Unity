@@ -23,7 +23,13 @@ namespace FixedMathSharp.Build.Editor
                 "Assets/Packages/com.mrdav30.fixedmathsharp/package.json"),
             new PackageDefinition(
                 "Assets/Packages/com.mrdav30.fixedmathsharp.lean",
-                "Assets/Packages/com.mrdav30.fixedmathsharp.lean/package.json")
+                "Assets/Packages/com.mrdav30.fixedmathsharp.lean/package.json"),
+            new PackageDefinition(
+                "Assets/Packages/com.mrdav30.fixedmathsharp.chronicler",
+                "Assets/Packages/com.mrdav30.fixedmathsharp.chronicler/package.json", false),
+            new PackageDefinition(
+                "Assets/Packages/com.mrdav30.fixedmathsharp.chronicler.lean",
+                "Assets/Packages/com.mrdav30.fixedmathsharp.chronicler.lean/package.json", false)
         };
 
         [MenuItem("Tools/FixedMathSharp/Export Unity Packages")]
@@ -71,7 +77,8 @@ namespace FixedMathSharp.Build.Editor
             foreach (var package in Packages)
             {
                 ValidatePackage(package);
-                PrepareDistributableSamples(package);
+                if (package.HasSamples)
+                    PrepareDistributableSamples(package);
                 AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
                 var manifest = LoadManifest(package.ManifestAssetPath);
@@ -244,11 +251,13 @@ namespace FixedMathSharp.Build.Editor
         {
             public string RootAssetPath { get; }
             public string ManifestAssetPath { get; }
+            public bool HasSamples { get; }
 
-            public PackageDefinition(string rootAssetPath, string manifestAssetPath)
+            public PackageDefinition(string rootAssetPath, string manifestAssetPath, bool hasSamples = true)
             {
                 RootAssetPath = rootAssetPath;
                 ManifestAssetPath = manifestAssetPath;
+                HasSamples = hasSamples;
             }
         }
 

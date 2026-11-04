@@ -61,6 +61,11 @@ compiling, install the other variant, then update any custom asmdef references.
 
 ## 3. Create a deterministic boundary
 
+If you also need hashing, exact time conversions, or Chronicler recording and
+restore, install the [matching Chronicler companion](chronicler.md) after your
+math base. The companion uses that base's shared dependencies; Standard and
+Lean companions must stay paired with their corresponding bases.
+
 Convert Unity input once, perform simulation work with fixed-point values, and
 convert back when Unity needs a rendering or scene value.
 

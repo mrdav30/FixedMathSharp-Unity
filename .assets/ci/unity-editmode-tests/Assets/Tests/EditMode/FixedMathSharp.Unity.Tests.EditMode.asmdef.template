@@ -14,7 +14,7 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "nunit.framework.dll",
-        "FixedMathSharp.dll"
+        "FixedMathSharp.dll"__COMPANION_REFERENCES__
     ],
     "autoReferenced": false,
     "defineConstraints": [

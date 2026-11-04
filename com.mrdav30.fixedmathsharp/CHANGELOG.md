@@ -5,6 +5,12 @@ version 7 onward.
 
 ## [8.0.0] - 2026-11-04
 
+### Added
+
+- Optional Standard and Lean Chronicler companion packages for deterministic
+  hash writing and exact simulation-time conversions. Each companion includes
+  Chronicler v1.0.0 and requires its matching math base package.
+
 ### Changed
 
 - Upgraded both bundled .NET Standard 2.1 core builds to FixedMathSharp v8.0.0,

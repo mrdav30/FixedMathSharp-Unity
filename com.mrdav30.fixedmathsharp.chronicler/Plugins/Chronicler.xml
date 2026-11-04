@@ -1,0 +1,794 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Chronicler</name>
+    </assembly>
+    <members>
+        <member name="T:Chronicler.Hashing.ChronicleHash">
+            <summary>
+            Fixed-width deterministic hash value produced by a Chronicler record-hash pass.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHash.#ctor(System.UInt64,System.UInt64)">
+            <summary>
+            Creates a new hash value from its two 64-bit lanes.
+            </summary>
+        </member>
+        <member name="P:Chronicler.Hashing.ChronicleHash.Low">
+            <summary>
+            Gets the low 64-bit lane.
+            </summary>
+        </member>
+        <member name="P:Chronicler.Hashing.ChronicleHash.High">
+            <summary>
+            Gets the high 64-bit lane.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHash.Equals(Chronicler.Hashing.ChronicleHash)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHash.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHash.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHash.ToString">
+            <summary>
+            Returns a lowercase 32-character hexadecimal hash string as high lane followed by low lane.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHash.op_Equality(Chronicler.Hashing.ChronicleHash,Chronicler.Hashing.ChronicleHash)">
+            <summary>
+            Compares two hash values for equality.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHash.op_Inequality(Chronicler.Hashing.ChronicleHash,Chronicler.Hashing.ChronicleHash)">
+            <summary>
+            Compares two hash values for inequality.
+            </summary>
+        </member>
+        <member name="T:Chronicler.Hashing.ChronicleHashSerializer">
+            <summary>
+            Computes deterministic record hashes by traversing <see cref="M:Chronicler.IRecordable.RecordData(Chronicler.IChronicler)"/>.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashSerializer.Compute(Chronicler.IRecordable)">
+            <summary>
+            Computes a deterministic hash for a recordable state graph using an empty context.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashSerializer.Compute(Chronicler.IRecordable,Chronicler.ChronicleContext)">
+            <summary>
+            Computes a deterministic hash for a recordable state graph using the supplied context.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashSerializer.Contribute(Chronicler.IRecordable,Chronicler.Hashing.ChronicleHashWriter@)">
+            <summary>
+            Contributes a recordable state graph to an existing caller-owned hash writer using an empty context.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashSerializer.Contribute(Chronicler.IRecordable,Chronicler.ChronicleContext,Chronicler.Hashing.ChronicleHashWriter@)">
+            <summary>
+            Contributes a recordable state graph to an existing caller-owned hash writer using the supplied context.
+            </summary>
+        </member>
+        <member name="T:Chronicler.Hashing.ChronicleHashWriter">
+            <summary>
+            Writes deterministic primitive payloads into a fixed-width record hash.
+            </summary>
+            <remarks>
+            This is a non-cryptographic conformance/replay hash writer. It is intended for deterministic
+            state comparison, not for security or tamper resistance.
+            </remarks>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.#ctor">
+            <summary>
+            Creates a writer seeded for an empty deterministic hash stream.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteSection(System.String,System.Int32)">
+            <summary>
+            Writes a stable ASCII section tag and schema version.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteBool(System.Boolean)">
+            <summary>
+            Writes a Boolean value as one canonical byte.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteByte(System.Byte)">
+            <summary>
+            Writes an unsigned 8-bit value.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteSByte(System.SByte)">
+            <summary>
+            Writes a signed 8-bit value by its two's-complement byte.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteInt16(System.Int16)">
+            <summary>
+            Writes a signed 16-bit value in little-endian byte order.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteUInt16(System.UInt16)">
+            <summary>
+            Writes an unsigned 16-bit value in little-endian byte order.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteInt32(System.Int32)">
+            <summary>
+            Writes a signed 32-bit value in little-endian byte order.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteUInt32(System.UInt32)">
+            <summary>
+            Writes an unsigned 32-bit value in little-endian byte order.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteInt64(System.Int64)">
+            <summary>
+            Writes a signed 64-bit value in little-endian byte order.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteUInt64(System.UInt64)">
+            <summary>
+            Writes an unsigned 64-bit value in little-endian byte order.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteChar(System.Char)">
+            <summary>
+            Writes a UTF-16 code unit in little-endian byte order.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteString(System.String)">
+            <summary>
+            Writes a nullable string as a presence marker, length, and UTF-16 code units.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.WriteEnum``1(``0)">
+            <summary>
+            Writes an enum value by its underlying integral bytes in little-endian byte order.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Hashing.ChronicleHashWriter.ToHash">
+            <summary>
+            Finalizes and returns the current hash value.
+            </summary>
+        </member>
+        <member name="T:Chronicler.IChronicler">
+            <summary>
+            Defines the common contract used by value and deep serialization helpers.
+            </summary>
+        </member>
+        <member name="P:Chronicler.IChronicler.Context">
+            <summary>
+            Gets the session context for the current chronicler pass.
+            </summary>
+        </member>
+        <member name="P:Chronicler.IChronicler.Mode">
+            <summary>
+            Gets the active serialization mode.
+            </summary>
+        </member>
+        <member name="M:Chronicler.IChronicler.LookValue``1(``0@,System.String,``0)">
+            <summary>
+            Reads or writes a value by name.
+            </summary>
+        </member>
+        <member name="M:Chronicler.IChronicler.LookDeep``1(``0@,System.String)">
+            <summary>
+            Reads or writes a nested recordable instance by name.
+            </summary>
+        </member>
+        <member name="M:Chronicler.IChronicler.LookDeepStruct``1(``0@,System.String)">
+            <summary>
+            Reads or writes a nested recordable struct by name.
+            </summary>
+        </member>
+        <member name="M:Chronicler.IChronicler.LookNullableDeep``1(System.Nullable{``0}@,System.String)">
+            <summary>
+            Reads or writes an optional nested recordable struct by name.
+            </summary>
+        </member>
+        <member name="M:Chronicler.IChronicler.LookLink``1(``0@,System.String,System.String,Chronicler.RecordLinkResolveMode,System.Action{``0})">
+            <summary>
+            Reads or writes a stable link to an external or runtime-owned value by name.
+            </summary>
+        </member>
+        <member name="T:Chronicler.IRecordable">
+            <summary>
+            Defines a type that can record its serializable state through a chronicler pass.
+            </summary>
+        </member>
+        <member name="M:Chronicler.IRecordable.RecordData(Chronicler.IChronicler)">
+            <summary>
+            Records the current instance state to the provided chronicler.
+            </summary>
+            <param name="chronicler">The active chronicler pass.</param>
+        </member>
+        <member name="T:Chronicler.IStateBacked`1">
+            <summary>
+            Exposes a canonical serializable state value for an object.
+            </summary>
+            <typeparam name="TState">The type that represents the object's serializable state.</typeparam>
+        </member>
+        <member name="P:Chronicler.IStateBacked`1.State">
+            <summary>
+            Gets the canonical serializable state for this object.
+            </summary>
+        </member>
+        <member name="T:Chronicler.ChronicleContext">
+            <summary>
+            Carries session-scoped serialization services such as stable link resolution.
+            </summary>
+        </member>
+        <member name="M:Chronicler.ChronicleContext.#ctor">
+            <summary>
+            Creates a new context with an empty link registry.
+            </summary>
+        </member>
+        <member name="P:Chronicler.ChronicleContext.Links">
+            <summary>
+            Gets the registry used to save and load stable links to external or runtime-owned objects.
+            </summary>
+        </member>
+        <member name="M:Chronicler.ChronicleContext.ResolveDeferredLinks">
+            <summary>
+            Attempts to resolve all deferred links queued during loading.
+            </summary>
+        </member>
+        <member name="T:Chronicler.DefaultSaver">
+            <summary>
+            Provides a reusable save/apply lifecycle base for explicit state transfer helpers.
+            </summary>
+            <remarks>
+            Host integrations can use these hooks to transfer settings and configuration
+            between a library and an editor or game engine. The host owns when each phase
+            runs; this base class has no engine dependency.
+            </remarks>
+        </member>
+        <member name="M:Chronicler.DefaultSaver.Save">
+            <summary>
+            Runs the save phase.
+            </summary>
+        </member>
+        <member name="M:Chronicler.DefaultSaver.OnSave">
+            <summary>
+            Called by <see cref="M:Chronicler.DefaultSaver.Save"/>.
+            </summary>
+        </member>
+        <member name="M:Chronicler.DefaultSaver.EarlyApply">
+            <summary>
+            Runs the early apply phase.
+            </summary>
+        </member>
+        <member name="M:Chronicler.DefaultSaver.OnEarlyApply">
+            <summary>
+            Called by <see cref="M:Chronicler.DefaultSaver.EarlyApply"/>.
+            </summary>
+        </member>
+        <member name="M:Chronicler.DefaultSaver.Apply">
+            <summary>
+            Runs the apply phase.
+            </summary>
+        </member>
+        <member name="M:Chronicler.DefaultSaver.OnApply">
+            <summary>
+            Called by <see cref="M:Chronicler.DefaultSaver.Apply"/>.
+            </summary>
+        </member>
+        <member name="M:Chronicler.DefaultSaver.LateApply">
+            <summary>
+            Runs the late apply phase.
+            </summary>
+        </member>
+        <member name="M:Chronicler.DefaultSaver.OnLateApply">
+            <summary>
+            Called by <see cref="M:Chronicler.DefaultSaver.LateApply"/>.
+            </summary>
+        </member>
+        <member name="T:Chronicler.ChronicleLinkRegistry">
+            <summary>
+            Stores stable-link resolution strategies for external or runtime-owned objects.
+            </summary>
+        </member>
+        <member name="M:Chronicler.ChronicleLinkRegistry.RegisterResolver``1(Chronicler.IRecordLinkResolver{``0},System.String)">
+            <summary>
+            Registers a custom link resolver for the given type and optional slot.
+            </summary>
+        </member>
+        <member name="M:Chronicler.ChronicleLinkRegistry.RegisterInstance``1(System.String,``0,System.String)">
+            <summary>
+            Registers a concrete instance so the chronicler can save and load it through a stable identifier.
+            </summary>
+        </member>
+        <member name="M:Chronicler.ChronicleLinkRegistry.UnregisterInstance``1(System.String,System.String)">
+            <summary>
+            Removes a previously registered concrete instance.
+            </summary>
+        </member>
+        <member name="M:Chronicler.ChronicleLinkRegistry.TryResolve``1(System.String,``0@,System.String)">
+            <summary>
+            Attempts to resolve a stable identifier into an instance of the requested type.
+            </summary>
+        </member>
+        <member name="M:Chronicler.ChronicleLinkRegistry.TryGetReferenceId``1(``0,System.String@,System.String)">
+            <summary>
+            Attempts to read a stable identifier from a concrete instance.
+            </summary>
+        </member>
+        <member name="T:Chronicler.IRecordLinkResolver`1">
+            <summary>
+            Resolves stable identifiers for external or runtime-owned objects that should not be serialized inline.
+            </summary>
+        </member>
+        <member name="M:Chronicler.IRecordLinkResolver`1.TryGetReferenceId(`0,System.String@)">
+            <summary>
+            Attempts to produce a stable identifier for the provided value.
+            </summary>
+        </member>
+        <member name="M:Chronicler.IRecordLinkResolver`1.TryResolveReference(System.String,`0@)">
+            <summary>
+            Attempts to resolve a previously recorded identifier back into a runtime value.
+            </summary>
+        </member>
+        <member name="T:Chronicler.RecordLinkResolveMode">
+            <summary>
+            Controls whether a recorded link must resolve during the current load pass or may resolve after the full graph has loaded.
+            </summary>
+        </member>
+        <member name="F:Chronicler.RecordLinkResolveMode.Immediate">
+            <summary>
+            The link must resolve immediately while the current <c>RecordData(...)</c> call is running.
+            </summary>
+        </member>
+        <member name="F:Chronicler.RecordLinkResolveMode.Deferred">
+            <summary>
+            The link may resolve after the current <c>RecordData(...)</c> graph finishes loading.
+            </summary>
+        </member>
+        <member name="T:Chronicler.RecordLinks">
+            <summary>
+            Helper for reading and writing stable links to external or runtime-owned objects during a chronicler pass.
+            </summary>
+        </member>
+        <member name="M:Chronicler.RecordLinks.Look``1(Chronicler.IChronicler,``0@,System.String,System.String)">
+            <summary>
+            Reads or writes a named external link that must resolve during the current load pass.
+            </summary>
+        </member>
+        <member name="M:Chronicler.RecordLinks.LookDeferred``1(Chronicler.IChronicler,``0,System.String,System.Action{``0},System.String)">
+            <summary>
+            Reads or writes a named external link that may resolve after the current load graph finishes.
+            </summary>
+        </member>
+        <member name="T:Chronicler.RecordChronicleTime">
+            <summary>Records exact time values through a versioned, transport-neutral component schema.</summary>
+        </member>
+        <member name="M:Chronicler.RecordChronicleTime.Look(Chronicler.IChronicler,Chronicler.Timing.ChronicleDuration@,System.String)">
+            <summary>Reads or writes a signed duration, assigning only after validation succeeds.</summary>
+            <exception cref="T:System.InvalidOperationException">The required value schema is missing or unsupported.</exception>
+        </member>
+        <member name="M:Chronicler.RecordChronicleTime.Look(Chronicler.IChronicler,Chronicler.Timing.ChronicleTimestamp@,System.String)">
+            <summary>Reads or writes a timestamp, assigning only after validation succeeds.</summary>
+            <exception cref="T:System.InvalidOperationException">The required value schema is missing or unsupported.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">The recorded timestamp precedes its origin.</exception>
+        </member>
+        <member name="T:Chronicler.RecordDeep">
+            <summary>
+            Helper for reading and writing nested recordable objects during a chronicler pass.
+            </summary>
+        </member>
+        <member name="M:Chronicler.RecordDeep.Look``1(Chronicler.IChronicler,``0@,System.String)">
+            <summary>
+            Reads or writes a named nested object.
+            </summary>
+        </member>
+        <member name="T:Chronicler.RecordDeepStruct">
+            <summary>
+            Helper for reading and writing nested recordable structs during a chronicler pass.
+            </summary>
+        </member>
+        <member name="M:Chronicler.RecordDeepStruct.Look``1(Chronicler.IChronicler,``0@,System.String)">
+            <summary>
+            Reads or writes a named nested struct.
+            </summary>
+        </member>
+        <member name="T:Chronicler.RecordNullableDeep">
+            <summary>
+            Helper for reading and writing optional nested recordable structs during a chronicler pass.
+            </summary>
+        </member>
+        <member name="M:Chronicler.RecordNullableDeep.Look``1(Chronicler.IChronicler,System.Nullable{``0}@,System.String)">
+            <summary>
+            Reads or writes a named optional nested struct.
+            </summary>
+        </member>
+        <member name="T:Chronicler.RecordValues">
+            <summary>
+            Helper for reading and writing leaf values during a chronicler pass.
+            </summary>
+        </member>
+        <member name="M:Chronicler.RecordValues.Look``1(Chronicler.IChronicler,``0@,System.String,``0)">
+            <summary>
+            Reads or writes a named value.
+            </summary>
+        </member>
+        <member name="T:Chronicler.SerializationMode">
+            <summary>
+            Describes whether a chronicler pass is saving values out or loading values in.
+            </summary>
+        </member>
+        <member name="F:Chronicler.SerializationMode.Saving">
+            <summary>
+            The chronicler is saving values out.
+            </summary>
+        </member>
+        <member name="F:Chronicler.SerializationMode.Loading">
+            <summary>
+            The chronicler is loading values in.
+            </summary>
+        </member>
+        <member name="T:Chronicler.Serialization.JsonRecordSerializer">
+            <summary>
+            Serializes <see cref="T:Chronicler.IRecordable"/> state graphs to and from JSON through the chronicler API.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.JsonRecordSerializer.Serialize(Chronicler.IRecordable,System.Boolean)">
+            <summary>
+            Serializes the current state of a recordable instance into JSON.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.JsonRecordSerializer.Serialize(Chronicler.IRecordable,Chronicler.ChronicleContext,System.Boolean)">
+            <summary>
+            Serializes the current state of a recordable instance into JSON.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.JsonRecordSerializer.Populate(Chronicler.IRecordable,System.String)">
+            <summary>
+            Loads JSON state into an existing recordable instance.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.JsonRecordSerializer.Populate(Chronicler.IRecordable,System.String,Chronicler.ChronicleContext)">
+            <summary>
+            Loads JSON state into an existing recordable instance.
+            </summary>
+        </member>
+        <member name="T:Chronicler.Serialization.StateJsonConverter`2">
+            <summary>
+            Serializes and deserializes an object through its canonical state value.
+            </summary>
+            <typeparam name="TRecord">The state-backed record type.</typeparam>
+            <typeparam name="TState">The serializable state type.</typeparam>
+        </member>
+        <member name="M:Chronicler.Serialization.StateJsonConverter`2.#ctor(System.Func{`1,`0})">
+            <summary>
+            Creates a converter that restores records from serialized state using the supplied factory.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.StateJsonConverter`2.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Serialization.StateJsonConverter`2.Write(System.Text.Json.Utf8JsonWriter,`0,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:Chronicler.Serialization.StateJsonConverterFactory">
+            <summary>
+            Creates JSON converters for types that explicitly implement <see cref="T:Chronicler.IStateBacked`1"/>.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.StateJsonConverterFactory.CanConvert(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Serialization.StateJsonConverterFactory.CreateConverter(System.Type,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:Chronicler.Serialization.MemoryPackRecordEntryTable">
+            <summary>
+            Stores ordered MemoryPack entry payloads while preserving the previous SwiftDictionary wire shape.
+            </summary>
+            <remarks>
+            MemoryPack GenerateType: Object<br/>
+            <code>
+            <b>Chronicler.Serialization.MemoryPackRecordEntryTableState</b> State<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="P:Chronicler.Serialization.MemoryPackRecordEntryTable.State">
+            <summary>
+            Gets or sets the serializable table state.
+            </summary>
+        </member>
+        <member name="T:Chronicler.Serialization.MemoryPackRecordEntryTableState">
+            <summary>
+            Represents the serializable state of a MemoryPack record entry table.
+            </summary>
+            <remarks>
+            MemoryPack GenerateType: Object<br/>
+            <code>
+            <b>System.Collections.Generic.KeyValuePair&lt;string, byte[]&gt;[]</b> Items<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="F:Chronicler.Serialization.MemoryPackRecordEntryTableState.Items">
+            <summary>
+            Gets the ordered entry items.
+            </summary>
+        </member>
+        <member name="T:Chronicler.Serialization.MemoryPackRecordEnvelope">
+            <summary>
+            Stores named field payloads for the MemoryPack chronicler transport.
+            </summary>
+            <remarks>
+            MemoryPack GenerateType: Object<br/>
+            <code>
+            <b>Chronicler.Serialization.MemoryPackRecordEntryTable</b> Entries<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="P:Chronicler.Serialization.MemoryPackRecordEnvelope.Entries">
+            <summary>
+            Serialized payloads keyed by record name.
+            </summary>
+        </member>
+        <member name="T:Chronicler.Serialization.MemoryPackRecordSerializer">
+            <summary>
+            Serializes <see cref="T:Chronicler.IRecordable"/> state graphs to and from MemoryPack through the chronicler API.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.MemoryPackRecordSerializer.Serialize(Chronicler.IRecordable)">
+            <summary>
+            Serializes the current state of a recordable instance into MemoryPack bytes.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.MemoryPackRecordSerializer.Serialize(Chronicler.IRecordable,Chronicler.ChronicleContext)">
+            <summary>
+            Serializes the current state of a recordable instance into MemoryPack bytes.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.MemoryPackRecordSerializer.Populate(Chronicler.IRecordable,System.Byte[])">
+            <summary>
+            Loads MemoryPack state into an existing recordable instance.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.MemoryPackRecordSerializer.Populate(Chronicler.IRecordable,System.Byte[],Chronicler.ChronicleContext)">
+            <summary>
+            Loads MemoryPack state into an existing recordable instance.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.MemoryPackRecordSerializer.Populate(Chronicler.IRecordable,System.ReadOnlySpan{System.Byte})">
+            <summary>
+            Loads MemoryPack state into an existing recordable instance.
+            </summary>
+        </member>
+        <member name="M:Chronicler.Serialization.MemoryPackRecordSerializer.Populate(Chronicler.IRecordable,System.ReadOnlySpan{System.Byte},Chronicler.ChronicleContext)">
+            <summary>
+            Loads MemoryPack state into an existing recordable instance.
+            </summary>
+        </member>
+        <member name="T:Chronicler.Serialization.SerializationPayloadEditor">
+            <summary>
+            Edits JSON properties and MemoryPack entries without populating a recordable object graph.
+            </summary>
+            <remarks>
+            Paths and replacement values must match the recorded schema. Replacement values use the
+            selected transport serializer directly; editing does not invoke <see cref="M:Chronicler.IRecordable.RecordData(Chronicler.IChronicler)"/>.
+            Use the format-specific record serializers to serialize and populate records.
+            </remarks>
+        </member>
+        <member name="M:Chronicler.Serialization.SerializationPayloadEditor.RemoveJsonProperty(System.String,System.String[])">
+            <summary>
+            Removes a property from a JSON payload at the specified path.
+            </summary>
+            <param name="json">The JSON payload.</param>
+            <param name="path">The path to the property to remove.</param>
+            <returns>The modified JSON payload.</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Chronicler.Serialization.SerializationPayloadEditor.SetJsonValue``1(System.String,``0,System.String[])">
+            <summary>
+            Sets a property value in a JSON payload at the specified path.
+            </summary>
+            <typeparam name="T">The type of the value to set.</typeparam>
+            <param name="json">The JSON payload.</param>
+            <param name="value">The value to set.</param>
+            <param name="path">The path to the property to set.</param>
+            <returns>The modified JSON payload.</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Chronicler.Serialization.SerializationPayloadEditor.RemoveMemoryPackEntry(System.Byte[],System.String[])">
+            <summary>
+            Removes a MemoryPack entry from a serialized payload at the specified path.
+            </summary>
+            <param name="data">The serialized MemoryPack payload.</param>
+            <param name="path">The path to the entry to remove.</param>
+            <returns>The modified serialized MemoryPack payload.</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Chronicler.Serialization.SerializationPayloadEditor.SetMemoryPackValue``1(System.Byte[],``0,System.String[])">
+            <summary>
+            Sets a MemoryPack entry value in a serialized payload at the specified path.
+            </summary>
+            <typeparam name="T">The type of the value to set.</typeparam>
+            <param name="data">The serialized MemoryPack payload.</param>
+            <param name="value">The value to set.</param>
+            <param name="path">The path to the entry to set.</param>
+            <returns>The modified serialized MemoryPack payload.</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:Chronicler.Timing.ChronicleClock">
+            <summary>
+            A host-advanced simulation clock with an exact elapsed timeline and a positive step.
+            </summary>
+            <remarks>
+            This clock has no wall-time source or thread synchronization. Its owner controls
+            advancement and invalidates retained work when resetting or restoring a timeline.
+            </remarks>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleClock.#ctor(Chronicler.Timing.ChronicleDuration)">
+            <summary>Creates a clock at frame and time zero.</summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">The step is not positive.</exception>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleClock.FrameCount">
+            <summary>Gets the number of completed advances in this timeline.</summary>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleClock.ElapsedTime">
+            <summary>Gets accumulated time, preserving the history of step changes.</summary>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleClock.StepDuration">
+            <summary>Gets the duration added by the next advance.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleClock.Advance">
+            <summary>Advances one frame and one configured step, or leaves all state unchanged.</summary>
+            <exception cref="T:System.InvalidOperationException">The frame counter is exhausted.</exception>
+            <exception cref="T:System.OverflowException">The next elapsed timestamp cannot be represented.</exception>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleClock.SetStepDuration(Chronicler.Timing.ChronicleDuration)">
+            <summary>Changes future steps without changing the frame or accumulated elapsed time.</summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">The step is not positive.</exception>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleClock.GetDeadlineFrame(System.Int64)">
+            <summary>Gets a future frame without scheduling work; zero selects the current frame.</summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">The offset is negative.</exception>
+            <exception cref="T:System.OverflowException">The deadline exceeds the frame range.</exception>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleClock.Reset">
+            <summary>Starts a new zero-based timeline, preserving the configured step.</summary>
+            <remarks>The owner must invalidate work associated with the previous timeline.</remarks>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleClock.RecordData(Chronicler.IChronicler)">
+            <summary>Records this clock or transactionally populates it from schema version one.</summary>
+            <remarks>
+            Failed loading leaves the entire clock unchanged. The owner must quiesce its
+            simulation and invalidate old work before restoring; no host services are reset here.
+            </remarks>
+            <exception cref="T:System.InvalidOperationException">The schema or frame/elapsed relationship is invalid.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">The elapsed timestamp is negative or the step is not positive.</exception>
+        </member>
+        <member name="T:Chronicler.Timing.ChronicleDuration">
+            <summary>
+            An exact signed interval with 64-bit whole seconds and 32 binary fractional bits.
+            </summary>
+            <remarks>
+            Whole seconds are rounded toward negative infinity. Negative one fractional
+            unit is (-1, uint.MaxValue). Arithmetic throws on overflow rather than saturating.
+            </remarks>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.#ctor(System.Int64,System.UInt32)">
+            <summary>Creates an interval from floor seconds and an unsigned fraction.</summary>
+            <param name="wholeSeconds">The mathematical floor of the interval in seconds.</param>
+            <param name="fractionalSecond">The nonnegative remainder in units of 2^-32 seconds.</param>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleDuration.Zero">
+            <summary>Gets the zero interval, also represented by the default value.</summary>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleDuration.WholeSeconds">
+            <summary>Gets the mathematical floor of the interval in seconds.</summary>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleDuration.FractionalSecond">
+            <summary>Gets the nonnegative remainder in units of 2^-32 seconds.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.CompareTo(Chronicler.Timing.ChronicleDuration)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.Equals(Chronicler.Timing.ChronicleDuration)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.GetHashCode">
+            <summary>Returns a deterministic collection hash of the value's components.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.op_Addition(Chronicler.Timing.ChronicleDuration,Chronicler.Timing.ChronicleDuration)">
+            <summary>Adds two exact intervals.</summary>
+            <exception cref="T:System.OverflowException">The final interval is outside the signed whole-second range.</exception>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.op_Subtraction(Chronicler.Timing.ChronicleDuration,Chronicler.Timing.ChronicleDuration)">
+            <summary>Subtracts two exact intervals.</summary>
+            <exception cref="T:System.OverflowException">The final interval is outside the signed whole-second range.</exception>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.op_Equality(Chronicler.Timing.ChronicleDuration,Chronicler.Timing.ChronicleDuration)">
+            <summary>Tests exact equality.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.op_Inequality(Chronicler.Timing.ChronicleDuration,Chronicler.Timing.ChronicleDuration)">
+            <summary>Tests exact inequality.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.op_LessThan(Chronicler.Timing.ChronicleDuration,Chronicler.Timing.ChronicleDuration)">
+            <summary>Tests whether the left interval is shorter than the right interval.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.op_LessThanOrEqual(Chronicler.Timing.ChronicleDuration,Chronicler.Timing.ChronicleDuration)">
+            <summary>Tests whether the left interval is shorter than or equal to the right interval.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.op_GreaterThan(Chronicler.Timing.ChronicleDuration,Chronicler.Timing.ChronicleDuration)">
+            <summary>Tests whether the left interval is longer than the right interval.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleDuration.op_GreaterThanOrEqual(Chronicler.Timing.ChronicleDuration,Chronicler.Timing.ChronicleDuration)">
+            <summary>Tests whether the left interval is longer than or equal to the right interval.</summary>
+        </member>
+        <member name="T:Chronicler.Timing.ChronicleTimestamp">
+            <summary>
+            An exact nonnegative instant relative to a simulation origin, with 2^-32-second precision.
+            </summary>
+            <remarks>
+            Values do not carry a world or lifetime identity. The owner must ensure that
+            compared or subtracted timestamps share the same origin and simulation lifetime.
+            </remarks>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.#ctor(System.Int64,System.UInt32)">
+            <summary>Creates an instant from nonnegative whole seconds and an unsigned fraction.</summary>
+            <param name="wholeSeconds">The mathematical floor of elapsed seconds since the origin.</param>
+            <param name="fractionalSecond">The nonnegative remainder in units of 2^-32 seconds.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Whole seconds are negative.</exception>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleTimestamp.Zero">
+            <summary>Gets the simulation origin, also represented by the default value.</summary>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleTimestamp.WholeSeconds">
+            <summary>Gets the mathematical floor of elapsed seconds since the origin.</summary>
+        </member>
+        <member name="P:Chronicler.Timing.ChronicleTimestamp.FractionalSecond">
+            <summary>Gets the nonnegative remainder in units of 2^-32 seconds.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.CompareTo(Chronicler.Timing.ChronicleTimestamp)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.Equals(Chronicler.Timing.ChronicleTimestamp)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.GetHashCode">
+            <summary>Returns a deterministic collection hash of the value's components.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.op_Addition(Chronicler.Timing.ChronicleTimestamp,Chronicler.Timing.ChronicleDuration)">
+            <summary>Offsets an instant by a signed interval.</summary>
+            <exception cref="T:System.OverflowException">The result precedes the origin or exceeds the timestamp range.</exception>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.op_Subtraction(Chronicler.Timing.ChronicleTimestamp,Chronicler.Timing.ChronicleTimestamp)">
+            <summary>Gets the signed interval from the right instant to the left instant.</summary>
+            <remarks>Either operand order is valid, including across the complete timestamp range.</remarks>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.op_Equality(Chronicler.Timing.ChronicleTimestamp,Chronicler.Timing.ChronicleTimestamp)">
+            <summary>Tests exact equality.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.op_Inequality(Chronicler.Timing.ChronicleTimestamp,Chronicler.Timing.ChronicleTimestamp)">
+            <summary>Tests exact inequality.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.op_LessThan(Chronicler.Timing.ChronicleTimestamp,Chronicler.Timing.ChronicleTimestamp)">
+            <summary>Tests whether the left instant is earlier.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.op_LessThanOrEqual(Chronicler.Timing.ChronicleTimestamp,Chronicler.Timing.ChronicleTimestamp)">
+            <summary>Tests whether the left instant is earlier or equal.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.op_GreaterThan(Chronicler.Timing.ChronicleTimestamp,Chronicler.Timing.ChronicleTimestamp)">
+            <summary>Tests whether the left instant is later.</summary>
+        </member>
+        <member name="M:Chronicler.Timing.ChronicleTimestamp.op_GreaterThanOrEqual(Chronicler.Timing.ChronicleTimestamp,Chronicler.Timing.ChronicleTimestamp)">
+            <summary>Tests whether the left instant is later or equal.</summary>
+        </member>
+    </members>
+</doc>

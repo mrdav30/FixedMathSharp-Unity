@@ -49,10 +49,11 @@ dotnet tool restore
 git diff --check
 ```
 
-The `build-and-test` workflow runs EditMode tests and sample-import smoke checks
-for both package variants on Unity 6000.5.0f1. It also builds the hosted API
-site from the Standard job; deployment occurs only after successful pushes to
-`main`.
+The `build-and-test` workflow runs EditMode tests for both math bases alone and
+with their matching Chronicler companions on Unity 6000.5.0f1. Sample-import
+smoke checks cover the two math bases; companions have no samples. It also
+builds the hosted API site from the Standard job; deployment occurs only after
+successful pushes to `main`.
 
 ## Code of Conduct
 

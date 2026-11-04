@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FixedMathSharp.Chronicler</name>
+    </assembly>
+    <members>
+        <member name="T:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions">
+            <summary>
+            Provides deterministic <see cref="T:Chronicler.Hashing.ChronicleHashWriter"/> extensions for FixedMathSharp types.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteFixed64(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Fixed64)">
+            <summary>
+            Writes a fixed-point value by its raw Q32.32 payload.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteVector2d(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Vector2d)">
+            <summary>
+            Writes a 2D vector in X, Y component order.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteVector3d(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Vector3d)">
+            <summary>
+            Writes a 3D vector in X, Y, Z component order.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteVector4d(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Vector4d)">
+            <summary>
+            Writes a 4D vector in X, Y, Z, W component order.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteQuaternion(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.FixedQuaternion)">
+            <summary>
+            Writes a quaternion in X, Y, Z, W component order.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteTransform(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.FixedTransform)">
+            <summary>
+            Writes authoritative local position, local rotation, then local scale.
+            </summary>
+            <remarks>
+            Parent identity and all derived world views are intentionally excluded. Adopting this local
+            contract is a replay/hash compatibility boundary for hashes produced by older package versions.
+            </remarks>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteFixed3x3(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Fixed3x3)">
+            <summary>
+            Writes a 3x3 matrix in row-major order.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteFixed4x4(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Fixed4x4)">
+            <summary>
+            Writes a 4x4 matrix in row-major order.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteBoundArea(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Geometry.FixedBoundArea)">
+            <summary>
+            Writes a 2D bounding area by canonical minimum then maximum corners.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteBoundBox(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Geometry.FixedBoundBox)">
+            <summary>
+            Writes a bounding box by canonical minimum then maximum corners.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteBoundCircle(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Geometry.FixedBoundCircle)">
+            <summary>
+            Writes a 2D bounding circle as center then normalized radius.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteBoundSphere(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Geometry.FixedBoundSphere)">
+            <summary>
+            Writes a bounding sphere as center then radius.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WriteRay(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Geometry.FixedRay)">
+            <summary>
+            Writes a ray as position then direction.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleHashWriterExtensions.WritePlane(Chronicler.Hashing.ChronicleHashWriter@,FixedMathSharp.Geometry.FixedPlane)">
+            <summary>
+            Writes a plane as normal then distance component.
+            </summary>
+        </member>
+        <member name="T:FixedMathSharp.Chronicler.FixedChronicleTime">
+            <summary>
+            Exact conversions between Fixed64 seconds and Chronicler durations.
+            Subtract wide timestamps before narrowing their difference to Fixed64.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleTime.FromFixed64(FixedMathSharp.Fixed64)">
+            <summary>Widens Fixed64 seconds without rounding or losing fractional bits.</summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleTime.TryToFixed64(Chronicler.Timing.ChronicleDuration,FixedMathSharp.Fixed64@)">
+            <summary>
+            Converts a representable duration exactly; otherwise returns false and a zero result.
+            </summary>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleTime.ToFixed64(Chronicler.Timing.ChronicleDuration)">
+            <summary>Converts a duration to Fixed64 seconds exactly, without saturation.</summary>
+            <exception cref="T:System.OverflowException">The duration is outside the Fixed64 range.</exception>
+        </member>
+        <member name="M:FixedMathSharp.Chronicler.FixedChronicleTime.GetFrameCountForDuration(FixedMathSharp.Fixed64,FixedMathSharp.Fixed64)">
+            <summary>
+            Counts complete steps in a nonnegative duration using exact raw integer division.
+            This floors the result; it is neither a ceiling-based wait nor a historical frame lookup.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            The duration is negative or the step duration is not positive.
+            </exception>
+        </member>
+    </members>
+</doc>

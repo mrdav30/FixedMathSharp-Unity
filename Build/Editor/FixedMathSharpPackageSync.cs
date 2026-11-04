@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 namespace FixedMathSharp.Build.Editor
 {
     /// <summary>
-    /// Synchronizes shared managed source files from Build/Base into both package variants.
+    /// Synchronizes shared Unity assets into math bases and metadata into all four packages.
     /// </summary>
     public static class FixedMathSharpPackageSync
     {
@@ -20,6 +21,12 @@ namespace FixedMathSharp.Build.Editor
         {
             "Assets/Packages/com.mrdav30.fixedmathsharp",
             "Assets/Packages/com.mrdav30.fixedmathsharp.lean"
+        };
+
+        private static readonly string[] ChroniclerPackageRootAssetPaths =
+        {
+            "Assets/Packages/com.mrdav30.fixedmathsharp.chronicler",
+            "Assets/Packages/com.mrdav30.fixedmathsharp.chronicler.lean"
         };
 
         // These paths are intentionally explicit so package-specific files can live beside
@@ -71,6 +78,15 @@ namespace FixedMathSharp.Build.Editor
             {
                 foreach (var packageRootAssetPath in PackageRootAssetPaths)
                     summary.Merge(SyncPackage(packageRootAssetPath));
+
+                foreach (var packageRootAssetPath in ChroniclerPackageRootAssetPaths)
+                {
+                    foreach (var entry in ManagedEntries)
+                    {
+                        if (entry.Kind == ManagedEntryKind.File)
+                            summary.Merge(SyncManagedFile(packageRootAssetPath, entry.RelativePath));
+                    }
+                }
             }
             finally
             {
@@ -83,7 +99,7 @@ namespace FixedMathSharp.Build.Editor
             Debug.Log(
                 $"FixedMathSharp package sync complete. " +
                 $"Copied {summary.CopiedFiles} files, deleted {summary.DeletedFiles} files, " +
-                $"removed {summary.DeletedDirectories} directories across {PackageRootAssetPaths.Length} packages.");
+                $"removed {summary.DeletedDirectories} directories across {PackageRootAssetPaths.Length + ChroniclerPackageRootAssetPaths.Length} packages.");
         }
 
         private static void ValidatePaths()
@@ -91,7 +107,7 @@ namespace FixedMathSharp.Build.Editor
             if (!Directory.Exists(ToAbsolutePath(BaseRootAssetPath)))
                 throw new DirectoryNotFoundException($"Shared package source folder not found: {BaseRootAssetPath}");
 
-            foreach (var packageRootAssetPath in PackageRootAssetPaths)
+            foreach (var packageRootAssetPath in PackageRootAssetPaths.Concat(ChroniclerPackageRootAssetPaths))
             {
                 if (!Directory.Exists(ToAbsolutePath(packageRootAssetPath)))
                     throw new DirectoryNotFoundException($"Package folder not found: {packageRootAssetPath}");
