@@ -13,6 +13,8 @@ version 7 onward.
 
 ### Changed
 
+- Raised the minimum Unity editor from 2022.3 to Unity 6.3 LTS (6000.3) for
+  all four packages. CI now validates the minimum supported LTS line.
 - Upgraded both bundled .NET Standard 2.1 core builds to FixedMathSharp v8.0.0,
   including its finite-contact, overlap, sweep, and transform corrections.
 - Bundled `Chronicler.Diagnostics` v1.0.0 in both variants and updated Lean's

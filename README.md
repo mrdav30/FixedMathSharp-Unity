@@ -5,7 +5,7 @@
 # FixedMathSharp for Unity
 
 [![Build](https://github.com/mrdav30/FixedMathSharp-Unity/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/mrdav30/FixedMathSharp-Unity/actions/workflows/build-and-test.yml)
-[![Unity 2022.3+](https://img.shields.io/badge/Unity-2022.3%2B-222c37?logo=unity)](https://unity.com/releases/editor/whats-new/2022.3.0)
+[![Unity 6.3 LTS+](https://img.shields.io/badge/Unity-6.3_LTS%2B-222c37?logo=unity)](https://unity.com/releases/unity-6/support)
 [![API](https://img.shields.io/badge/docs-API-f4511e)](https://mrdav30.github.io/FixedMathSharp-Unity/)
 [![Discord](https://img.shields.io/badge/discord-join%20community-5865F2?logo=discord&logoColor=white)](https://discord.gg/mhwK2QFNBA)
 
@@ -41,7 +41,7 @@ engine boundaries and Burst-compile your deterministic jobs separately.
 
 ## Install
 
-Requires Unity **2022.3 or newer** and Git available to the Unity Editor. In
+Requires Unity **6.3 LTS (6000.3) or newer** and Git available to the Unity Editor. In
 **Window → Package Manager**, choose **Install package from git URL…** and paste
 one pinned URL:
 

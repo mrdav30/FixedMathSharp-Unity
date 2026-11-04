@@ -1,7 +1,7 @@
 # FixedMathSharp for Unity — Lean
 
 Deterministic Q32.32 math, Unity adapters, and editor tooling without the
-MemoryPack serializer/runtime dependency. Requires Unity 2022.3+.
+MemoryPack serializer/runtime dependency. Requires Unity 6.3 LTS (6000.3) or newer.
 
 [Getting started](https://mrdav30.github.io/FixedMathSharp-Unity/guides/getting-started.html) ·
 [API reference](https://mrdav30.github.io/FixedMathSharp-Unity/) ·

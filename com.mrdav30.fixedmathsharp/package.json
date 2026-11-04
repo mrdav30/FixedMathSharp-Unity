@@ -3,7 +3,7 @@
   "version": "8.0.0",
   "displayName": "FixedMathSharp",
   "description": "Deterministic Q32.32 math for Unity with engine adapters, editor tooling, samples, and MemoryPack serialization support.",
-  "unity": "2022.3",
+  "unity": "6000.3",
   "author": {
     "name": "David Oravsky",
     "email": "david.oravsky@gmail.com",

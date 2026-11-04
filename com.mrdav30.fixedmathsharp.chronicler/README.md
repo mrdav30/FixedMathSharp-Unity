@@ -2,7 +2,7 @@
 
 Optional deterministic hashing and exact simulation-time conversions for the
 Standard FixedMathSharp math base, with Chronicler recording and restore APIs.
-Requires Unity 2022.3 or newer.
+Requires Unity 6.3 LTS (6000.3) or newer.
 
 [Integration guide](https://mrdav30.github.io/FixedMathSharp-Unity/guides/chronicler.html) ·
 [Changelog](CHANGELOG.md)

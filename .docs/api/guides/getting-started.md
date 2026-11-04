@@ -12,8 +12,8 @@ types stay at the edges of your application; deterministic state stays in
 
 ## 1. Choose exactly one package
 
-Both variants require Unity **2022.3 or newer** and expose the same math and
-Unity adapter APIs. Repository CI currently validates Unity **6000.5.0f1**.
+Both variants require Unity **6.3 LTS (6000.3) or newer** and expose the same math and
+Unity adapter APIs. Repository CI currently validates Unity **6000.3.9f1**.
 
 | Variant | Package ID | Use it when |
 | --- | --- | --- |

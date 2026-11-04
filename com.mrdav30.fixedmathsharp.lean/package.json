@@ -3,7 +3,7 @@
   "version": "8.0.0",
   "displayName": "FixedMathSharp.Lean",
   "description": "Deterministic Q32.32 math for Unity with engine adapters and editor tooling, without the MemoryPack serializer/runtime.",
-  "unity": "2022.3",
+  "unity": "6000.3",
   "author": {
     "name": "David Oravsky",
     "email": "david.oravsky@gmail.com",

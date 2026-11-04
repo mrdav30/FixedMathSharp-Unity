@@ -31,7 +31,8 @@ the checkout from the current workspace, git remotes, or user context.
 
 ## Current Package Facts
 
-- Package manifests require Unity `2022.3` or newer.
+- All four package manifests require Unity 6.3 LTS (`6000.3`) or newer.
+- CI and its test-project templates target Unity `6000.3.9f1`.
 - This Unity host project currently uses Unity `6000.5.0f1` according to
   `../../ProjectSettings/ProjectVersion.txt`.
 - Both math bases include the precompiled FixedMathSharp plugin assets under

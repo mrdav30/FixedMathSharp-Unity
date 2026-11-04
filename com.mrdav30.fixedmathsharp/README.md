@@ -1,7 +1,7 @@
 # FixedMathSharp for Unity — Standard
 
 Deterministic Q32.32 math, Unity adapters, editor tooling, and the MemoryPack
-serializer/runtime in one Unity 2022.3+ package.
+serializer/runtime in one package for Unity 6.3 LTS (6000.3) or newer.
 
 [Getting started](https://mrdav30.github.io/FixedMathSharp-Unity/guides/getting-started.html) ·
 [API reference](https://mrdav30.github.io/FixedMathSharp-Unity/) ·

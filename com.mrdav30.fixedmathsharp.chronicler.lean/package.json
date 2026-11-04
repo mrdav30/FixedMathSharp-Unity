@@ -3,7 +3,7 @@
   "version": "8.0.0",
   "displayName": "FixedMathSharp.Chronicler.Lean",
   "description": "Optional lean companion for deterministic hashing, exact time conversions, and Chronicler integration. Requires the matching FixedMathSharp math package.",
-  "unity": "2022.3",
+  "unity": "6000.3",
   "author": {
     "name": "David Oravsky",
     "email": "david.oravsky@gmail.com",
